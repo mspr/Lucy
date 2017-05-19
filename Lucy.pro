@@ -25,9 +25,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    familytreeview.cpp
+    familytreeview.cpp \
+    familytreescene.cpp
 
 HEADERS  += mainwindow.h \
-    familytreeview.h
+    familytreeview.h \
+    familytreescene.h
 
 FORMS    += mainwindow.ui
