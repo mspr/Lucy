@@ -1,5 +1,5 @@
 #include "messagehandler.h"
-#include "outputwindow.h"
+#include "output/outputwindow.h"
 
 using namespace Output;
 
