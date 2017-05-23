@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 #include "familytreeview.h"
 #include "familytreescene.h"
-#include "outputwindow.h"
+#include "output/outputwindow.h"
 
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlError>
@@ -19,31 +19,29 @@ MainWindow::MainWindow(QWidget* parent)
   _familyTreeView = new FamilyTreeView();
   setCentralWidget(_familyTreeView);
 
-  _familyTreeScene.reset(new FamilyTreeScene(QRectF(0, 0, 1000, 1000), _familyTreeView));
+  _familyTreeScene.reset(new FamilyTreeScene(QRectF(-10000, -10000, 20000, 20000), _familyTreeView));
   _familyTreeView->setScene(_familyTreeScene.data());
-  _familyTreeView->setSceneRect(_familyTreeScene.data()->sceneRect());
+  _familyTreeView->setSceneRect(QRectF(-1000, -1000, 2000, 2000));
 
   OutputWindow* outputWindow = new OutputWindow(this);
   addDockWidget(Qt::BottomDockWidgetArea, outputWindow);
 
-  qDebug() << "_familyTreeView scene rect " << _familyTreeView->sceneRect();
+//  QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL");
 
-  QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL");
+////  QSqlDatabase db;
+//  db.setHostName("localhost");
+//  db.setPort(5432);
+//  db.setDatabaseName("lucy");
+//  db.setUserName("postgres");
+//  db.setPassword("postgres");
+//  bool check = db.open();
+//  if (!check)
+//  {
+//    QString errorMsg = db.lastError().text();
+//    qDebug() << "error when opening db " << errorMsg;
+//  }
 
-//  QSqlDatabase db;
-  db.setHostName("localhost");
-  db.setPort(5432);
-  db.setDatabaseName("lucy");
-  db.setUserName("postgres");
-  db.setPassword("postgres");
-  bool check = db.open();
-  if (!check)
-  {
-    QString errorMsg = db.lastError().text();
-    qDebug() << "error when opening db " << errorMsg;
-  }
-
-  db.close();
+//  db.close();
 }
 
 MainWindow::~MainWindow()
