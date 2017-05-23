@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "familytreeview.h"
-#include "familytreescene.h"
+#include "tree_view/familytreeview.h"
+#include "tree_view/familytreescene.h"
 #include "output/outputwindow.h"
 
 #include <QtSql/QSqlDatabase>

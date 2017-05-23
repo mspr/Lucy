@@ -7,8 +7,6 @@
 FamilyTreeNodeView::FamilyTreeNodeView(const QPointF& scenePos, const int radius, QGraphicsItem* parent)
   : QGraphicsEllipseItem(scenePos.x()-radius, scenePos.y()-radius, 2*radius, 2*radius, parent)
 {
-  setFlags(QGraphicsItem::ItemSendsScenePositionChanges);
-//  setFlags(QGraphicsItem::ItemPositionChange);
 }
 
 QRectF FamilyTreeNodeView::boundingRect() const
