@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -22,16 +22,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+include(output/output.pri)
 
 SOURCES += main.cpp\
         mainwindow.cpp \
     familytreeview.cpp \
     familytreescene.cpp \
-    familytreenodeview.cpp
+    familytreenodeview.cpp \
+    messagehandler.cpp
 
 HEADERS  += mainwindow.h \
     familytreeview.h \
     familytreescene.h \
-    familytreenodeview.h
+    familytreenodeview.h \
+    messagehandler.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    resources.qrc
