@@ -4,10 +4,6 @@
 #include "tree_view/familytreescene.h"
 #include "output/outputwindow.h"
 
-#include <QtSql/QSqlDatabase>
-#include <QtSql/QSqlError>
-#include <QDebug>
-
 using namespace Output;
 
 MainWindow::MainWindow(QWidget* parent)
@@ -25,23 +21,6 @@ MainWindow::MainWindow(QWidget* parent)
 
   OutputWindow* outputWindow = new OutputWindow(this);
   addDockWidget(Qt::BottomDockWidgetArea, outputWindow);
-
-//  QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL");
-
-////  QSqlDatabase db;
-//  db.setHostName("localhost");
-//  db.setPort(5432);
-//  db.setDatabaseName("lucy");
-//  db.setUserName("postgres");
-//  db.setPassword("postgres");
-//  bool check = db.open();
-//  if (!check)
-//  {
-//    QString errorMsg = db.lastError().text();
-//    qDebug() << "error when opening db " << errorMsg;
-//  }
-
-//  db.close();
 }
 
 MainWindow::~MainWindow()

@@ -27,10 +27,12 @@ include(tree_view/tree_view.pri)
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-		messagehandler.cpp
+		messagehandler.cpp \
+    databaseconnection.cpp
 
 HEADERS  += mainwindow.h \
-		messagehandler.h
+		messagehandler.h \
+    databaseconnection.h
 
 FORMS    += mainwindow.ui
 
