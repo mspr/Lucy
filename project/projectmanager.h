@@ -2,6 +2,9 @@
 #define PROJECTMANAGER_H
 
 #include <QString>
+#include <QScopedPointer>
+
+class Project;
 
 class ProjectManager
 {
@@ -9,6 +12,9 @@ class ProjectManager
     ProjectManager();
 
     void openProject(const QString& projectFileName);
+
+  private:
+    QScopedPointer<Project> _currentProject;
 };
 
 #endif // PROJECTMANAGER_H
