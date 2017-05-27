@@ -1,5 +1,6 @@
 #include "familytreenodeview.h"
 
+#include <QGraphicsScene>
 #include <QPen>
 #include <QPainter>
 #include <QDebug>

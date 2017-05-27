@@ -15,6 +15,13 @@ class FamilyTreeScene : public QGraphicsScene
 
   protected:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent*) override;
+
+  private:
+    void ExtendTreeFromNode(QGraphicsItem* previousNode, Qt::MouseButton button);
+
+  private:
+    QHash<QGraphicsItem*, int> _levelByTreeNode;
+    QHash<QGraphicsItem*, double> _inclinationByTreeNode;
 };
 
 #endif // FAMILYTREESCENE_H
