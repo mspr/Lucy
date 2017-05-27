@@ -23,6 +23,21 @@ MainWindow::MainWindow(QWidget* parent)
   addDockWidget(Qt::BottomDockWidgetArea, outputWindow);
 }
 
+void MainWindow::newProject()
+{
+
+}
+
+void MainWindow::openProject()
+{
+
+}
+
+void MainWindow::saveProject()
+{
+
+}
+
 MainWindow::~MainWindow()
 {
   delete _ui;

@@ -16,6 +16,11 @@ class MainWindow : public QMainWindow
     explicit MainWindow(QWidget* parent = 0);
     ~MainWindow();
 
+  private slots:
+    void newProject();
+    void openProject();
+    void saveProject();
+
   private:
     Ui::MainWindow* _ui;
     FamilyTreeView* _familyTreeView;

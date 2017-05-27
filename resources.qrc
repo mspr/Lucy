@@ -3,5 +3,8 @@
         <file>images/info.png</file>
         <file>images/warning.png</file>
         <file>images/error.png</file>
+        <file>images/open.png</file>
+        <file>images/save.png</file>
+        <file>images/new.png</file>
     </qresource>
 </RCC>
