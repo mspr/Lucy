@@ -4,6 +4,8 @@
 #include "tree_view/familytreescene.h"
 #include "output/outputwindow.h"
 
+#include <QFileDialog>
+
 using namespace Output;
 
 MainWindow::MainWindow(QWidget* parent)
@@ -30,6 +32,13 @@ void MainWindow::newProject()
 
 void MainWindow::openProject()
 {
+  // TODO Close current project if necessary
+
+  const QString projectFileName = QFileDialog::getOpenFileName(this,
+                                                               tr("Open Project"),
+                                                               "",
+                                                               tr("Project Files (*.lcy)"));
+
 
 }
 
