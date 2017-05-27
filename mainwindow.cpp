@@ -38,13 +38,16 @@ void MainWindow::openProject()
                                                                tr("Open Project"),
                                                                "",
                                                                tr("Project Files (*.lcy)"));
-
-
 }
 
 void MainWindow::saveProject()
 {
 
+}
+
+void MainWindow::quit()
+{
+  qApp->quit();
 }
 
 MainWindow::~MainWindow()

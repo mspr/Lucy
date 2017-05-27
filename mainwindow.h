@@ -20,6 +20,7 @@ class MainWindow : public QMainWindow
     void newProject();
     void openProject();
     void saveProject();
+    void quit();
 
   private:
     Ui::MainWindow* _ui;

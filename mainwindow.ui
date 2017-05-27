@@ -44,6 +44,7 @@
    <addaction name="actionOpen"/>
    <addaction name="actionSave"/>
    <addaction name="separator"/>
+   <addaction name="actionQuit"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionNew">
@@ -80,6 +81,18 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/quit.png</normaloff>:/images/quit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
    </property>
   </action>
  </widget>
@@ -136,10 +149,27 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionQuit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>quit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>newProject()</slot>
   <slot>openProject()</slot>
   <slot>saveProject()</slot>
+  <slot>quit()</slot>
  </slots>
 </ui>
