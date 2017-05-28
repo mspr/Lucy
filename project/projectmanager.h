@@ -9,11 +9,16 @@ class Project;
 class ProjectManager
 {
   public:
-    ProjectManager();
+    static ProjectManager* getInstance();
+    static void kill();
 
     void openProject(const QString& projectFileName);
 
   private:
+    ProjectManager();
+
+  private:
+    static ProjectManager* _projectManager;
     QScopedPointer<Project> _currentProject;
 };
 

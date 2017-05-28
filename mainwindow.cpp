@@ -3,6 +3,7 @@
 #include "tree_view/familytreeview.h"
 #include "tree_view/familytreescene.h"
 #include "output/outputwindow.h"
+#include "project/projectmanager.h"
 
 #include <QFileDialog>
 
@@ -38,6 +39,8 @@ void MainWindow::openProject()
                                                                tr("Open Project"),
                                                                "",
                                                                tr("Project Files (*.lcy)"));
+
+  ProjectManager::getInstance()->openProject(projectFileName);
 }
 
 void MainWindow::saveProject()
