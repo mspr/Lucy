@@ -10,10 +10,11 @@ class ProjectXmlReader
   public:
     ProjectXmlReader() = delete;
 
-    static Project load(const QString& fileName);
+    static QSharedPointer<Project> load(const QString& fileName);
 
   private:
     static void loadTrees(const QDomElement& projectNode, Project& project);
+    static void loadCurrentTree(const QDomElement& projectNode, Project& project);
 };
 
 #endif // PROJECTXMLREADER_H

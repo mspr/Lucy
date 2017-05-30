@@ -2,6 +2,7 @@
 #include "project.h"
 #include "projectxmlreader.h"
 
+#include <QSharedPointer>
 #include <QFile>
 
 ProjectManager* ProjectManager::_projectManager = nullptr;
@@ -32,6 +33,6 @@ void ProjectManager::openProject(const QString& projectFileName)
 {
   Q_ASSERT(QFile::exists(projectFileName));
 
-  Project project = ProjectXmlReader::load(projectFileName);
-
+  QSharedPointer<Project> project = ProjectXmlReader::load(projectFileName);
+  _currentProject.reset();
 }

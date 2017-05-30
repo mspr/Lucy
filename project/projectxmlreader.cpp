@@ -2,10 +2,13 @@
 #include "domain_object/tree.h"
 
 #include <QtXml/QDomDocument>
+#include <QFile>
 #include <QDebug>
 
-/*static*/ Project ProjectXmlReader::load(const QString& fileName)
+/*static*/ QSharedPointer<Project> ProjectXmlReader::load(const QString& fileName)
 {
+  QSharedPointer<Project> project = nullptr;
+
   QDomDocument doc(fileName);
   QFile file(fileName);
   if (file.open(QIODevice::ReadOnly))
@@ -20,31 +23,43 @@
                   << "(line=" << errorLine
                   << ", column=" << errorColumn << ")";
       file.close();
-      return Project();
     }
+    else
+    {
+      project.reset(new Project());
 
-    Project project;
+      QDomElement docElem = doc.documentElement();
 
-    QDomElement docElem = doc.documentElement();
+      loadTrees(docElem, *project);
+      loadCurrentTree(docElem, *project);
 
-    loadTrees(docElem, project);
-
-    file.close();
+      file.close();
+    }
   }
 
-  return Project();
+  return project;
 }
 
 void ProjectXmlReader::loadTrees(const QDomElement& projectNode, Project& project)
 {
-  QList<Tree> trees;
-
   const QDomNodeList treeNodes = projectNode.elementsByTagName("tree");
   for (int i=0; i<treeNodes.count(); ++i)
   {
-    QDomNode treeNode = treeNodes.at(i);
-//    const QString nodeName = treeNode.nodeName();
-    const int treeNodeId = treeNode.toElement().attribute("id").toInt();
-    trees.append(Tree(treeNodeId));
+    QDomElement treeNode = treeNodes.at(i).toElement();
+    if (treeNode.hasAttribute("id"))
+    {
+      const int treeNodeId = treeNode.toElement().attribute("id").toInt();
+      project.AddTree(treeNodeId);
+    }
+  }
+}
+
+void ProjectXmlReader::loadCurrentTree(const QDomElement& projectNode, Project& project)
+{
+  QDomElement currentTreeNode = projectNode.firstChildElement("current_tree");
+  if (!currentTreeNode.isNull())
+  {
+    if (currentTreeNode.hasAttribute("id"))
+      project.setCurrentTree(currentTreeNode.attribute("id").toInt());
   }
 }
