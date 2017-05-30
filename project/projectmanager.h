@@ -1,8 +1,7 @@
 #ifndef PROJECTMANAGER_H
 #define PROJECTMANAGER_H
 
-#include <QString>
-#include <QScopedPointer>
+#include <QSharedPointer>
 
 class Project;
 
@@ -19,7 +18,7 @@ class ProjectManager
 
   private:
     static ProjectManager* _projectManager;
-    QScopedPointer<Project> _currentProject;
+    QSharedPointer<Project> _currentProject;
 };
 
 #endif // PROJECTMANAGER_H
