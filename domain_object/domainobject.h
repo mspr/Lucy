@@ -3,14 +3,18 @@
 
 #include <QSharedPointer>
 
-#define DEFINE_PIMPL(T) \
+#define DECLARE_PIMPL(T) \
   protected: \
-    QSharedPointer<T> d() const \
-    { \
-      return _pimpl; \
-    } \
+    QSharedPointer<T##_p> d() const; \
   private: \
-    QSharedPointer<T> _pimpl;
+    QSharedPointer<T##_p> _pimpl;
+
+#define DEFINE_PIMPL(T) \
+  QSharedPointer<T##_p> T::d() const \
+  { \
+    _pimpl.data()->tryLoad(); \
+    return _pimpl; \
+  } \
 
 class DomainObject
 {

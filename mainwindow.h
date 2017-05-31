@@ -5,9 +5,6 @@
 
 namespace Ui { class MainWindow; }
 
-class FamilyTreeView;
-class FamilyTreeScene;
-
 class MainWindow : public QMainWindow
 {
   Q_OBJECT
@@ -24,8 +21,7 @@ class MainWindow : public QMainWindow
 
   private:
     Ui::MainWindow* _ui;
-    FamilyTreeView* _familyTreeView;
-    QScopedPointer<FamilyTreeScene> _familyTreeScene;
+    QTabWidget* _treeTabWidget;
 };
 
 #endif // MAINWINDOW_H

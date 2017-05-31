@@ -13,6 +13,8 @@ class ProjectManager
 
     void openProject(const QString& projectFileName);
 
+    QSharedPointer<Project> currentProject() const;
+
   private:
     ProjectManager();
 

@@ -6,7 +6,7 @@ class DomainObject_p
   public:
     DomainObject_p();
 
-    void load();
+    void tryLoad();
 
   protected:
     virtual void load_impl() = 0;

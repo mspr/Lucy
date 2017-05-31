@@ -9,7 +9,7 @@ class Tree_p;
 
 class Tree
 {
-  DEFINE_PIMPL(Tree_p)
+  DECLARE_PIMPL(Tree)
 
   public:
     Tree(const int id);

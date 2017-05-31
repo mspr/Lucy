@@ -6,9 +6,11 @@ DomainObject_p::DomainObject_p()
 {
 }
 
-void DomainObject_p::load()
+void DomainObject_p::tryLoad()
 {
-  load_impl();
-
-  _isLoaded = true;
+  if (!_isLoaded)
+  {
+    load_impl();
+    _isLoaded = true;
+  }
 }

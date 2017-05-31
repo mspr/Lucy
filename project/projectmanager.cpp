@@ -34,3 +34,8 @@ void ProjectManager::openProject(const QString& projectFileName)
 
   _currentProject = ProjectXmlReader::load(projectFileName);
 }
+
+QSharedPointer<Project> ProjectManager::currentProject() const
+{
+  return _currentProject;
+}
