@@ -5,6 +5,7 @@ class DomainObject_p
 {
   public:
     DomainObject_p();
+    virtual ~DomainObject_p();
 
     void tryLoad();
 

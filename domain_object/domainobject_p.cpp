@@ -6,6 +6,10 @@ DomainObject_p::DomainObject_p()
 {
 }
 
+DomainObject_p::~DomainObject_p()
+{
+}
+
 void DomainObject_p::tryLoad()
 {
   if (!_isLoaded)

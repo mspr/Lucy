@@ -12,8 +12,6 @@ class Tree
   DECLARE_PIMPL(Tree)
 
   public:
-    Tree(const int id);
-
     QString name() const;
 };
 

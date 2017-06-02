@@ -8,7 +8,7 @@
 class Tree_p : public DomainObject_p
 {
   public:
-    Tree_p();
+    Tree_p(const int id);
 
     QString name() const;
 
@@ -16,6 +16,7 @@ class Tree_p : public DomainObject_p
     virtual void load_impl() override;
 
   private:
+    int _id;
     QString _name;
 };
 

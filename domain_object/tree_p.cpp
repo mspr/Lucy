@@ -3,9 +3,9 @@
 #include <QSqlQuery>
 #include <QVariant>
 
-Tree_p::Tree_p()
+Tree_p::Tree_p(const int id)
+  : _id(id)
 {
-
 }
 
 void Tree_p::load_impl()
