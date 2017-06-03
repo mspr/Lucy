@@ -31,7 +31,14 @@
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
    </widget>
+   <widget class="QMenu" name="menuTree">
+    <property name="title">
+     <string>Tree</string>
+    </property>
+    <addaction name="actionCreateTree"/>
+   </widget>
    <addaction name="menuProject"/>
+   <addaction name="menuTree"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -45,6 +52,8 @@
    <addaction name="actionSave"/>
    <addaction name="separator"/>
    <addaction name="actionQuit"/>
+   <addaction name="separator"/>
+   <addaction name="actionCreateTree"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionNew">
@@ -95,6 +104,18 @@
     <string>Ctrl+Q</string>
    </property>
   </action>
+  <action name="actionCreateTree">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/tree.png</normaloff>:/images/tree.png</iconset>
+   </property>
+   <property name="text">
+    <string>Create Tree</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
@@ -140,8 +161,8 @@
    <slot>saveProject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>199</x>
-     <y>167</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
     <hint type="destinationlabel">
      <x>199</x>
@@ -165,11 +186,28 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionCreateTree</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>createTree()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>newProject()</slot>
   <slot>openProject()</slot>
   <slot>saveProject()</slot>
   <slot>quit()</slot>
+  <slot>createTree()</slot>
  </slots>
 </ui>

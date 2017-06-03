@@ -1,7 +1,7 @@
 #include "domainobject_p.h"
 
-DomainObject_p::DomainObject_p()
-  : _id(-1),
+DomainObject_p::DomainObject_p(const int id)
+  : _id(id),
     _isLoaded(false)
 {
 }

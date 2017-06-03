@@ -18,6 +18,7 @@ class MainWindow : public QMainWindow
     void openProject();
     void saveProject();
     void quit();
+    void createTree();
 
   private:
     Ui::MainWindow* _ui;

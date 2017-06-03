@@ -62,6 +62,11 @@ void MainWindow::quit()
   qApp->quit();
 }
 
+void MainWindow::createTree()
+{
+
+}
+
 MainWindow::~MainWindow()
 {
   delete _ui;

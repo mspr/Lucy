@@ -16,8 +16,9 @@ class Tree_p : public DomainObject_p
     virtual void load_impl() override;
 
   private:
-    int _id;
+    int _rootId;
     QString _name;
+
 };
 
 #endif // TREE_P_H

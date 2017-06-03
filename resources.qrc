@@ -7,5 +7,6 @@
         <file>images/save.png</file>
         <file>images/new.png</file>
         <file>images/quit.png</file>
+        <file>images/tree.png</file>
     </qresource>
 </RCC>

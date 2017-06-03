@@ -4,7 +4,7 @@
 class DomainObject_p
 {
   public:
-    DomainObject_p();
+    DomainObject_p(const int id);
     virtual ~DomainObject_p();
 
     void tryLoad();
