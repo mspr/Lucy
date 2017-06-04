@@ -1,6 +1,9 @@
 #include "treecreationdialog.h"
 #include "ui_treecreationdialog.h"
 #include "domain_object/person.h"
+#include "domain_object/tree.h"
+#include "project/projectmanager.h"
+#include "project/project.h"
 
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -47,7 +50,11 @@ int TreeCreationDialog::exec()
 //      query.exec();
 //    }
 
+    QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
     Person* person = new Person(firstName, lastName, birthDate);
+    currentProject->add(person);
+    Tree* tree = new Tree(treeName);
+    currentProject->add(tree);
   }
 
   return result;

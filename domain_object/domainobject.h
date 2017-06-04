@@ -1,30 +1,42 @@
 #ifndef DOMAINOBJECT_H
 #define DOMAINOBJECT_H
 
-#include <QSharedPointer>
+#include <QScopedPointer>
 
-#define DECLARE_PIMPL(T) \
-  public: \
-    T(const int id); \
-    ~T(); \
-  protected: \
-    QSharedPointer<T##_p> d() const; \
-  private: \
-    QSharedPointer<T##_p> _pimpl;
+class DomainObject_p;
 
-#define DEFINE_PIMPL(T) \
-  T::T(const int id) : _pimpl(new T##_p(id)) {}; \
-  T::~T() {} \
-  QSharedPointer<T##_p> T::d() const \
-  { \
-    _pimpl.data()->tryLoad(); \
-    return _pimpl; \
-  } \
+#define DECLARE_PIMPL(T)                                \
+  public:                                               \
+    T(const int id);                                    \
+    ~T();                                               \
+                                                        \
+    T##_p* d() const;                                   \
+    virtual DomainObject_p* getD() const override;      \
+                                                        \
+  private:                                              \
+    QScopedPointer<T##_p> _pimpl;
+
+#define DEFINE_PIMPL(T)                           \
+  T::T(const int id) : _pimpl(new T##_p(id)) {};  \
+  T::~T() {}                                      \
+  T##_p* T::d() const                             \
+  {                                               \
+    _pimpl.data()->tryLoad();                     \
+    return _pimpl.data();                         \
+  }                                               \
+                                                  \
+  DomainObject_p* T::getD() const                 \
+  {                                               \
+    return d();                                   \
+  }
 
 class DomainObject
 {
   public:
     DomainObject();
+    virtual ~DomainObject();
+
+    virtual DomainObject_p* getD() const = 0;
 };
 
 #endif // DOMAINOBJECT_H

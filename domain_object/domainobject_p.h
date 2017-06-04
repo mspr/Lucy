@@ -1,6 +1,10 @@
 #ifndef DOMAINOBJECT_P_H
 #define DOMAINOBJECT_P_H
 
+#include <QString>
+
+class QSqlQuery;
+
 class DomainObject_p
 {
   public:
@@ -10,21 +14,16 @@ class DomainObject_p
 
     void tryLoad();
 
-  protected:
-    virtual void load_impl() = 0;
+    virtual void deleteFromDatabase();
+    virtual void updateInDatabase() = 0;
+    virtual void insertIntoDatabase() = 0;
 
   protected:
-    enum class State
-    {
-      New,
-      Deleted,
-      Dirty,
-      Unchanged
-    };
+    virtual void load_impl(QSqlQuery& query) = 0;
+    virtual QString databaseTableName() const = 0;
 
   protected:
     int _id;
-    State _state;
     bool _isLoaded;
 };
 

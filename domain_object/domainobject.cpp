@@ -3,3 +3,7 @@
 DomainObject::DomainObject()
 {
 }
+
+DomainObject::~DomainObject()
+{
+}

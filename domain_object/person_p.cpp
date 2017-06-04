@@ -8,23 +8,29 @@ Person_p::Person_p(const int id)
 {
 }
 
-void Person_p::load_impl()
+void Person_p::load_impl(QSqlQuery& query)
 {
-  QString queryStr = "SELECT * FROM public.\"Person\" WHERE \"Id\" = :id";
+    while (query.next())
+    {
+        _firstName = query.value(0).toString();
+        _birthDate = query.value(1).toDate();
+        _lastName = query.value(2).toString();
+    }
+}
 
-  QSqlQuery query;
-  query.prepare(queryStr);
-  query.bindValue(":id", QVariant::fromValue(_id));
+QString Person_p::databaseTableName() const
+{
+  return "Person";
+}
 
-  if (query.exec())
-  {
-      while (query.next())
-      {
-          _firstName = query.value(0).toString();
-          _birthDate = query.value(1).toDate();
-          _lastName = query.value(2).toString();
-      }
-  }
+void Person_p::insertIntoDatabase()
+{
+
+}
+
+void Person_p::updateInDatabase()
+{
+
 }
 
 void Person_p::setFirstName(const QString& firstName)

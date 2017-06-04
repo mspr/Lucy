@@ -41,21 +41,23 @@ void MainWindow::openProject()
   ProjectManager::getInstance()->openProject(projectFileName);
 
   QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
+  const QList<Tree*>& trees = currentProject->trees();
 
-  for (int i=0; i<currentProject.data()->trees().count(); ++i)
+  for (int i=0; i<trees.count(); ++i)
   {
     FamilyTreeView* familyTreeView = new FamilyTreeView();
     FamilyTreeScene* familyTreeScene = new FamilyTreeScene(QRectF(-10000, -10000, 20000, 20000), familyTreeView);
     familyTreeView->setScene(familyTreeScene);
     familyTreeView->setSceneRect(QRectF(-1000, -1000, 2000, 2000));
 
-    _treeTabWidget->addTab(familyTreeView, currentProject.data()->trees().at(i).name());
+    _treeTabWidget->addTab(familyTreeView, trees.at(i)->name());
   }
 }
 
 void MainWindow::saveProject()
 {
-
+  QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
+  currentProject->commit();
 }
 
 void MainWindow::quit()

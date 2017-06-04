@@ -49,7 +49,7 @@ void ProjectXmlReader::loadTrees(const QDomElement& projectNode, Project& projec
     if (treeNode.hasAttribute("id"))
     {
       const int treeNodeId = treeNode.toElement().attribute("id").toInt();
-      project.AddTree(treeNodeId);
+      project.addTree(treeNodeId);
     }
   }
 }

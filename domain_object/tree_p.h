@@ -3,17 +3,20 @@
 
 #include "domainobject_p.h"
 
-#include <QString>
-
 class Tree_p : public DomainObject_p
 {
   public:
     Tree_p(const int id);
 
+    void setName(const QString& name);
     QString name() const;
 
+    virtual void insertIntoDatabase();
+    virtual void updateInDatabase();
+
   protected:
-    virtual void load_impl() override;
+    virtual void load_impl(QSqlQuery& query) override;
+    virtual QString databaseTableName() const override;
 
   private:
     int _rootId;

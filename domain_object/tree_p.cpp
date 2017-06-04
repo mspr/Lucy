@@ -8,25 +8,36 @@ Tree_p::Tree_p(const int id)
 {
 }
 
-void Tree_p::load_impl()
+void Tree_p::load_impl(QSqlQuery& query)
 {
-  QString queryStr = "SELECT * FROM public.\"Tree\" WHERE \"Id\" = :id";
+    while (query.next())
+    {
+        _name = query.value(0).toString();
+        _rootId = query.value(1).toInt();
+    }
+}
 
-  QSqlQuery query;
-  query.prepare(queryStr);
-  query.bindValue(":id", QVariant::fromValue(_id));
+QString Tree_p::databaseTableName() const
+{
+  return "Tree";
+}
 
-  if (query.exec())
-  {
-      while (query.next())
-      {
-          _name = query.value(0).toString();
-          _rootId = query.value(1).toInt();
-      }
-  }
+void Tree_p::insertIntoDatabase()
+{
+
+}
+
+void Tree_p::updateInDatabase()
+{
+
 }
 
 QString Tree_p::name() const
 {
   return _name;
+}
+
+void Tree_p::setName(const QString& name)
+{
+  _name = name;
 }

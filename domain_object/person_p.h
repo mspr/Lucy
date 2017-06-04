@@ -3,7 +3,6 @@
 
 #include "domainobject_p.h"
 
-#include <QString>
 #include <QDate>
 
 class Person_p : public DomainObject_p
@@ -15,8 +14,12 @@ class Person_p : public DomainObject_p
     void setLastName(const QString& lastName);
     void setBirthDate(const QDate& birthDate);
 
+    virtual void insertIntoDatabase();
+    virtual void updateInDatabase();
+
   protected:
-    virtual void load_impl() override;
+    virtual void load_impl(QSqlQuery& query) override;
+    virtual QString databaseTableName() const override;
 
   private:
     QString _firstName;
