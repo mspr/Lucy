@@ -30,13 +30,16 @@ include(project/project.pri)
 SOURCES += main.cpp\
         mainwindow.cpp \
 		messagehandler.cpp \
-    databaseconnection.cpp
+    databaseconnection.cpp \
+    treecreationdialog.cpp
 
 HEADERS  += mainwindow.h \
 		messagehandler.h \
-    databaseconnection.h
+    databaseconnection.h \
+    treecreationdialog.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    treecreationdialog.ui
 
 RESOURCES += \
     resources.qrc

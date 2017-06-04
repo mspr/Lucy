@@ -5,6 +5,7 @@
 #include "output/outputwindow.h"
 #include "project/projectmanager.h"
 #include "project/project.h"
+#include "treecreationdialog.h"
 
 #include <QFileDialog>
 
@@ -64,7 +65,11 @@ void MainWindow::quit()
 
 void MainWindow::createTree()
 {
+  TreeCreationDialog treeCreationDialog(this);
+  if (treeCreationDialog.exec())
+  {
 
+  }
 }
 
 MainWindow::~MainWindow()
