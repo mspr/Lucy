@@ -6,7 +6,6 @@
 Person_p::Person_p(const int id)
   : DomainObject_p(id)
 {
-
 }
 
 void Person_p::load_impl()
@@ -21,7 +20,24 @@ void Person_p::load_impl()
   {
       while (query.next())
       {
-          _name = query.value(0).toString();
+          _firstName = query.value(0).toString();
+          _birthDate = query.value(1).toDate();
+          _lastName = query.value(2).toString();
       }
   }
+}
+
+void Person_p::setFirstName(const QString& firstName)
+{
+  _firstName = firstName;
+}
+
+void Person_p::setLastName(const QString& lastName)
+{
+  _lastName = lastName;
+}
+
+void Person_p::setBirthDate(const QDate& birthDate)
+{
+  _birthDate = birthDate;
 }

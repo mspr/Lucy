@@ -13,6 +13,9 @@ class TreeCreationDialog : public QDialog
     explicit TreeCreationDialog(QWidget* parent = nullptr);
     ~TreeCreationDialog();
 
+  public slots:
+    virtual int exec() override;
+
   private:
     Ui::TreeCreationDialog* _ui;
 };

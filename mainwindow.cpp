@@ -68,7 +68,6 @@ void MainWindow::createTree()
   TreeCreationDialog treeCreationDialog(this);
   if (treeCreationDialog.exec())
   {
-
   }
 }
 

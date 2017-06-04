@@ -6,6 +6,11 @@ DomainObject_p::DomainObject_p(const int id)
 {
 }
 
+DomainObject_p::DomainObject_p()
+  : _state(State::New)
+{
+}
+
 DomainObject_p::~DomainObject_p()
 {
 }

@@ -1,11 +1,16 @@
 #ifndef PERSON_H
 #define PERSON_H
 
+#include "domainobject.h"
 
-class Person
+class Person_p;
+
+class Person : public DomainObject
 {
+  DECLARE_PIMPL(Person)
+
   public:
-    Person();
+    Person(const QString& firstName, const QString& lastName, const QDate& birthDate);
 };
 
 #endif // PERSON_H
