@@ -23,19 +23,34 @@ Project::~Project()
 void Project::add(Tree* tree)
 {
   _trees.append(tree);
-  _objectsToAdd.append(tree);
+
+  if (tree->id() == -1)
+    _objectsToAdd.append(tree);
+
+  emit treeAdded(tree->droid());
+}
+
+Tree* Project::tree(QUuid droid) const
+{
+  Tree* treeFound = nullptr;
+
+  for (int i=0; i<_trees.count(); ++i)
+  {
+    Tree* tree = _trees.at(i);
+    if (tree->droid() == droid)
+    {
+      treeFound = tree;
+      break;
+    }
+  }
+
+  return treeFound;
 }
 
 void Project::add(Person* person)
 {
-  _objectsToAdd.append(person);
-}
-
-void Project::addTree(int treeId)
-{
-  Tree* tree = new Tree(treeId);
-  _trees.append(tree);
-  _objectsToAdd.append(tree);
+  if (person->id() == -1)
+    _objectsToAdd.append(person);
 }
 
 void Project::setCurrentTree(int id)

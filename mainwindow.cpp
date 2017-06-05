@@ -22,6 +22,13 @@ MainWindow::MainWindow(QWidget* parent)
 
   OutputWindow* outputWindow = new OutputWindow(this);
   addDockWidget(Qt::BottomDockWidgetArea, outputWindow);
+
+  setupSignalSlotConnections();
+}
+
+void MainWindow::setupSignalSlotConnections()
+{
+  connect(ProjectManager::getInstance(), ProjectManager::projectOpen, this, MainWindow::onProjectOpen);
 }
 
 void MainWindow::newProject()
@@ -71,6 +78,29 @@ void MainWindow::createTree()
   if (treeCreationDialog.exec())
   {
   }
+}
+
+void MainWindow::onProjectOpen()
+{
+  _ui->actionCreateTree->setEnabled(true);
+
+  QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
+  connect(currentProject.data(), Project::treeAdded, this, MainWindow::onTreeAdded);
+}
+
+void MainWindow::onTreeAdded(QUuid droid)
+{
+  QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
+  Tree* treeAdded = currentProject->tree(droid);
+
+  Q_ASSERT(treeAdded != nullptr);
+
+  FamilyTreeView* familyTreeView = new FamilyTreeView();
+  FamilyTreeScene* familyTreeScene = new FamilyTreeScene(QRectF(-10000, -10000, 20000, 20000), familyTreeView);
+  familyTreeView->setScene(familyTreeScene);
+  familyTreeView->setSceneRect(QRectF(-1000, -1000, 2000, 2000));
+
+  _treeTabWidget->addTab(familyTreeView, treeAdded->name());
 }
 
 MainWindow::~MainWindow()

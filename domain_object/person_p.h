@@ -9,6 +9,7 @@ class Person_p : public DomainObject_p
 {
   public:
     Person_p(const int id);
+    Person_p();
 
     void setFirstName(const QString& firstName);
     void setLastName(const QString& lastName);

@@ -2,14 +2,19 @@
 
 #include <QSqlQuery>
 #include <QVariant>
+#include <QSqlError>
+#include <QDebug>
 
 DomainObject_p::DomainObject_p(const int id)
-  : _id(id),
-    _isLoaded(false)
+  : _id(id)
+  , _droid(QUuid::createUuid())
+  , _isLoaded(false)
 {
 }
 
 DomainObject_p::DomainObject_p()
+  : _id(-1)
+  , _droid(QUuid::createUuid())
 {
 }
 
@@ -17,9 +22,19 @@ DomainObject_p::~DomainObject_p()
 {
 }
 
+QUuid DomainObject_p::droid() const
+{
+  return _droid;
+}
+
+int DomainObject_p::id() const
+{
+  return _id;
+}
+
 void DomainObject_p::tryLoad()
 {
-  if (!_isLoaded)
+  if (!_isLoaded && _id != -1)
   {
     QString queryStr = "SELECT * FROM public.\"" + databaseTableName() + "\" WHERE \"Id\" = :id";
 
@@ -35,6 +50,8 @@ void DomainObject_p::tryLoad()
     }
     else
     {
+      const QSqlError sqlError = query.lastError();
+      qCritical() << "Fail to select data from " << databaseTableName() << " table from database:" << sqlError.text();
     }
   }
 }
@@ -47,5 +64,9 @@ void DomainObject_p::deleteFromDatabase()
   query.prepare(queryStr);
   query.bindValue(":id", QVariant::fromValue(_id));
 
-  query.exec();
+  if (!query.exec())
+  {
+    const QSqlError sqlError = query.lastError();
+    qCritical() << "Fail to delete " << databaseTableName() << " " << _id << " from database :" << sqlError.text();
+  }
 }

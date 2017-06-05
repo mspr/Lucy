@@ -51,9 +51,11 @@ int TreeCreationDialog::exec()
 //    }
 
     QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
+    Q_ASSERT(!currentProject.isNull());
+
     Person* person = new Person(firstName, lastName, birthDate);
     currentProject->add(person);
-    Tree* tree = new Tree(treeName);
+    Tree* tree = new Tree(treeName, person);
     currentProject->add(tree);
   }
 

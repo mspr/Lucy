@@ -105,6 +105,9 @@
    </property>
   </action>
   <action name="actionCreateTree">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="resources.qrc">
      <normaloff>:/images/tree.png</normaloff>:/images/tree.png</iconset>

@@ -2,9 +2,16 @@
 
 #include <QSqlQuery>
 #include <QVariant>
+#include <QSqlError>
+#include <QDebug>
 
 Person_p::Person_p(const int id)
   : DomainObject_p(id)
+{
+}
+
+Person_p::Person_p()
+  : DomainObject_p()
 {
 }
 
@@ -25,7 +32,24 @@ QString Person_p::databaseTableName() const
 
 void Person_p::insertIntoDatabase()
 {
+  QString queryStr = "INSERT INTO public.\"Person\" (\"FirstName\", \"BirthDate\", \"LastName\") VALUES (:firstName, :birthDate, :lastName);";
 
+  QSqlQuery query;
+  query.prepare(queryStr);
+  query.bindValue(":firstName", QVariant::fromValue(_firstName));
+  query.bindValue(":lastName", QVariant::fromValue(_lastName));
+  query.bindValue(":birthDate", QVariant::fromValue(_birthDate));
+
+  if (query.exec())
+  {
+    _id = query.lastInsertId().toInt();
+    _isLoaded = true;
+  }
+  else
+  {
+    const QSqlError sqlError = query.lastError();
+    qCritical() << "Fail to insert Person into database:" << sqlError.text();
+  }
 }
 
 void Person_p::updateInDatabase()

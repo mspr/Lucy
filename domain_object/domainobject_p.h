@@ -2,6 +2,7 @@
 #define DOMAINOBJECT_P_H
 
 #include <QString>
+#include <QUuid>
 
 class QSqlQuery;
 
@@ -14,6 +15,9 @@ class DomainObject_p
 
     void tryLoad();
 
+    QUuid droid() const;
+    int id() const;
+
     virtual void deleteFromDatabase();
     virtual void updateInDatabase() = 0;
     virtual void insertIntoDatabase() = 0;
@@ -24,6 +28,7 @@ class DomainObject_p
 
   protected:
     int _id;
+    QUuid _droid;
     bool _isLoaded;
 };
 

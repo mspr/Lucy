@@ -2,26 +2,32 @@
 #define PROJECT_H
 
 #include <QList>
+#include <QUuid>
 
 class Person;
 class Tree;
 class DomainObject;
 
-class Project
+class Project : public QObject
 {
+  Q_OBJECT
+
   public:
     Project();
     ~Project();
 
     void add(Tree* tree);
     void add(Person* person);
-    void addTree(int treeId);
     void setCurrentTree(int id);
 
     QList<Tree*> trees() const;
     int currentTree() const;
+    Tree* tree(QUuid droid) const;
 
     void commit();
+
+  signals:
+    void treeAdded(QUuid droid);
 
   private:
     QList<Tree*> _trees;

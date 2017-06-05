@@ -3,6 +3,8 @@
 
 #include "domainobject.h"
 
+#include <QDate>
+
 class Person_p;
 
 class Person : public DomainObject

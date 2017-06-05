@@ -3,12 +3,17 @@
 
 #include "domainobject_p.h"
 
+class Person;
+
 class Tree_p : public DomainObject_p
 {
   public:
     Tree_p(const int id);
+    Tree_p();
 
     void setName(const QString& name);
+    void setReference(Person* person);
+
     QString name() const;
 
     virtual void insertIntoDatabase();
@@ -20,6 +25,7 @@ class Tree_p : public DomainObject_p
 
   private:
     int _rootId;
+    Person* _reference;
     QString _name;
 
 };

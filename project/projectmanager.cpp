@@ -33,6 +33,8 @@ void ProjectManager::openProject(const QString& projectFileName)
   Q_ASSERT(QFile::exists(projectFileName));
 
   _currentProject = ProjectXmlReader::load(projectFileName);
+  if (!_currentProject.isNull())
+    emit projectOpen();
 }
 
 QSharedPointer<Project> ProjectManager::currentProject() const

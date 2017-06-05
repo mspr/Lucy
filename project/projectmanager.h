@@ -5,8 +5,10 @@
 
 class Project;
 
-class ProjectManager
+class ProjectManager : public QObject
 {
+  Q_OBJECT
+
   public:
     static ProjectManager* getInstance();
     static void kill();
@@ -14,6 +16,9 @@ class ProjectManager
     void openProject(const QString& projectFileName);
 
     QSharedPointer<Project> currentProject() const;
+
+  signals:
+    void projectOpen();
 
   private:
     ProjectManager();
