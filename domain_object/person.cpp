@@ -4,9 +4,6 @@
 DEFINE_PIMPL(Person)
 
 Person::Person(const QString& firstName, const QString& lastName, const QDate& birthDate)
-  : Person()
+  : _pimpl(new Person_p(firstName, lastName, birthDate))
 {
-  _pimpl->setFirstName(firstName);
-  _pimpl->setLastName(lastName);
-  _pimpl->setBirthDate(birthDate);
 }

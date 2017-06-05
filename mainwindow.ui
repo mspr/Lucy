@@ -30,6 +30,9 @@
     <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
+    <addaction name="actionSaveAs"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuTree">
     <property name="title">
@@ -50,6 +53,7 @@
    <addaction name="actionNew"/>
    <addaction name="actionOpen"/>
    <addaction name="actionSave"/>
+   <addaction name="actionSaveAs"/>
    <addaction name="separator"/>
    <addaction name="actionQuit"/>
    <addaction name="separator"/>
@@ -117,6 +121,15 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+T</string>
+   </property>
+  </action>
+  <action name="actionSaveAs">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/saveAs.png</normaloff>:/images/saveAs.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save As</string>
    </property>
   </action>
  </widget>
@@ -205,6 +218,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionSaveAs</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>saveProjectAs()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>newProject()</slot>
@@ -212,5 +241,6 @@
   <slot>saveProject()</slot>
   <slot>quit()</slot>
   <slot>createTree()</slot>
+  <slot>saveProjectAs()</slot>
  </slots>
 </ui>

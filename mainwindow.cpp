@@ -8,6 +8,8 @@
 #include "treecreationdialog.h"
 
 #include <QFileDialog>
+#include <QMessageBox>
+#include <QDebug>
 
 using namespace Output;
 
@@ -33,7 +35,26 @@ void MainWindow::setupSignalSlotConnections()
 
 void MainWindow::newProject()
 {
-
+  QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
+  if (!currentProject.isNull())
+  {
+    const int res = QMessageBox::warning(this,
+                                         "Project open with changes",
+                                         "A project is already open and has been modified. Do you want to save changes before closing it ?",
+                                         QMessageBox::SaveAll,
+                                         QMessageBox::Ignore,
+                                         QMessageBox::Cancel);
+    if (res & QMessageBox::SaveAll)
+    {
+      saveProject();
+    }
+    else if (res & QMessageBox::Ignore)
+    {
+    }
+    else
+    {
+    }
+  }
 }
 
 void MainWindow::openProject()
@@ -63,8 +84,44 @@ void MainWindow::openProject()
 
 void MainWindow::saveProject()
 {
+//  const filename = QFileDialog::getSaveFileName(this,
+//                                     tr("Save Xml"), ".",
+//                                     tr("Xml files (*.xml)"));
+
+//  QFile file(filename);
+//  file.open(QIODevice::WriteOnly);
+
+//  QXmlStreamWriter xmlWriter(&file);
+//  xmlWriter.setAutoFormatting(true);
+//  xmlWriter.writeStartDocument();
+
+//  xmlWriter.writeStartElement("LAMPS");
+
+//  xmlWriter.writeStartElement("LIGHT1");
+//  xmlWriter.writeTextElement("State", ui.pushButton1->isChecked()?"Off":"On" );
+//  xmlWriter.writeTextElement("Room",ui.comboBox1->currentText());
+//  xmlWriter.writeTextElement("Potencial",QString::number(ui.spinBox1->value()));
+//  xmlWriter.writeEndElement();
+//   ...
+//  xmlWriter.writeStartElement("LIGHT4");
+//  xmlWriter.writeTextElement("State", ui.pushButton4->isChecked()?"Off":"On" );
+//  xmlWriter.writeTextElement("Room",ui.comboBox4->currentText());
+//  xmlWriter.writeTextElement("Potencial",QString::number(ui.spinBox4->value()));
+//  xmlWriter.writeEndElement();
+//  xmlWriter.writeEndElement();
+//  xmlWriter.writeEndDocument();
+
+//  file.close();
+//  ShowXmlOnScreen();
+//  statusBar()->showMessage(tr("Xml Saved"));
+
   QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
   currentProject->commit();
+}
+
+void MainWindow::saveProjectAs()
+{
+
 }
 
 void MainWindow::quit()

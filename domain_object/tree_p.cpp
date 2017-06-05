@@ -12,9 +12,12 @@ Tree_p::Tree_p(const int id)
 {
 }
 
-Tree_p::Tree_p()
+Tree_p::Tree_p(const QString& name, Person* reference)
   : DomainObject_p()
+  , _name(name)
+  , _reference(reference)
 {
+  Q_ASSERT(reference != nullptr);
 }
 
 void Tree_p::load_impl(QSqlQuery& query)
@@ -22,7 +25,6 @@ void Tree_p::load_impl(QSqlQuery& query)
     while (query.next())
     {
         _name = query.value(0).toString();
-        _rootId = query.value(1).toInt();
     }
 }
 
@@ -66,10 +68,5 @@ QString Tree_p::name() const
 void Tree_p::setName(const QString& name)
 {
   _name = name;
-}
-
-void Tree_p::setReference(Person* reference)
-{
-  Q_ASSERT(reference != nullptr);
-  _reference = reference;
+  setDirty();
 }

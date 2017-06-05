@@ -9,12 +9,15 @@ DomainObject_p::DomainObject_p(const int id)
   : _id(id)
   , _droid(QUuid::createUuid())
   , _isLoaded(false)
+  , _isDirty(false)
 {
 }
 
 DomainObject_p::DomainObject_p()
   : _id(-1)
   , _droid(QUuid::createUuid())
+  , _isLoaded(false)
+  , _isDirty(false)
 {
 }
 
@@ -69,4 +72,9 @@ void DomainObject_p::deleteFromDatabase()
     const QSqlError sqlError = query.lastError();
     qCritical() << "Fail to delete " << databaseTableName() << " " << _id << " from database :" << sqlError.text();
   }
+}
+
+void DomainObject_p::setDirty()
+{
+  _isDirty = true;
 }

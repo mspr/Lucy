@@ -9,11 +9,9 @@ class Tree_p : public DomainObject_p
 {
   public:
     Tree_p(const int id);
-    Tree_p();
+    Tree_p(const QString& name, Person* reference);
 
     void setName(const QString& name);
-    void setReference(Person* person);
-
     QString name() const;
 
     virtual void insertIntoDatabase();
@@ -24,10 +22,8 @@ class Tree_p : public DomainObject_p
     virtual QString databaseTableName() const override;
 
   private:
-    int _rootId;
-    Person* _reference;
     QString _name;
-
+    Person* _reference;
 };
 
 #endif // TREE_P_H

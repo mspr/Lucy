@@ -16,6 +16,7 @@ class Tree : public DomainObject
     Tree(const QString& name, Person* reference);
 
   public:
+    void setName(const QString& name);
     QString name() const;
 };
 

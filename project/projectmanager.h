@@ -14,6 +14,7 @@ class ProjectManager : public QObject
     static void kill();
 
     void openProject(const QString& projectFileName);
+    void createNewProject();
 
     QSharedPointer<Project> currentProject() const;
 

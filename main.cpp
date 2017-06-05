@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "messagehandler.h"
 #include "databaseconnection.h"
+#include "project/projectmanager.h"
 
 #include <QApplication>
 
@@ -15,5 +16,9 @@ int main(int argc, char* argv[])
   MainWindow w;
   w.show();
 
-  return a.exec();
+  const int res = a.exec();
+
+  ProjectManager::kill();
+
+  return res;
 }

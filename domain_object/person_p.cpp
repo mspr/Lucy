@@ -10,8 +10,11 @@ Person_p::Person_p(const int id)
 {
 }
 
-Person_p::Person_p()
+Person_p::Person_p(const QString& firstName, const QString& lastName, const QDate& birthDate)
   : DomainObject_p()
+  , _firstName(firstName)
+  , _lastName(lastName)
+  , _birthDate(birthDate)
 {
 }
 
@@ -60,14 +63,17 @@ void Person_p::updateInDatabase()
 void Person_p::setFirstName(const QString& firstName)
 {
   _firstName = firstName;
+  setDirty();
 }
 
 void Person_p::setLastName(const QString& lastName)
 {
   _lastName = lastName;
+  setDirty();
 }
 
 void Person_p::setBirthDate(const QDate& birthDate)
 {
   _birthDate = birthDate;
+  setDirty();
 }

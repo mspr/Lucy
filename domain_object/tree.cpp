@@ -4,10 +4,13 @@
 DEFINE_PIMPL(Tree)
 
 Tree::Tree(const QString& name, Person* reference)
-  : Tree()
+  : _pimpl(new Tree_p(name, reference))
 {
-  _pimpl->setName(name);
-  _pimpl->setReference(reference);
+}
+
+void Tree::setName(const QString& name)
+{
+  d()->setName(name);
 }
 
 QString Tree::name() const

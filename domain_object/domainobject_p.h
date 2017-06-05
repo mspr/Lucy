@@ -26,10 +26,13 @@ class DomainObject_p
     virtual void load_impl(QSqlQuery& query) = 0;
     virtual QString databaseTableName() const = 0;
 
+    void setDirty();
+
   protected:
     int _id;
     QUuid _droid;
     bool _isLoaded;
+    bool _isDirty;
 };
 
 #endif // DOMAINOBJECT_P_H

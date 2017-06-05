@@ -21,6 +21,7 @@ class MainWindow : public QMainWindow
     void newProject();
     void openProject();
     void saveProject();
+    void saveProjectAs();
     void quit();
     void createTree();
     void onProjectOpen();

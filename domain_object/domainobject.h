@@ -9,7 +9,6 @@ class DomainObject_p;
 #define DECLARE_PIMPL(T)                                \
   public:                                               \
     T(const int id);                                    \
-    T();                                                \
     ~T();                                               \
                                                         \
     int id() const;                                     \
@@ -22,7 +21,6 @@ class DomainObject_p;
 
 #define DEFINE_PIMPL(T)                           \
   T::T(const int id) : _pimpl(new T##_p(id)) {};  \
-  T::T() : _pimpl(new T##_p()) {};                \
   T::~T() {}                                      \
   int T::id() const                               \
   {                                               \

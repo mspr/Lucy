@@ -1,8 +1,9 @@
 #ifndef PROJECTXMLWRITER_H
 #define PROJECTXMLWRITER_H
 
+#include <QXmlStreamWriter>
 
-class ProjectXmlWriter
+class ProjectXmlWriter : QXmlStreamWriter
 {
   public:
     ProjectXmlWriter();
