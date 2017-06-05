@@ -1,13 +1,16 @@
 #ifndef DOMAINOBJECT_P_H
 #define DOMAINOBJECT_P_H
 
+#include <QObject>
 #include <QString>
 #include <QUuid>
 
 class QSqlQuery;
 
-class DomainObject_p
+class DomainObject_p : public QObject
 {
+  Q_OBJECT
+
   public:
     DomainObject_p();
     DomainObject_p(const int id);
@@ -21,6 +24,9 @@ class DomainObject_p
     virtual void deleteFromDatabase();
     virtual void updateInDatabase() = 0;
     virtual void insertIntoDatabase() = 0;
+
+  signals:
+    void dirty();
 
   protected:
     virtual void load_impl(QSqlQuery& query) = 0;

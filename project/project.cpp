@@ -5,6 +5,7 @@
 #include "domain_object/tree.h"
 
 Project::Project()
+  : _currentTreeId(-1)
 {
 }
 
@@ -22,12 +23,49 @@ Project::~Project()
 
 void Project::add(Tree* tree)
 {
+  Q_ASSERT(tree != nullptr);
+
   _trees.append(tree);
 
-  if (tree->id() == -1)
-    _objectsToAdd.append(tree);
+  add_impl(tree);
 
   emit treeAdded(tree->droid());
+}
+
+void Project::add(Person* person)
+{
+  Q_ASSERT(person != nullptr);
+
+  add_impl(person);
+}
+
+void Project::add_impl(DomainObject* object)
+{
+  Q_ASSERT(object != nullptr);
+
+  if (object->id() == -1)
+  {
+    _objectsToAdd.append(object);
+    emit updated();
+  }
+  else
+  {
+    connect(object->getD(), DomainObject_p::dirty, this, Project::updated);
+  }
+}
+
+void Project::setCurrentTree(int id)
+{
+  if (_currentTreeId != id)
+  {
+    _currentTreeId = id;
+    emit updated();
+  }
+}
+
+int Project::currentTree() const
+{
+  return _currentTreeId;
 }
 
 Tree* Project::tree(QUuid droid) const
@@ -47,22 +85,6 @@ Tree* Project::tree(QUuid droid) const
   return treeFound;
 }
 
-void Project::add(Person* person)
-{
-  if (person->id() == -1)
-    _objectsToAdd.append(person);
-}
-
-void Project::setCurrentTree(int id)
-{
-  _currentTreeId = id;
-}
-
-int Project::currentTree() const
-{
-  return _currentTreeId;
-}
-
 QList<Tree*> Project::trees() const
 {
   return _trees;
@@ -71,17 +93,11 @@ QList<Tree*> Project::trees() const
 void Project::commit()
 {
   for (int i=0; i<_objectsToDelete.count(); ++i)
-  {
     _objectsToDelete.at(i)->getD()->deleteFromDatabase();
-  }
 
   for (int i=0; i<_objectsToUpdate.count(); ++i)
-  {
     _objectsToUpdate.at(i)->getD()->updateInDatabase();
-  }
 
   for (int i=0; i<_objectsToAdd.count(); ++i)
-  {
     _objectsToAdd.at(i)->getD()->insertIntoDatabase();
-  }
 }

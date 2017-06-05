@@ -77,4 +77,5 @@ void DomainObject_p::deleteFromDatabase()
 void DomainObject_p::setDirty()
 {
   _isDirty = true;
+  emit dirty();
 }

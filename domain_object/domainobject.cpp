@@ -13,3 +13,8 @@ QUuid DomainObject::droid() const
 {
   return getD()->droid();
 }
+
+int DomainObject::id() const
+{
+  return getD()->id();
+}

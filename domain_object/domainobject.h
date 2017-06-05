@@ -11,8 +11,6 @@ class DomainObject_p;
     T(const int id);                                    \
     ~T();                                               \
                                                         \
-    int id() const;                                     \
-                                                        \
     T##_p* d() const;                                   \
     virtual DomainObject_p* getD() const override;      \
                                                         \
@@ -22,10 +20,6 @@ class DomainObject_p;
 #define DEFINE_PIMPL(T)                           \
   T::T(const int id) : _pimpl(new T##_p(id)) {};  \
   T::~T() {}                                      \
-  int T::id() const                               \
-  {                                               \
-    return _pimpl.data()->id();                   \
-  }                                               \
   T##_p* T::d() const                             \
   {                                               \
     _pimpl.data()->tryLoad();                     \
@@ -44,6 +38,7 @@ class DomainObject
     virtual ~DomainObject();
 
     QUuid droid() const;
+    int id() const;
 
     virtual DomainObject_p* getD() const = 0;
 };

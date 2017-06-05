@@ -28,6 +28,10 @@ class Project : public QObject
 
   signals:
     void treeAdded(QUuid droid);
+    void updated();
+
+  private:
+    void add_impl(DomainObject* object);
 
   private:
     QList<Tree*> _trees;

@@ -143,6 +143,7 @@ void MainWindow::onProjectOpen()
 
   QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
   connect(currentProject.data(), Project::treeAdded, this, MainWindow::onTreeAdded);
+  connect(currentProject.data(), Project::updated, this, MainWindow::onProjectUpdated);
 }
 
 void MainWindow::onTreeAdded(QUuid droid)
@@ -158,6 +159,11 @@ void MainWindow::onTreeAdded(QUuid droid)
   familyTreeView->setSceneRect(QRectF(-1000, -1000, 2000, 2000));
 
   _treeTabWidget->addTab(familyTreeView, treeAdded->name());
+}
+
+void MainWindow::onProjectUpdated()
+{
+  setWindowModified(true);
 }
 
 MainWindow::~MainWindow()
