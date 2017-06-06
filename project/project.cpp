@@ -4,8 +4,9 @@
 #include "domain_object/person.h"
 #include "domain_object/tree.h"
 
-Project::Project()
-  : _currentTreeId(-1)
+Project::Project(const QString& name)
+  : _name(name)
+  , _currentTreeId(-1)
 {
 }
 
@@ -19,6 +20,11 @@ Project::~Project()
 
   qDeleteAll(_objectsToAdd.begin(), _objectsToAdd.end());
   _objectsToAdd.clear();
+}
+
+QString Project::name() const
+{
+  return _name;
 }
 
 void Project::add(Tree* tree)
@@ -100,4 +106,6 @@ void Project::commit()
 
   for (int i=0; i<_objectsToAdd.count(); ++i)
     _objectsToAdd.at(i)->getD()->insertIntoDatabase();
+
+  emit upToDate();
 }

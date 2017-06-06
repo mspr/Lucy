@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget* parent)
   , _ui(new Ui::MainWindow)
 {
   _ui->setupUi(this);
+//  setWindowState(Qt::WindowFullScreen);
 
   _treeTabWidget = new QTabWidget();
   setCentralWidget(_treeTabWidget);
@@ -144,6 +145,9 @@ void MainWindow::onProjectOpen()
   QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
   connect(currentProject.data(), Project::treeAdded, this, MainWindow::onTreeAdded);
   connect(currentProject.data(), Project::updated, this, MainWindow::onProjectUpdated);
+  connect(currentProject.data(), Project::upToDate, this, MainWindow::onProjectUpToDate);
+
+  setWindowTitle(currentProject.data()->name() + "[*]");
 }
 
 void MainWindow::onTreeAdded(QUuid droid)
@@ -164,6 +168,11 @@ void MainWindow::onTreeAdded(QUuid droid)
 void MainWindow::onProjectUpdated()
 {
   setWindowModified(true);
+}
+
+void MainWindow::onProjectUpToDate()
+{
+  setWindowModified(false);
 }
 
 MainWindow::~MainWindow()

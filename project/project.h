@@ -13,8 +13,10 @@ class Project : public QObject
   Q_OBJECT
 
   public:
-    Project();
+    Project(const QString& name);
     ~Project();
+
+    QString name() const;
 
     void add(Tree* tree);
     void add(Person* person);
@@ -29,11 +31,13 @@ class Project : public QObject
   signals:
     void treeAdded(QUuid droid);
     void updated();
+    void upToDate();
 
   private:
     void add_impl(DomainObject* object);
 
   private:
+    QString _name;
     QList<Tree*> _trees;
     QList<DomainObject*> _objectsToDelete;
     QList<DomainObject*> _objectsToAdd;

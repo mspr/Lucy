@@ -26,12 +26,13 @@
     }
     else
     {
-      project.reset(new Project());
+      QDomElement projectElem = doc.documentElement();
 
-      QDomElement docElem = doc.documentElement();
+      const QString projectName = projectElem.attribute("name");
+      project.reset(new Project(projectName));
 
-      loadTrees(docElem, *project);
-      loadCurrentTree(docElem, *project);
+      loadTrees(projectElem, *project);
+      loadCurrentTree(projectElem, *project);
 
       file.close();
     }

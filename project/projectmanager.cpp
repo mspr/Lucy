@@ -41,7 +41,7 @@ void ProjectManager::createNewProject()
 {
   Q_ASSERT(_currentProject.isNull());
 
-  _currentProject.reset(new Project());
+//  _currentProject.reset(new Project());
 }
 
 QSharedPointer<Project> ProjectManager::currentProject() const
