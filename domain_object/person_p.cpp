@@ -18,6 +18,21 @@ Person_p::Person_p(const QString& firstName, const QString& lastName, const QDat
 {
 }
 
+QString Person_p::firstName() const
+{
+  return _firstName;
+}
+
+QString Person_p::lastName() const
+{
+  return _lastName;
+}
+
+QDate Person_p::birthDate() const
+{
+  return _birthDate;
+}
+
 void Person_p::load_impl(QSqlQuery& query)
 {
     while (query.next())

@@ -11,6 +11,10 @@ class Person_p : public DomainObject_p
     Person_p(const int id);
     Person_p(const QString& firstName, const QString& lastName, const QDate& birthDate);
 
+    QString firstName() const;
+    QString lastName() const;
+    QDate birthDate() const;
+
     void setFirstName(const QString& firstName);
     void setLastName(const QString& lastName);
     void setBirthDate(const QDate& birthDate);

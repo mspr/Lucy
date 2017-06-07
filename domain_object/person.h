@@ -13,6 +13,10 @@ class Person : public DomainObject
 
   public:
     Person(const QString& firstName, const QString& lastName, const QDate& birthDate);
+
+    QString firstName() const;
+    QString lastName() const;
+    QDate birthDate() const;
 };
 
 #endif // PERSON_H

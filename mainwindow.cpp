@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget* parent)
   , _ui(new Ui::MainWindow)
 {
   _ui->setupUi(this);
-//  setWindowState(Qt::WindowFullScreen);
+  setWindowState(Qt::WindowMaximized);
 
   _treeTabWidget = new QTabWidget();
   setCentralWidget(_treeTabWidget);

@@ -14,6 +14,8 @@ class FamilyTreeScene : public QGraphicsScene
   public:
     FamilyTreeScene(const QRectF& sceneRect, QObject* parent = nullptr);
 
+    void createNodeView(Person* person, const QPointF& scenePos);
+
   protected:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent*) override;
 

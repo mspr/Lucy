@@ -1,5 +1,6 @@
 #include "familytreescene.h"
 #include "familytreenodeview.h"
+#include "domain_object/person.h"
 
 #include <QGraphicsSceneMouseEvent>
 #include <QDebug>
@@ -45,6 +46,22 @@ void FamilyTreeScene::ExtendTreeFromNode(QGraphicsItem* previousNode, Qt::MouseB
   _inclinationByTreeNode.insert(newTreeNode, angle);
 }
 
+void FamilyTreeScene::createNodeView(Person* person, const QPointF& scenePos)
+{
+  Q_ASSERT(person != nullptr);
+
+  QGraphicsItemGroup* personViewItem = new QGraphicsItemGroup();
+  personViewItem->setPos(scenePos);
+  addItem(personViewItem);
+
+  QGraphicsSimpleTextItem* personFirstNameViewItem = new QGraphicsSimpleTextItem(person->firstName(), personViewItem);
+  personViewItem->addToGroup(personFirstNameViewItem);
+  QGraphicsSimpleTextItem* personLastNameViewItem = new QGraphicsSimpleTextItem(person->lastName(), personViewItem);
+  personViewItem->addToGroup(personLastNameViewItem);
+  QGraphicsSimpleTextItem* personBirthDateViewItem = new QGraphicsSimpleTextItem(person->birthDate().toString(), personViewItem);
+  personViewItem->addToGroup(personBirthDateViewItem);
+}
+
 void FamilyTreeScene::mousePressEvent(QGraphicsSceneMouseEvent* e)
 {
   qDebug() << "FamilyTreeScene::mousePressEvent " << e->scenePos();
@@ -59,14 +76,20 @@ void FamilyTreeScene::mousePressEvent(QGraphicsSceneMouseEvent* e)
   }
   else if (e->button() == Qt::RightButton)
   {
-    FamilyTreeNodeView* treeNode = new FamilyTreeNodeView(e->scenePos(), 10);
-    addItem(treeNode);
 
-    _levelByTreeNode.insert(treeNode, 0);
-    _inclinationByTreeNode.insert(treeNode, 0.0);
+//    FamilyTreeNodeView* treeNode = new FamilyTreeNodeView(e->scenePos(), 50);
+//    qDebug() << "tree node view scene pos " << treeNode->scenePos();
+//    qDebug() << "tree node view pos " << treeNode->pos();
+//    qDebug() << "tree node view rect " << treeNode->boundingRect();
+//    addItem(treeNode);
+
+//    _levelByTreeNode.insert(treeNode, 0);
+//    _inclinationByTreeNode.insert(treeNode, 0.0);
 
 //    QGraphicsTextItem* graphicsTextItem = new QGraphicsTextItem("Coucou c'est moi", treeNode);
-//    graphicsTextItem->setPos(QPointF(5.0, 5.0));
-//    addItem(graphicsTextItem);
+//    qDebug() << "tree text view scene pos " << graphicsTextItem->scenePos();
+//    qDebug() << "tree text view pos " << graphicsTextItem->pos();
+    //graphicsTextItem->setPos(QPointF(5.0, 5.0));
+    //addItem(graphicsTextItem);
   }
 }
