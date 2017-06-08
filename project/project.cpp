@@ -6,7 +6,7 @@
 
 Project::Project(const QString& name)
   : _name(name)
-  , _currentTreeId(-1)
+  , _currentTree(nullptr)
 {
 }
 
@@ -62,16 +62,31 @@ void Project::add_impl(DomainObject* object)
 
 void Project::setCurrentTree(int id)
 {
-  if (_currentTreeId != id)
+//  Tree* currentTree = tree(droid);
+//  Q_ASSERT(currentTree != nullptr);
+
+//  if (_currentTree != currentTree)
+//  {
+//    _currentTreeId = currentTree;
+//    emit updated();
+//  }
+}
+
+void Project::setCurrentTree(QUuid droid)
+{
+  Tree* currentTree = tree(droid);
+  Q_ASSERT(currentTree != nullptr);
+
+  if (_currentTree != currentTree)
   {
-    _currentTreeId = id;
+    _currentTree = currentTree;
     emit updated();
   }
 }
 
-int Project::currentTree() const
+Tree* Project::currentTree() const
 {
-  return _currentTreeId;
+  return _currentTree;
 }
 
 Tree* Project::tree(QUuid droid) const

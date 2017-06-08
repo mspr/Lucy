@@ -20,10 +20,11 @@ class Project : public QObject
 
     void add(Tree* tree);
     void add(Person* person);
+    void setCurrentTree(QUuid droid);
     void setCurrentTree(int id);
 
     QList<Tree*> trees() const;
-    int currentTree() const;
+    Tree* currentTree() const;
     Tree* tree(QUuid droid) const;
 
     void commit();
@@ -42,7 +43,7 @@ class Project : public QObject
     QList<DomainObject*> _objectsToDelete;
     QList<DomainObject*> _objectsToAdd;
     QList<DomainObject*> _objectsToUpdate;
-    int _currentTreeId;
+    Tree* _currentTree;
 };
 
 #endif // PROJECT_H

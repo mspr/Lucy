@@ -6,9 +6,11 @@
 #include "project/projectmanager.h"
 #include "project/project.h"
 #include "treecreationdialog.h"
+#include "domain_object/tree.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QXmlStreamWriter>
 #include <QDebug>
 
 using namespace Output;
@@ -87,43 +89,50 @@ void MainWindow::openProject()
 
 void MainWindow::saveProject()
 {
-//  const filename = QFileDialog::getSaveFileName(this,
-//                                     tr("Save Xml"), ".",
-//                                     tr("Xml files (*.xml)"));
-
-//  QFile file(filename);
-//  file.open(QIODevice::WriteOnly);
-
-//  QXmlStreamWriter xmlWriter(&file);
-//  xmlWriter.setAutoFormatting(true);
-//  xmlWriter.writeStartDocument();
-
-//  xmlWriter.writeStartElement("LAMPS");
-
-//  xmlWriter.writeStartElement("LIGHT1");
-//  xmlWriter.writeTextElement("State", ui.pushButton1->isChecked()?"Off":"On" );
-//  xmlWriter.writeTextElement("Room",ui.comboBox1->currentText());
-//  xmlWriter.writeTextElement("Potencial",QString::number(ui.spinBox1->value()));
-//  xmlWriter.writeEndElement();
-//   ...
-//  xmlWriter.writeStartElement("LIGHT4");
-//  xmlWriter.writeTextElement("State", ui.pushButton4->isChecked()?"Off":"On" );
-//  xmlWriter.writeTextElement("Room",ui.comboBox4->currentText());
-//  xmlWriter.writeTextElement("Potencial",QString::number(ui.spinBox4->value()));
-//  xmlWriter.writeEndElement();
-//  xmlWriter.writeEndElement();
-//  xmlWriter.writeEndDocument();
-
-//  file.close();
-//  ShowXmlOnScreen();
-//  statusBar()->showMessage(tr("Xml Saved"));
-
   QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
+  Q_ASSERT(!currentProject.isNull());
+
+  const QString fileName = currentProject->name() + ".xml";
+  QFile file(fileName);
+  if (file.open(QIODevice::WriteOnly))
+  {
+    QXmlStreamWriter xmlWriter(&file);
+    xmlWriter.setAutoFormatting(true);
+
+    xmlWriter.writeStartDocument();
+
+    xmlWriter.writeStartElement("project");
+    xmlWriter.writeAttribute("name", currentProject->name());
+
+    for (int i=0; i<currentProject->trees().count(); ++i)
+    {
+      Tree* tree = currentProject->trees().at(i);
+      xmlWriter.writeStartElement("tree");
+      xmlWriter.writeAttribute("id", QString::number(tree->id()));
+      xmlWriter.writeEndElement();
+    }
+
+    xmlWriter.writeStartElement("current_tree");
+    xmlWriter.writeAttribute("id", QString::number(currentProject->currentTree()->id()));
+    xmlWriter.writeEndElement();
+
+    xmlWriter.writeEndDocument();
+
+    file.close();
+  }
+  else
+  {
+  }
+
   currentProject->commit();
 }
 
 void MainWindow::saveProjectAs()
 {
+  //  const filename = QFileDialog::getSaveFileName(this,
+  //                                     tr("Save Xml"), ".",
+  //                                     tr("Xml files (*.xml)"));
+
 
 }
 
