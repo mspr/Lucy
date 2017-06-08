@@ -65,6 +65,11 @@ QString Tree_p::name() const
   return _name;
 }
 
+Person* Tree_p::reference() const
+{
+  return _reference;
+}
+
 void Tree_p::setName(const QString& name)
 {
   _name = name;

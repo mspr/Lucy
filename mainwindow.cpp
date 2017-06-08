@@ -76,6 +76,8 @@ void MainWindow::openProject()
   {
     FamilyTreeView* familyTreeView = new FamilyTreeView();
     FamilyTreeScene* familyTreeScene = new FamilyTreeScene(QRectF(-10000, -10000, 20000, 20000), familyTreeView);
+    Person* reference = trees.at(i)->reference();
+    familyTreeScene->createNodeView(reference, QPointF(0, 0));
     familyTreeView->setScene(familyTreeScene);
     familyTreeView->setSceneRect(QRectF(-1000, -1000, 2000, 2000));
 

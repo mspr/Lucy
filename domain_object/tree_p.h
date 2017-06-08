@@ -11,8 +11,10 @@ class Tree_p : public DomainObject_p
     Tree_p(const int id);
     Tree_p(const QString& name, Person* reference);
 
-    void setName(const QString& name);
     QString name() const;
+    Person* reference() const;
+
+    void setName(const QString& name);
 
     virtual void insertIntoDatabase();
     virtual void updateInDatabase();

@@ -13,6 +13,11 @@ void Tree::setName(const QString& name)
   d()->setName(name);
 }
 
+Person* Tree::reference() const
+{
+  return d()->reference();
+}
+
 QString Tree::name() const
 {
   return d()->name();
