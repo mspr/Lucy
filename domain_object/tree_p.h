@@ -25,7 +25,7 @@ class Tree_p : public DomainObject_p
 
   private:
     QString _name;
-    Person* _reference;
+    QScopedPointer<Person> _reference;
 };
 
 #endif // TREE_P_H

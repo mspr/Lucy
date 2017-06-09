@@ -1,5 +1,6 @@
 #include "tree.h"
 #include "tree_p.h"
+#include "person.h"
 
 DEFINE_PIMPL(Tree)
 

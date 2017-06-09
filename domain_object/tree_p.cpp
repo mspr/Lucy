@@ -25,6 +25,8 @@ void Tree_p::load_impl(QSqlQuery& query)
     while (query.next())
     {
         _name = query.value(0).toString();
+        const int referenceId = query.value(0).toInt();
+        _reference.reset(new Person(referenceId));
     }
 }
 
@@ -67,7 +69,7 @@ QString Tree_p::name() const
 
 Person* Tree_p::reference() const
 {
-  return _reference;
+  return _reference.data();
 }
 
 void Tree_p::setName(const QString& name)

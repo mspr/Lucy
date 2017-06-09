@@ -69,21 +69,24 @@ void MainWindow::openProject()
                                                                "",
                                                                tr("Project Files (*.lcy)"));
 
-  ProjectManager::getInstance()->openProject(projectFileName);
-
-  QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
-  const QList<Tree*>& trees = currentProject->trees();
-
-  for (int i=0; i<trees.count(); ++i)
+  if (!projectFileName.isEmpty())
   {
-    FamilyTreeView* familyTreeView = new FamilyTreeView();
-    FamilyTreeScene* familyTreeScene = new FamilyTreeScene(QRectF(-10000, -10000, 20000, 20000), familyTreeView);
-    Person* reference = trees.at(i)->reference();
-    familyTreeScene->createNodeView(reference, QPointF(0, 0));
-    familyTreeView->setScene(familyTreeScene);
-    familyTreeView->setSceneRect(QRectF(-1000, -1000, 2000, 2000));
+    ProjectManager::getInstance()->openProject(projectFileName);
 
-    _treeTabWidget->addTab(familyTreeView, trees.at(i)->name());
+    QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
+    const QList<Tree*>& trees = currentProject->trees();
+
+    for (int i=0; i<trees.count(); ++i)
+    {
+      FamilyTreeView* familyTreeView = new FamilyTreeView();
+      FamilyTreeScene* familyTreeScene = new FamilyTreeScene(QRectF(-10000, -10000, 20000, 20000), familyTreeView);
+      Person* reference = trees.at(i)->reference();
+      familyTreeScene->createNodeView(reference, QPointF(0, 0));
+      familyTreeView->setScene(familyTreeScene);
+      familyTreeView->setSceneRect(QRectF(-1000, -1000, 2000, 2000));
+
+      _treeTabWidget->addTab(familyTreeView, trees.at(i)->name());
+    }
   }
 }
 
@@ -92,7 +95,7 @@ void MainWindow::saveProject()
   QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
   Q_ASSERT(!currentProject.isNull());
 
-  const QString fileName = currentProject->name() + ".xml";
+  const QString fileName = currentProject->name() + ".lcy";
   QFile file(fileName);
   if (file.open(QIODevice::WriteOnly))
   {
@@ -152,6 +155,8 @@ void MainWindow::createTree()
 void MainWindow::onProjectOpen()
 {
   _ui->actionCreateTree->setEnabled(true);
+  _ui->actionSave->setEnabled(true);
+  _ui->actionSaveAs->setEnabled(true);
 
   QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
   connect(currentProject.data(), Project::treeAdded, this, MainWindow::onTreeAdded);

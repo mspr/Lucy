@@ -62,14 +62,14 @@ void Project::add_impl(DomainObject* object)
 
 void Project::setCurrentTree(int id)
 {
-//  Tree* currentTree = tree(droid);
-//  Q_ASSERT(currentTree != nullptr);
+  Tree* currentTree = tree(id);
+  Q_ASSERT(currentTree != nullptr);
 
-//  if (_currentTree != currentTree)
-//  {
-//    _currentTreeId = currentTree;
-//    emit updated();
-//  }
+  if (_currentTree != currentTree)
+  {
+    _currentTree = currentTree;
+    emit updated();
+  }
 }
 
 void Project::setCurrentTree(QUuid droid)
@@ -97,6 +97,23 @@ Tree* Project::tree(QUuid droid) const
   {
     Tree* tree = _trees.at(i);
     if (tree->droid() == droid)
+    {
+      treeFound = tree;
+      break;
+    }
+  }
+
+  return treeFound;
+}
+
+Tree* Project::tree(const int id) const
+{
+  Tree* treeFound = nullptr;
+
+  for (int i=0; i<_trees.count(); ++i)
+  {
+    Tree* tree = _trees.at(i);
+    if (tree->id() == id)
     {
       treeFound = tree;
       break;

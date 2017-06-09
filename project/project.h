@@ -26,6 +26,7 @@ class Project : public QObject
     QList<Tree*> trees() const;
     Tree* currentTree() const;
     Tree* tree(QUuid droid) const;
+    Tree* tree(const int id) const;
 
     void commit();
 
