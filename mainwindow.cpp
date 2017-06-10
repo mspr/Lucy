@@ -11,6 +11,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QXmlStreamWriter>
+#include <QInputDialog>
 #include <QDebug>
 
 using namespace Output;
@@ -50,14 +51,29 @@ void MainWindow::newProject()
     if (res & QMessageBox::SaveAll)
     {
       saveProject();
+      ProjectManager::getInstance()->closeProject();
     }
     else if (res & QMessageBox::Ignore)
     {
+      ProjectManager::getInstance()->closeProject();
     }
     else
     {
+      return;
     }
   }
+
+  QInputDialog* dialog = new QInputDialog(this);
+  dialog->setLabelText("Project name:");
+  dialog->setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+
+  if (!dialog->exec())
+    return;
+
+  const QString& projectName = dialog->textValue();
+
+  if (!projectName.isEmpty())
+    ProjectManager::getInstance()->createNewProject(projectName);
 }
 
 void MainWindow::openProject()

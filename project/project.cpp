@@ -11,6 +11,12 @@ Project::Project(const QString& fileName, const QString& name)
 {
 }
 
+Project::Project(const QString& name)
+  : _name(name)
+  , _currentTree(nullptr)
+{
+}
+
 Project::~Project()
 {
   qDeleteAll(_objectsToDelete.begin(), _objectsToDelete.end());

@@ -14,6 +14,7 @@ class Project : public QObject
 
   public:
     Project(const QString& fileName, const QString& name);
+    Project(const QString& name);
     ~Project();
 
     QString fileName() const;

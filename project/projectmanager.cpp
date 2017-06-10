@@ -37,11 +37,20 @@ void ProjectManager::openProject(const QString& projectFileName)
     emit projectOpen();
 }
 
-void ProjectManager::createNewProject()
+void ProjectManager::closeProject()
+{
+  Q_ASSERT(!_currentProject.isNull());
+
+  _currentProject.reset();
+}
+
+QSharedPointer<Project> ProjectManager::createNewProject(const QString& projectName)
 {
   Q_ASSERT(_currentProject.isNull());
 
-//  _currentProject.reset(new Project());
+  _currentProject.reset(new Project(projectName));
+
+  return _currentProject;
 }
 
 QSharedPointer<Project> ProjectManager::currentProject() const
