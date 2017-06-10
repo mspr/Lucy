@@ -1,13 +1,21 @@
 #include "familytreeview.h"
+#include "familytreescene.h"
 
 #include <QApplication>
 #include <QGraphicsItem>
 #include <QMouseEvent>
 #include <QDebug>
 
-FamilyTreeView::FamilyTreeView(QWidget* parent)
+FamilyTreeView::FamilyTreeView(Tree* tree, QWidget* parent)
   : QGraphicsView(parent)
 {
+  Q_ASSERT(tree != nullptr);
+
+  FamilyTreeScene* familyTreeScene = new FamilyTreeScene(QRectF(-10000, -10000, 20000, 20000), this);
+  familyTreeScene->createNodeView(tree->reference(), QPointF(0, 0));
+  setScene(familyTreeScene);
+  setSceneRect(QRectF(-1000, -1000, 2000, 2000));
+
   setMouseTracking(true);
 }
 

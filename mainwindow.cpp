@@ -78,14 +78,7 @@ void MainWindow::openProject()
 
     for (int i=0; i<trees.count(); ++i)
     {
-      // TODO memory leak if reference not loaded correctly on Scene and View!!
-      FamilyTreeView* familyTreeView = new FamilyTreeView();
-      FamilyTreeScene* familyTreeScene = new FamilyTreeScene(QRectF(-10000, -10000, 20000, 20000), familyTreeView);
-      Person* reference = trees.at(i)->reference();
-      familyTreeScene->createNodeView(reference, QPointF(0, 0));
-      familyTreeView->setScene(familyTreeScene);
-      familyTreeView->setSceneRect(QRectF(-1000, -1000, 2000, 2000));
-
+      FamilyTreeView* familyTreeView = new FamilyTreeView(trees.at(i));
       _treeTabWidget->addTab(familyTreeView, trees.at(i)->name());
     }
   }
@@ -174,11 +167,7 @@ void MainWindow::onTreeAdded(QUuid droid)
 
   Q_ASSERT(treeAdded != nullptr);
 
-  FamilyTreeView* familyTreeView = new FamilyTreeView();
-  FamilyTreeScene* familyTreeScene = new FamilyTreeScene(QRectF(-10000, -10000, 20000, 20000), familyTreeView);
-  familyTreeView->setScene(familyTreeScene);
-  familyTreeView->setSceneRect(QRectF(-1000, -1000, 2000, 2000));
-
+  FamilyTreeView* familyTreeView = new FamilyTreeView(treeAdded);
   _treeTabWidget->addTab(familyTreeView, treeAdded->name());
 }
 
