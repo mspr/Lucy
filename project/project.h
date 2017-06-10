@@ -13,9 +13,10 @@ class Project : public QObject
   Q_OBJECT
 
   public:
-    Project(const QString& name);
+    Project(const QString& fileName, const QString& name);
     ~Project();
 
+    QString fileName() const;
     QString name() const;
 
     void add(Tree* tree);
@@ -39,6 +40,7 @@ class Project : public QObject
     void add_impl(DomainObject* object);
 
   private:
+    QString _fileName;
     QString _name;
     QList<Tree*> _trees;
     QList<DomainObject*> _objectsToDelete;

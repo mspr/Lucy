@@ -1,13 +1,12 @@
+#include "application.h"
 #include "mainwindow.h"
 #include "messagehandler.h"
 #include "databaseconnection.h"
 #include "project/projectmanager.h"
 
-#include <QApplication>
-
 int main(int argc, char* argv[])
 {
-  QApplication a(argc, argv);
+  Application a(argc, argv);
 
   qInstallMessageHandler(MessageHandler::handleMessage);
 

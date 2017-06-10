@@ -31,12 +31,14 @@ SOURCES += main.cpp\
         mainwindow.cpp \
 		messagehandler.cpp \
     databaseconnection.cpp \
-    treecreationdialog.cpp
+    treecreationdialog.cpp \
+    application.cpp
 
 HEADERS  += mainwindow.h \
 		messagehandler.h \
     databaseconnection.h \
-    treecreationdialog.h
+    treecreationdialog.h \
+    application.h
 
 FORMS    += mainwindow.ui \
     treecreationdialog.ui

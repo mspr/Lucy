@@ -4,8 +4,9 @@
 #include "domain_object/person.h"
 #include "domain_object/tree.h"
 
-Project::Project(const QString& name)
-  : _name(name)
+Project::Project(const QString& fileName, const QString& name)
+  : _fileName(fileName)
+  , _name(name)
   , _currentTree(nullptr)
 {
 }
@@ -20,6 +21,11 @@ Project::~Project()
 
   qDeleteAll(_objectsToAdd.begin(), _objectsToAdd.end());
   _objectsToAdd.clear();
+}
+
+QString Project::fileName() const
+{
+  return _fileName;
 }
 
 QString Project::name() const

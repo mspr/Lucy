@@ -35,12 +35,9 @@ QDate Person_p::birthDate() const
 
 void Person_p::load_impl(QSqlQuery& query)
 {
-    while (query.next())
-    {
-        _firstName = query.value(0).toString();
-        _birthDate = query.value(1).toDate();
-        _lastName = query.value(2).toString();
-    }
+    _firstName = query.value(0).toString();
+    _birthDate = query.value(1).toDate();
+    _lastName = query.value(2).toString();
 }
 
 QString Person_p::databaseTableName() const

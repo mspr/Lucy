@@ -47,9 +47,16 @@ void DomainObject_p::tryLoad()
 
     if (query.exec())
     {
-      load_impl(query);
+      if (query.next())
+      {
+        load_impl(query);
 
-      _isLoaded = true;
+        _isLoaded = true;
+      }
+      else
+      {
+        throw std::invalid_argument("Impossible to load data from database.");
+      }
     }
     else
     {

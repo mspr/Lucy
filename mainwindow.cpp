@@ -78,6 +78,7 @@ void MainWindow::openProject()
 
     for (int i=0; i<trees.count(); ++i)
     {
+      // TODO memory leak if reference not loaded correctly on Scene and View!!
       FamilyTreeView* familyTreeView = new FamilyTreeView();
       FamilyTreeScene* familyTreeScene = new FamilyTreeScene(QRectF(-10000, -10000, 20000, 20000), familyTreeView);
       Person* reference = trees.at(i)->reference();
@@ -95,7 +96,7 @@ void MainWindow::saveProject()
   QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
   Q_ASSERT(!currentProject.isNull());
 
-  const QString fileName = currentProject->name() + ".lcy";
+  const QString fileName = currentProject->fileName();
   QFile file(fileName);
   if (file.open(QIODevice::WriteOnly))
   {

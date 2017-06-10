@@ -22,12 +22,9 @@ Tree_p::Tree_p(const QString& name, Person* reference)
 
 void Tree_p::load_impl(QSqlQuery& query)
 {
-    while (query.next())
-    {
-        _name = query.value(0).toString();
-        const int referenceId = query.value(0).toInt();
-        _reference.reset(new Person(referenceId));
-    }
+    _name = query.value(0).toString();
+    const int referenceId = query.value(1).toInt();
+    _reference.reset(new Person(referenceId));
 }
 
 QString Tree_p::databaseTableName() const
