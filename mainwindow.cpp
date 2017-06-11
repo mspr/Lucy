@@ -42,24 +42,25 @@ void MainWindow::newProject()
   QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
   if (!currentProject.isNull())
   {
-    const int res = QMessageBox::warning(this,
-                                         "Project open with changes",
-                                         "A project is already open and has been modified. Do you want to save changes before closing it ?",
-                                         QMessageBox::SaveAll,
-                                         QMessageBox::Ignore,
-                                         QMessageBox::Cancel);
-    if (res & QMessageBox::SaveAll)
+    if (isWindowModified())
     {
-      saveProject();
-      ProjectManager::getInstance()->closeProject();
-    }
-    else if (res & QMessageBox::Ignore)
-    {
-      ProjectManager::getInstance()->closeProject();
-    }
-    else
-    {
-      return;
+      const int res = QMessageBox::warning(this,
+                                           "Project open with changes",
+                                           "A project is already open and has been modified. Do you want to save changes before closing it ?",
+                                           QMessageBox::SaveAll,
+                                           QMessageBox::Ignore,
+                                           QMessageBox::Cancel);
+      if (res & QMessageBox::SaveAll)
+      {
+        saveProject();
+      }
+      else if (res & QMessageBox::Ignore)
+      {
+      }
+      else
+      {
+        return;
+      }
     }
   }
 
