@@ -1,36 +1,49 @@
 #include "familytreenodeview.h"
+#include "domain_object/person.h"
 
 #include <QGraphicsScene>
-#include <QPen>
 #include <QPainter>
-#include <QDebug>
 
-FamilyTreeNodeView::FamilyTreeNodeView(const QPointF& scenePos, const int radius, QGraphicsItem* parent)
-  : QGraphicsEllipseItem(-radius, -radius, 2*radius, 2*radius, parent)
+int FamilyTreeNodeView::_width = 100;
+int FamilyTreeNodeView::_height = 50;
+int FamilyTreeNodeView::_margin = 5;
+
+FamilyTreeNodeView::FamilyTreeNodeView(const QPointF& sceneCenterPos, Person* person, QGraphicsItem* parent)
+  : QGraphicsItemGroup(parent)
+  , _person(person)
 {
-  setPos(scenePos);
+  Q_ASSERT(_person != nullptr);
+
+  QGraphicsSimpleTextItem* personFirstNameViewItem = new QGraphicsSimpleTextItem(_person->firstName(), this);
+  addToGroup(personFirstNameViewItem);
+  QGraphicsSimpleTextItem* personLastNameViewItem = new QGraphicsSimpleTextItem(_person->lastName(), this);
+  personLastNameViewItem->setPos(0, 10);
+  addToGroup(personLastNameViewItem);
+  QGraphicsSimpleTextItem* personBirthDateViewItem = new QGraphicsSimpleTextItem(_person->birthDate().toString(), this);
+  personBirthDateViewItem->setPos(0, 20);
+  addToGroup(personBirthDateViewItem);
+
+  setPos(sceneCenterPos.x() - _width/2, sceneCenterPos.y() - _height/2);
+}
+
+Person* FamilyTreeNodeView::person() const
+{
+  return _person;
 }
 
 QRectF FamilyTreeNodeView::boundingRect() const
 {
-  return QGraphicsEllipseItem::boundingRect();
+  return QRectF(-_margin, -_margin, _width+2*_margin, _height+2*_margin);
 }
 
 QPainterPath FamilyTreeNodeView::shape() const
 {
-  return QGraphicsEllipseItem::shape();
+  return QGraphicsItemGroup::shape();
 }
 
 void FamilyTreeNodeView::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
-  QGraphicsEllipseItem::paint(painter, option, widget);
+  QGraphicsItemGroup::paint(painter, option, widget);
 
-//  QRectF rect = boundingRect();
-//  QPen pen(Qt::NoPen);
-//  QBrush brush(Qt::blue);
-//  brush.setStyle(Qt::SolidPattern);
-
-//  painter->setPen(pen);
-//  painter->setBrush(brush);
-//  painter->drawEllipse(rect);
+  painter->drawRect(boundingRect());
 }

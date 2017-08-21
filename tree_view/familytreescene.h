@@ -6,6 +6,7 @@
 #include <QList>
 
 class QGraphicsSceneMouseEvent;
+class FamilyTreeNodeView;
 
 class FamilyTreeScene : public QGraphicsScene
 {
@@ -14,13 +15,14 @@ class FamilyTreeScene : public QGraphicsScene
   public:
     FamilyTreeScene(const QRectF& sceneRect, QObject* parent = nullptr);
 
-    void createNodeView(Person* person, const QPointF& scenePos);
+    void createReferenceNode(Person* person, const QPointF& scenePos);
+    FamilyTreeNodeView* createNode(Person* person, const QPointF& scenePos);
 
   protected:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent*) override;
 
   private:
-    void ExtendTreeFromNode(QGraphicsItem* previousNode, Qt::MouseButton button);
+    void extendTreeFromNode(FamilyTreeNodeView* previousNode, Qt::MouseButton button);
 
   private:
     QHash<QGraphicsItem*, int> _levelByTreeNode;
