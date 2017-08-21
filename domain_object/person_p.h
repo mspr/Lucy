@@ -5,6 +5,8 @@
 
 #include <QDate>
 
+class Person;
+
 class Person_p : public DomainObject_p
 {
   public:
@@ -14,10 +16,14 @@ class Person_p : public DomainObject_p
     QString firstName() const;
     QString lastName() const;
     QDate birthDate() const;
+    Person* father() const;
+    Person* mother() const;
 
     void setFirstName(const QString& firstName);
     void setLastName(const QString& lastName);
     void setBirthDate(const QDate& birthDate);
+    void setFather(Person* father);
+    void setMother(Person* mother);
 
     virtual void insertIntoDatabase();
     virtual void updateInDatabase();
@@ -30,6 +36,8 @@ class Person_p : public DomainObject_p
     QString _firstName;
     QString _lastName;
     QDate _birthDate;
+    Person* _father;
+    Person* _mother;
 };
 
 #endif // PERSON_P_H

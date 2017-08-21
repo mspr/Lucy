@@ -33,6 +33,16 @@ QDate Person_p::birthDate() const
   return _birthDate;
 }
 
+Person* Person_p::father() const
+{
+  return _father;
+}
+
+Person* Person_p::mother() const
+{
+  return _mother;
+}
+
 void Person_p::load_impl(QSqlQuery& query)
 {
     _firstName = query.value(1).toString();
@@ -88,4 +98,16 @@ void Person_p::setBirthDate(const QDate& birthDate)
 {
   _birthDate = birthDate;
   setDirty();
+}
+
+void Person_p::setFather(Person* father)
+{
+  Q_ASSERT(father != nullptr);
+  _father = father;
+}
+
+void Person_p::setMother(Person* mother)
+{
+  Q_ASSERT(mother != nullptr);
+  _mother = mother;
 }

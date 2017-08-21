@@ -17,6 +17,11 @@ class Person : public DomainObject
     QString firstName() const;
     QString lastName() const;
     QDate birthDate() const;
+    Person* father() const;
+    Person* mother() const;
+
+    void setFather(Person* father);
+    void setMother(Person* mother);
 };
 
 #endif // PERSON_H

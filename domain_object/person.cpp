@@ -22,3 +22,23 @@ QDate Person::birthDate() const
 {
   return d()->birthDate();
 }
+
+Person* Person::father() const
+{
+  return d()->father();
+}
+
+Person* Person::mother() const
+{
+  return d()->mother();
+}
+
+void Person::setFather(Person* father)
+{
+  d()->setFather(father);
+}
+
+void Person::setMother(Person* mother)
+{
+  d()->setMother(mother);
+}
