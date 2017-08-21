@@ -3,10 +3,14 @@
 
 #include <QXmlStreamWriter>
 
+#include "project.h"
+
 class ProjectXmlWriter : QXmlStreamWriter
 {
   public:
-    ProjectXmlWriter();
+    ProjectXmlWriter() = delete;
+
+    static void write(Project* project);
 };
 
 #endif // PROJECTXMLWRITER_H

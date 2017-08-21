@@ -5,12 +5,12 @@
 #include "output/outputwindow.h"
 #include "project/projectmanager.h"
 #include "project/project.h"
+#include "project/projectxmlwriter.h"
 #include "treecreationdialog.h"
 #include "domain_object/tree.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
-#include <QXmlStreamWriter>
 #include <QInputDialog>
 #include <QDebug>
 
@@ -106,37 +106,7 @@ void MainWindow::saveProject()
   QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
   Q_ASSERT(!currentProject.isNull());
 
-  const QString fileName = currentProject->fileName();
-  QFile file(fileName);
-  if (file.open(QIODevice::WriteOnly))
-  {
-    QXmlStreamWriter xmlWriter(&file);
-    xmlWriter.setAutoFormatting(true);
-
-    xmlWriter.writeStartDocument();
-
-    xmlWriter.writeStartElement("project");
-    xmlWriter.writeAttribute("name", currentProject->name());
-
-    for (int i=0; i<currentProject->trees().count(); ++i)
-    {
-      Tree* tree = currentProject->trees().at(i);
-      xmlWriter.writeStartElement("tree");
-      xmlWriter.writeAttribute("id", QString::number(tree->id()));
-      xmlWriter.writeEndElement();
-    }
-
-    xmlWriter.writeStartElement("current_tree");
-    xmlWriter.writeAttribute("id", QString::number(currentProject->currentTree()->id()));
-    xmlWriter.writeEndElement();
-
-    xmlWriter.writeEndDocument();
-
-    file.close();
-  }
-  else
-  {
-  }
+  ProjectXmlWriter::write(currentProject.data());
 
   currentProject->commit();
 }
