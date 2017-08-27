@@ -3,8 +3,8 @@
 
 DEFINE_PIMPL(Person)
 
-Person::Person(const QString& firstName, const QString& lastName, const QDate& birthDate)
-  : _pimpl(new Person_p(firstName, lastName, birthDate))
+Person::Person(Tree* tree, const QString& firstName, const QString& lastName, const QDate& birthDate)
+  : _pimpl(new Person_p(tree, firstName, lastName, birthDate))
 {
 }
 
@@ -31,6 +31,16 @@ Person* Person::father() const
 Person* Person::mother() const
 {
   return d()->mother();
+}
+
+Tree* Person::tree() const
+{
+  return d()->tree();
+}
+
+void Person::setTree(Tree* tree)
+{
+  d()->setTree(tree);
 }
 
 void Person::setFather(Person* father)

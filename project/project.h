@@ -19,6 +19,9 @@ class Project : public QObject
 
     QString fileName() const;
     QString name() const;
+    bool isDirty() const;
+
+    void setFileName(const QString& fileName);
 
     void add(Tree* tree);
     void add(Person* person);
@@ -30,7 +33,10 @@ class Project : public QObject
     Tree* tree(QUuid droid) const;
     Tree* tree(const int id) const;
 
-    void commit();
+    void save();
+
+  public slots:
+    void onObjectDirty();
 
   signals:
     void treeAdded(QUuid droid);
@@ -39,6 +45,8 @@ class Project : public QObject
 
   private:
     void add_impl(DomainObject* object);
+
+    void commit();
 
   private:
     QString _fileName;

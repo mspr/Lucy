@@ -5,7 +5,6 @@
 #include "output/outputwindow.h"
 #include "project/projectmanager.h"
 #include "project/project.h"
-#include "project/projectxmlwriter.h"
 #include "treecreationdialog.h"
 #include "domain_object/tree.h"
 
@@ -74,7 +73,9 @@ void MainWindow::newProject()
   const QString& projectName = dialog->textValue();
 
   if (!projectName.isEmpty())
+  {
     ProjectManager::getInstance()->createNewProject(projectName);
+  }
 }
 
 void MainWindow::openProject()
@@ -91,8 +92,7 @@ void MainWindow::openProject()
     ProjectManager::getInstance()->openProject(projectFileName);
 
     QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
-    const QList<Tree*>& trees = currentProject->trees();
-
+    const QList<Tree*> trees = currentProject->trees();
     for (int i=0; i<trees.count(); ++i)
     {
       FamilyTreeView* familyTreeView = new FamilyTreeView(trees.at(i));
@@ -105,19 +105,24 @@ void MainWindow::saveProject()
 {
   QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
   Q_ASSERT(!currentProject.isNull());
-
-  ProjectXmlWriter::write(currentProject.data());
-
-  currentProject->commit();
+  currentProject->save();
 }
 
 void MainWindow::saveProjectAs()
 {
-  //  const filename = QFileDialog::getSaveFileName(this,
-  //                                     tr("Save Xml"), ".",
-  //                                     tr("Xml files (*.xml)"));
+  QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
+  Q_ASSERT(!currentProject.isNull());
 
+  const QString fileName = QFileDialog::getSaveFileName(this,
+                                                        tr("Save Project"),
+                                                        ".",
+                                                        tr("Project Files (*.lcy)"));
 
+  if (!fileName.isEmpty())
+  {
+    currentProject->setFileName(fileName);
+    currentProject->save();
+  }
 }
 
 void MainWindow::quit()
@@ -136,8 +141,6 @@ void MainWindow::createTree()
 void MainWindow::onProjectOpen()
 {
   _ui->actionCreateTree->setEnabled(true);
-  _ui->actionSave->setEnabled(true);
-  _ui->actionSaveAs->setEnabled(true);
 
   QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
   connect(currentProject.data(), Project::treeAdded, this, MainWindow::onTreeAdded);
@@ -160,11 +163,15 @@ void MainWindow::onTreeAdded(QUuid droid)
 
 void MainWindow::onProjectUpdated()
 {
+  _ui->actionSave->setEnabled(true);
+  _ui->actionSaveAs->setEnabled(true);
   setWindowModified(true);
 }
 
 void MainWindow::onProjectUpToDate()
 {
+  _ui->actionSave->setEnabled(false);
+  _ui->actionSaveAs->setEnabled(false);
   setWindowModified(false);
 }
 

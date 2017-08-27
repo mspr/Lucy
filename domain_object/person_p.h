@@ -6,19 +6,23 @@
 #include <QDate>
 
 class Person;
+class Tree;
 
 class Person_p : public DomainObject_p
 {
+  DECLARE_FACADE(Person)
+
   public:
-    Person_p(const int id);
-    Person_p(const QString& firstName, const QString& lastName, const QDate& birthDate);
+    Person_p(Tree* tree, const QString& firstName, const QString& lastName, const QDate& birthDate);
 
     QString firstName() const;
     QString lastName() const;
     QDate birthDate() const;
     Person* father() const;
     Person* mother() const;
+    Tree* tree() const;
 
+    void setTree(Tree* tree);
     void setFirstName(const QString& firstName);
     void setLastName(const QString& lastName);
     void setBirthDate(const QDate& birthDate);
@@ -33,6 +37,7 @@ class Person_p : public DomainObject_p
     virtual QString databaseTableName() const override;
 
   private:
+    Tree* _tree;
     QString _firstName;
     QString _lastName;
     QDate _birthDate;

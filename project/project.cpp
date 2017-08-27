@@ -1,8 +1,11 @@
 #include "project.h"
+#include "projectxmlwriter.h"
 #include "domain_object/domainobject.h"
 #include "domain_object/domainobject_p.h"
 #include "domain_object/person.h"
 #include "domain_object/tree.h"
+
+#include "QDebug"
 
 Project::Project(const QString& fileName, const QString& name)
   : _fileName(fileName)
@@ -19,14 +22,14 @@ Project::Project(const QString& name)
 
 Project::~Project()
 {
-  qDeleteAll(_objectsToDelete.begin(), _objectsToDelete.end());
-  _objectsToDelete.clear();
+  qDeleteAll(_trees);
+  _trees.clear();
+}
 
-  qDeleteAll(_objectsToUpdate.begin(), _objectsToUpdate.end());
-  _objectsToUpdate.clear();
-
-  qDeleteAll(_objectsToAdd.begin(), _objectsToAdd.end());
-  _objectsToAdd.clear();
+void Project::setFileName(const QString& fileName)
+{
+  Q_ASSERT(!fileName.isEmpty());
+  _fileName = fileName;
 }
 
 QString Project::fileName() const
@@ -37,6 +40,11 @@ QString Project::fileName() const
 QString Project::name() const
 {
   return _name;
+}
+
+bool Project::isDirty() const
+{
+  return !_objectsToDelete.isEmpty() || !_objectsToUpdate.isEmpty() || !_objectsToAdd.isEmpty();
 }
 
 void Project::add(Tree* tree)
@@ -68,7 +76,7 @@ void Project::add_impl(DomainObject* object)
   }
   else
   {
-    connect(object->getD(), DomainObject_p::dirty, this, Project::updated);
+    connect(object->getD(), DomainObject_p::dirty, this, Project::onObjectDirty);
   }
 }
 
@@ -138,6 +146,31 @@ Tree* Project::tree(const int id) const
 QList<Tree*> Project::trees() const
 {
   return _trees;
+}
+
+void Project::onObjectDirty()
+{
+  DomainObject* dirtyObject = dynamic_cast<DomainObject*>(sender());
+  Q_ASSERT(dirtyObject != nullptr);
+
+  _objectsToUpdate.append(dirtyObject);
+
+  emit updated();
+}
+
+void Project::save()
+{
+  if (isDirty())
+  {
+    if (fileName().isEmpty())
+      _fileName = _name + ".lcy";
+
+    commit();
+
+    ProjectXmlWriter::write(this);
+
+    qInfo() << "Project " << name() << " has been saved.";
+  }
 }
 
 void Project::commit()

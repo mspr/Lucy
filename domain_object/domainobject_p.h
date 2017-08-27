@@ -7,6 +7,22 @@
 
 class QSqlQuery;
 
+#define DECLARE_FACADE(T)                                 \
+  public:                                                 \
+    T##_p(T* facade, const int id);                       \
+    virtual ~T##_p();                                     \
+                                                          \
+    T* facade() const;                                    \
+                                                          \
+  private:                                                \
+    T* _facade;
+
+#define DEFINE_FACADE(T)                                \
+  T* T##_p::facade() const                              \
+  {                                                     \
+    return _facade;                                     \
+  }
+
 class DomainObject_p : public QObject
 {
   Q_OBJECT

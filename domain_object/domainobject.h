@@ -17,18 +17,18 @@ class DomainObject_p;
   private:                                              \
     QScopedPointer<T##_p> _pimpl;
 
-#define DEFINE_PIMPL(T)                           \
-  T::T(const int id) : _pimpl(new T##_p(id)) {};  \
-  T::~T() {}                                      \
-  T##_p* T::d() const                             \
-  {                                               \
-    _pimpl.data()->tryLoad();                     \
-    return _pimpl.data();                         \
-  }                                               \
-                                                  \
-  DomainObject_p* T::getD() const                 \
-  {                                               \
-    return d();                                   \
+#define DEFINE_PIMPL(T)                                 \
+  T::T(const int id) : _pimpl(new T##_p(this, id)) {};  \
+  T::~T() {}                                            \
+  T##_p* T::d() const                                   \
+  {                                                     \
+    _pimpl.data()->tryLoad();                           \
+    return _pimpl.data();                               \
+  }                                                     \
+                                                        \
+  DomainObject_p* T::getD() const                       \
+  {                                                     \
+    return d();                                         \
   }
 
 class DomainObject

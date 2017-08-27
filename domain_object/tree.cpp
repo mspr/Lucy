@@ -1,11 +1,10 @@
 #include "tree.h"
 #include "tree_p.h"
-#include "person.h"
 
 DEFINE_PIMPL(Tree)
 
-Tree::Tree(const QString& name, Person* reference)
-  : _pimpl(new Tree_p(name, reference))
+Tree::Tree(const QString& name)
+  : _pimpl(new Tree_p(name))
 {
 }
 
@@ -14,12 +13,27 @@ void Tree::setName(const QString& name)
   d()->setName(name);
 }
 
-Person* Tree::reference() const
+void Tree::addPerson(Person* person)
 {
-  return d()->reference();
+  d()->addPerson(person);
+}
+
+void Tree::setReference(Person* person)
+{
+  d()->setReference(person);
 }
 
 QString Tree::name() const
 {
   return d()->name();
+}
+
+QList<Person*> Tree::persons() const
+{
+  return d()->persons();
+}
+
+Person* Tree::reference() const
+{
+  return d()->reference();
 }

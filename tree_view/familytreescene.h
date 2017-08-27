@@ -13,16 +13,17 @@ class FamilyTreeScene : public QGraphicsScene
   Q_OBJECT
 
   public:
-    FamilyTreeScene(const QRectF& sceneRect, QObject* parent = nullptr);
+    FamilyTreeScene(const QRectF& sceneRect, Tree* tree, QObject* parent = nullptr);
 
-    void createReferenceNode(Person* person, const QPointF& scenePos);
+    FamilyTreeNodeView* createReferenceNode(Person* person, const QPointF& scenePos);
     FamilyTreeNodeView* createNode(Person* person, const QPointF& scenePos);
 
   protected:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent*) override;
 
   private:
-    void extendTreeFromNode(FamilyTreeNodeView* previousNode, Qt::MouseButton button);
+    void extendTreeFromNodeRecursively(FamilyTreeNodeView* node);
+    FamilyTreeNodeView* extendTreeFromNode(FamilyTreeNodeView* node, Person* person, Qt::MouseButton button);
 
   private:
     QHash<QGraphicsItem*, int> _levelByTreeNode;
