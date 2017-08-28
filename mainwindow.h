@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <functional>
 #include <QMainWindow>
 #include <QUuid>
 
@@ -16,6 +17,7 @@ class MainWindow : public QMainWindow
 
   private:
     void setupSignalSlotConnections();
+    void askUserToSaveAndContinue(std::function<void()> action);
 
   private slots:
     void newProject();
