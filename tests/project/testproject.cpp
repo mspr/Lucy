@@ -13,5 +13,5 @@ void TestProject::setFileName()
 
   project.setFileName(fileName);
 
-  QVERIFY(project.fileName() == fileName);
+  QCOMPARE(project.fileName(), fileName);
 }

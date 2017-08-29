@@ -11,7 +11,7 @@ TEMPLATE = app
 
 QT += testlib
 
-CONFIG += console
+CONFIG += testcase
 CONFIG -= app_bundle
 
 LIBS += -L../src -lLucy
