@@ -16,8 +16,6 @@ FamilyTreeScene::FamilyTreeScene(const QRectF& sceneRect, Tree* tree, QObject* p
   Q_ASSERT(tree != nullptr);
 
   FamilyTreeNodeView* referenceNode = createReferenceNode(tree->reference(), QPointF(0, 0));
-  Q_ASSERT(referenceNode != nullptr);
-
   extendTreeFromNodeRecursively(referenceNode);
 }
 

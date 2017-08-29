@@ -13,7 +13,7 @@ class Person_p : public DomainObject_p
   DECLARE_FACADE(Person)
 
   public:
-    Person_p(Tree* tree, const QString& firstName, const QString& lastName, const QDate& birthDate);
+    Person_p(Person* facade, const QString& firstName, const QString& lastName, const QDate& birthDate);
 
     QString firstName() const;
     QString lastName() const;

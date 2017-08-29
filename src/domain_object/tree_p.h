@@ -11,7 +11,7 @@ class Tree_p : public DomainObject_p
   DECLARE_FACADE(Tree)
 
   public:
-    Tree_p(const QString& name);
+    Tree_p(Tree* facade, const QString& name);
 
     QString name() const;
     QList<Person*> persons() const;

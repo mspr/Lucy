@@ -4,7 +4,7 @@
 DEFINE_PIMPL(Tree)
 
 Tree::Tree(const QString& name)
-  : _pimpl(new Tree_p(name))
+  : _pimpl(new Tree_p(this, name))
 {
 }
 

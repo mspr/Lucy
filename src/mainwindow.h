@@ -27,6 +27,7 @@ class MainWindow : public QMainWindow
     void quit();
     void createTree();
     void onProjectOpen();
+    void onProjectClosed();
     void onTreeAdded(QUuid droid);
     void onProjectUpdated();
     void onProjectUpToDate();

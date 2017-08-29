@@ -45,14 +45,16 @@ void MainWindow::newProject()
   if (!dialog->exec())
     return;
 
-  std::function<void()> action = [&] ()
+  const QString projectName = dialog->textValue();
+  if (!projectName.isEmpty())
   {
-    const QString& projectName = dialog->textValue();
-    if (!projectName.isEmpty())
+    std::function<void()> action = [&] ()
+    {
       ProjectManager::getInstance()->createNewProject(projectName);
-  };
+    };
 
-  askUserToSaveAndContinue(action);
+    askUserToSaveAndContinue(action);
+  }
 }
 
 void MainWindow::openProject()
@@ -67,26 +69,18 @@ void MainWindow::openProject()
     std::function<void()> action = [&] ()
     {
       ProjectManager::getInstance()->openProject(projectFileName);
-
-      QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
-      const QList<Tree*> trees = currentProject->trees();
-      for (int i=0; i<trees.count(); ++i)
-      {
-        FamilyTreeView* familyTreeView = new FamilyTreeView(trees.at(i));
-        _treeTabWidget->addTab(familyTreeView, trees.at(i)->name());
-      }
     };
 
     askUserToSaveAndContinue(action);
   }
 }
 
-void MainWindow::askUserToSaveAndContinue(std::function<void()> action)
+void MainWindow::askUserToSaveAndContinue(std::function<void ()> action)
 {
-  QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
+  QWeakPointer<Project> currentProject = ProjectManager::getInstance()->currentProject().toWeakRef();
   if (!currentProject.isNull())
   {
-    if (currentProject->isDirty())
+    if (currentProject.data()->isDirty())
     {
       const int res = QMessageBox::warning(this,
                                            "Project open with changes",
@@ -156,8 +150,23 @@ void MainWindow::onProjectOpen()
   connect(currentProject.data(), Project::treeAdded, this, MainWindow::onTreeAdded);
   connect(currentProject.data(), Project::updated, this, MainWindow::onProjectUpdated);
   connect(currentProject.data(), Project::upToDate, this, MainWindow::onProjectUpToDate);
+  connect(currentProject.data(), Project::destroyed, this, MainWindow::onProjectClosed);
 
   setWindowTitle(currentProject.data()->name() + "[*]");
+
+  const QList<Tree*> trees = currentProject->trees();
+  for (int i=0; i<trees.count(); ++i)
+  {
+    FamilyTreeView* familyTreeView = new FamilyTreeView(trees.at(i));
+    _treeTabWidget->addTab(familyTreeView, trees.at(i)->name());
+  }
+
+  onProjectUpToDate();
+}
+
+void MainWindow::onProjectClosed()
+{
+  _treeTabWidget->clear();
 }
 
 void MainWindow::onTreeAdded(QUuid droid)
