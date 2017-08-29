@@ -38,10 +38,49 @@ void MainWindow::setupSignalSlotConnections()
 
 void MainWindow::newProject()
 {
-  QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
+  QInputDialog* dialog = new QInputDialog(this);
+  dialog->setLabelText("Project name:");
+  dialog->setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+
+  if (!dialog->exec())
+    return;
+
+  const QString projectName = dialog->textValue();
+  if (!projectName.isEmpty())
+  {
+    std::function<void()> action = [&] ()
+    {
+      ProjectManager::getInstance()->createNewProject(projectName);
+    };
+
+    askUserToSaveAndContinue(action);
+  }
+}
+
+void MainWindow::openProject()
+{
+  const QString projectFileName = QFileDialog::getOpenFileName(this,
+                                                               tr("Open Project"),
+                                                               "",
+                                                               tr("Project Files (*.lcy)"));
+
+  if (!projectFileName.isEmpty())
+  {
+    std::function<void()> action = [&] ()
+    {
+      ProjectManager::getInstance()->openProject(projectFileName);
+    };
+
+    askUserToSaveAndContinue(action);
+  }
+}
+
+void MainWindow::askUserToSaveAndContinue(std::function<void ()> action)
+{
+  QWeakPointer<Project> currentProject = ProjectManager::getInstance()->currentProject().toWeakRef();
   if (!currentProject.isNull())
   {
-    if (isWindowModified())
+    if (currentProject.data()->isDirty())
     {
       const int res = QMessageBox::warning(this,
                                            "Project open with changes",
@@ -63,42 +102,7 @@ void MainWindow::newProject()
     }
   }
 
-  QInputDialog* dialog = new QInputDialog(this);
-  dialog->setLabelText("Project name:");
-  dialog->setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-
-  if (!dialog->exec())
-    return;
-
-  const QString& projectName = dialog->textValue();
-
-  if (!projectName.isEmpty())
-  {
-    ProjectManager::getInstance()->createNewProject(projectName);
-  }
-}
-
-void MainWindow::openProject()
-{
-  // TODO Close current project if necessary
-
-  const QString projectFileName = QFileDialog::getOpenFileName(this,
-                                                               tr("Open Project"),
-                                                               "",
-                                                               tr("Project Files (*.lcy)"));
-
-  if (!projectFileName.isEmpty())
-  {
-    ProjectManager::getInstance()->openProject(projectFileName);
-
-    QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
-    const QList<Tree*> trees = currentProject->trees();
-    for (int i=0; i<trees.count(); ++i)
-    {
-      FamilyTreeView* familyTreeView = new FamilyTreeView(trees.at(i));
-      _treeTabWidget->addTab(familyTreeView, trees.at(i)->name());
-    }
-  }
+  action();
 }
 
 void MainWindow::saveProject()
@@ -146,8 +150,23 @@ void MainWindow::onProjectOpen()
   connect(currentProject.data(), Project::treeAdded, this, MainWindow::onTreeAdded);
   connect(currentProject.data(), Project::updated, this, MainWindow::onProjectUpdated);
   connect(currentProject.data(), Project::upToDate, this, MainWindow::onProjectUpToDate);
+  connect(currentProject.data(), Project::destroyed, this, MainWindow::onProjectClosed);
 
   setWindowTitle(currentProject.data()->name() + "[*]");
+
+  const QList<Tree*> trees = currentProject->trees();
+  for (int i=0; i<trees.count(); ++i)
+  {
+    FamilyTreeView* familyTreeView = new FamilyTreeView(trees.at(i));
+    _treeTabWidget->addTab(familyTreeView, trees.at(i)->name());
+  }
+
+  onProjectUpToDate();
+}
+
+void MainWindow::onProjectClosed()
+{
+  _treeTabWidget->clear();
 }
 
 void MainWindow::onTreeAdded(QUuid droid)

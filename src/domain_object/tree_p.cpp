@@ -9,15 +9,17 @@
 
 DEFINE_FACADE(Tree)
 
-Tree_p::Tree_p(Tree* tree, const int id)
+Tree_p::Tree_p(Tree* facade, const int id)
   : DomainObject_p(id)
-  , _facade(tree)
+  , _facade(facade)
   , _reference(nullptr)
 {
+  Q_ASSERT(_facade != nullptr);
 }
 
-Tree_p::Tree_p(const QString& name)
+Tree_p::Tree_p(Tree* facade, const QString& name)
   : DomainObject_p()
+  , _facade(facade)
   , _name(name)
   , _reference(nullptr)
 {

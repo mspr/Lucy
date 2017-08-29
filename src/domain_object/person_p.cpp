@@ -1,5 +1,6 @@
 #include "person_p.h"
 #include "person.h"
+#include "tree.h"
 
 #include <QSqlQuery>
 #include <QVariant>
@@ -8,25 +9,25 @@
 
 DEFINE_FACADE(Person)
 
-Person_p::Person_p(Person* person, const int id)
+Person_p::Person_p(Person* facade, const int id)
   : DomainObject_p(id)
-  , _facade(person)
+  , _facade(facade)
   , _tree(nullptr)
   , _father(nullptr)
   , _mother(nullptr)
 {
+    Q_ASSERT(_facade != nullptr);
 }
 
-Person_p::Person_p(Tree* tree, const QString& firstName, const QString& lastName, const QDate& birthDate)
+Person_p::Person_p(Person* facade, const QString& firstName, const QString& lastName, const QDate& birthDate)
   : DomainObject_p()
-  , _tree(tree)
+  , _facade(facade)
   , _firstName(firstName)
   , _lastName(lastName)
   , _birthDate(birthDate)
   , _father(nullptr)
   , _mother(nullptr)
 {
-  Q_ASSERT(_tree != nullptr);
 }
 
 Person_p::~Person_p()

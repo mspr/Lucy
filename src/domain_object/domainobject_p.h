@@ -10,6 +10,7 @@ class QSqlQuery;
 #define DECLARE_FACADE(T)                                 \
   public:                                                 \
     T##_p(T* facade, const int id);                       \
+    T##_p(T* facade);                                     \
     virtual ~T##_p();                                     \
                                                           \
     T* facade() const;                                    \
@@ -18,10 +19,15 @@ class QSqlQuery;
     T* _facade;
 
 #define DEFINE_FACADE(T)                                \
+  T##_p::T##_p(T* facade) : _facade(facade)             \
+  {                                                     \
+    Q_ASSERT(facade != nullptr);                        \
+  }                                                     \
+                                                        \
   T* T##_p::facade() const                              \
   {                                                     \
     return _facade;                                     \
-  }
+  }                                                     \
 
 class DomainObject_p : public QObject
 {

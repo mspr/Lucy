@@ -31,7 +31,7 @@ int TreeCreationDialog::exec()
     Q_ASSERT(!currentProject.isNull());
 
     Tree* tree = new Tree(treeName);
-    Person* person = new Person(tree, firstName, lastName, birthDate);
+    Person* person = new Person(firstName, lastName, birthDate);
     tree->addPerson(person);
     tree->setReference(person);
 

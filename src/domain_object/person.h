@@ -13,7 +13,7 @@ class Person : public DomainObject
   DECLARE_PIMPL(Person)
 
   public:
-    Person(Tree* tree, const QString& firstName, const QString& lastName, const QDate& birthDate);
+    Person(const QString& firstName, const QString& lastName, const QDate& birthDate);
 
     QString firstName() const;
     QString lastName() const;
