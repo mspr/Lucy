@@ -7,17 +7,12 @@
 
 #include "QDebug"
 
-Project::Project(const QString& fileName, const QString& name)
-  : _fileName(fileName)
-  , _name(name)
-  , _currentTree(nullptr)
-{
-}
 
 Project::Project(const QString& name)
   : _name(name)
   , _currentTree(nullptr)
 {
+  Q_ASSERT(!_name.isEmpty());
 }
 
 Project::~Project()
@@ -52,6 +47,8 @@ void Project::add(Tree* tree)
   Q_ASSERT(tree != nullptr);
 
   _trees.append(tree);
+  if (_trees.count() == 1)
+    setCurrentTree(tree->droid());
 
   add_impl(tree);
 

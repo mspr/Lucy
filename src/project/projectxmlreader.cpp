@@ -29,7 +29,8 @@
       QDomElement projectElem = doc.documentElement();
 
       const QString projectName = projectElem.attribute("name");
-      project.reset(new Project(fileName, projectName));
+      project.reset(new Project(projectName));
+      project->setFileName(fileName);
 
       loadTrees(projectElem, *project);
       loadCurrentTree(projectElem, *project);

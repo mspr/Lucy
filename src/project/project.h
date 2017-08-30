@@ -13,7 +13,6 @@ class Project : public QObject
   Q_OBJECT
 
   public:
-    Project(const QString& fileName, const QString& name);
     Project(const QString& name);
     ~Project();
 
