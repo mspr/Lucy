@@ -30,7 +30,7 @@
 
       const QString projectName = projectElem.attribute("name");
       project.reset(new Project(projectName));
-      project->setFileName(fileName);
+      project->setFileInfo(QFileInfo(fileName));
 
       loadTrees(projectElem, *project);
       loadCurrentTree(projectElem, *project);

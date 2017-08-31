@@ -3,6 +3,7 @@
 
 #include <QList>
 #include <QUuid>
+#include <QFileInfo>
 
 class Person;
 class Tree;
@@ -16,11 +17,11 @@ class Project : public QObject
     Project(const QString& name);
     ~Project();
 
-    QString fileName() const;
+    QFileInfo fileInfo() const;
     QString name() const;
     bool isDirty() const;
 
-    void setFileName(const QString& fileName);
+    void setFileInfo(const QFileInfo& fileInfo);
 
     void add(Tree* tree);
     void setCurrentTree(Tree* tree);
@@ -31,6 +32,8 @@ class Project : public QObject
     Tree* tree(const int id) const;
 
     void save();
+
+    static QString fileFormat();
 
   public slots:
     void onObjectDirty();
@@ -46,7 +49,7 @@ class Project : public QObject
     void commit();
 
   private:
-    QString _fileName;
+    QFileInfo _fileInfo;
     QString _name;
     QList<Tree*> _trees;
     QList<DomainObject*> _objectsToDelete;

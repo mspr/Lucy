@@ -124,7 +124,7 @@ void MainWindow::saveProjectAs()
 
   if (!fileName.isEmpty())
   {
-    currentProject->setFileName(fileName);
+    currentProject->setFileInfo(QFileInfo(fileName));
     currentProject->save();
   }
 }

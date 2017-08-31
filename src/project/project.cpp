@@ -5,8 +5,7 @@
 #include "domain_object/person.h"
 #include "domain_object/tree.h"
 
-#include "QDebug"
-
+#include <QDebug>
 
 Project::Project(const QString& name)
   : _name(name)
@@ -21,15 +20,22 @@ Project::~Project()
   _trees.clear();
 }
 
-void Project::setFileName(const QString& fileName)
+void Project::setFileInfo(const QFileInfo& fileInfo)
 {
-  Q_ASSERT(!fileName.isEmpty());
-  _fileName = fileName;
+  Q_ASSERT(!fileInfo.baseName().isEmpty());
+  Q_ASSERT(fileInfo.completeSuffix() == fileFormat());
+
+  _fileInfo = fileInfo;
 }
 
-QString Project::fileName() const
+QFileInfo Project::fileInfo() const
 {
-  return _fileName;
+  return _fileInfo;
+}
+
+/*static*/ QString Project::fileFormat()
+{
+  return "lcy";
 }
 
 QString Project::name() const
@@ -139,8 +145,8 @@ void Project::save()
 {
   if (isDirty())
   {
-    if (fileName().isEmpty())
-      _fileName = _name + ".lcy";
+    if (fileInfo().fileName().isEmpty())
+      _fileInfo = QFileInfo(_name + fileFormat());
 
     commit();
 

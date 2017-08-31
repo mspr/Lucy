@@ -12,21 +12,26 @@ void TestProject::createProject()
 
   QCOMPARE(project.name(), projectName);
   QCOMPARE(project.isDirty(), false);
-  QCOMPARE(project.fileName().isEmpty(), true);
+  QCOMPARE(project.fileInfo().fileName().isEmpty(), true);
   QCOMPARE(project.trees().count(), 0);
   QCOMPARE(project.currentTree(), nullptr);
 }
 
-void TestProject::setFileName()
+void TestProject::fileFormat()
 {
-  const QString fileName = "project.lcy";
+  QCOMPARE(Project::fileFormat(), QString("lcy"));
+}
+
+void TestProject::setFileInfo()
+{
+  const QFileInfo fileInfo("project.lcy");
 
   Project project("projectName");
-  QVERIFY(project.fileName() != fileName);
+  QVERIFY(project.fileInfo() != fileInfo);
 
-  project.setFileName(fileName);
+  project.setFileInfo(fileInfo);
 
-  QCOMPARE(project.fileName(), fileName);
+  QCOMPARE(project.fileInfo(), fileInfo);
 }
 
 void TestProject::addTree()

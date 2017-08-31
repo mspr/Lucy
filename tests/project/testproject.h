@@ -9,7 +9,8 @@ class TestProject : public QObject
 
   private slots:
     void createProject();
-    void setFileName();
+    void fileFormat();
+    void setFileInfo();
     void addTree();
     void addTree_currentTree();
     void setCurrentTree();
