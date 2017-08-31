@@ -55,13 +55,6 @@ void Project::add(Tree* tree)
   emit treeAdded(tree->droid());
 }
 
-void Project::add(Person* person)
-{
-  Q_ASSERT(person != nullptr);
-
-  add_impl(person);
-}
-
 void Project::add_impl(DomainObject* object)
 {
   Q_ASSERT(object != nullptr);

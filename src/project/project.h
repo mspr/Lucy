@@ -23,7 +23,6 @@ class Project : public QObject
     void setFileName(const QString& fileName);
 
     void add(Tree* tree);
-    void add(Person* person);
     void setCurrentTree(Tree* tree);
 
     QList<Tree*> trees() const;
