@@ -69,3 +69,31 @@ void TestProject::setCurrentTree()
 
   QCOMPARE(project.currentTree(), tree2);
 }
+
+void TestProject::tree_from_droid()
+{
+  Project project("projectName");
+
+  Tree* tree = new Tree("treeName1");
+  const QUuid droid = tree->droid();
+
+  QCOMPARE(project.tree(droid), nullptr);
+
+  project.add(tree);
+
+  QCOMPARE(project.tree(droid), tree);
+}
+
+void TestProject::tree_from_id()
+{
+  Project project("projectName");
+
+  Tree* tree = new Tree(5);
+  const int id = tree->id();
+
+  QCOMPARE(project.tree(id), nullptr);
+
+  project.add(tree);
+
+  QCOMPARE(project.tree(id), tree);
+}
