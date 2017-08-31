@@ -24,8 +24,8 @@ class Project : public QObject
 
     void add(Tree* tree);
     void add(Person* person);
-    void setCurrentTree(QUuid droid);
-    void setCurrentTree(int id);
+    void setCurrentTree(Tree* tree);
+//    void setCurrentTree(QUuid droid);
 
     QList<Tree*> trees() const;
     Tree* currentTree() const;
