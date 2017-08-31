@@ -88,18 +88,6 @@ void Project::setCurrentTree(Tree* tree)
   }
 }
 
-//void Project::setCurrentTree(QUuid droid)
-//{
-//  Tree* currentTree = tree(droid);
-//  Q_ASSERT(currentTree != nullptr);
-
-//  if (_currentTree != currentTree)
-//  {
-//    _currentTree = currentTree;
-//    emit updated();
-//  }
-//}
-
 Tree* Project::currentTree() const
 {
   return _currentTree;
