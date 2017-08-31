@@ -48,7 +48,7 @@ void Project::add(Tree* tree)
 
   _trees.append(tree);
   if (_trees.count() == 1)
-    setCurrentTree(tree->droid());
+    setCurrentTree(tree);
 
   add_impl(tree);
 
@@ -77,29 +77,28 @@ void Project::add_impl(DomainObject* object)
   }
 }
 
-void Project::setCurrentTree(int id)
+void Project::setCurrentTree(Tree* tree)
 {
-  Tree* currentTree = tree(id);
-  Q_ASSERT(currentTree != nullptr);
+  Q_ASSERT(tree != nullptr);
 
-  if (_currentTree != currentTree)
+  if (_currentTree != tree)
   {
-    _currentTree = currentTree;
+    _currentTree = tree;
     emit updated();
   }
 }
 
-void Project::setCurrentTree(QUuid droid)
-{
-  Tree* currentTree = tree(droid);
-  Q_ASSERT(currentTree != nullptr);
+//void Project::setCurrentTree(QUuid droid)
+//{
+//  Tree* currentTree = tree(droid);
+//  Q_ASSERT(currentTree != nullptr);
 
-  if (_currentTree != currentTree)
-  {
-    _currentTree = currentTree;
-    emit updated();
-  }
-}
+//  if (_currentTree != currentTree)
+//  {
+//    _currentTree = currentTree;
+//    emit updated();
+//  }
+//}
 
 Tree* Project::currentTree() const
 {

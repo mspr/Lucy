@@ -36,7 +36,7 @@ int TreeCreationDialog::exec()
     tree->setReference(person);
 
     currentProject->add(tree);
-    currentProject->setCurrentTree(tree->droid());
+    currentProject->setCurrentTree(tree);
   }
 
   return result;

@@ -54,7 +54,7 @@ void TestProject::addTree_currentTree()
   QCOMPARE(project.currentTree(), tree);
 }
 
-void TestProject::setCurrentTree_from_droid()
+void TestProject::setCurrentTree()
 {
   Project project("projectName");
 
@@ -65,23 +65,7 @@ void TestProject::setCurrentTree_from_droid()
 
   QCOMPARE(project.currentTree(), tree1);
 
-  project.setCurrentTree(tree2->droid());
-
-  QCOMPARE(project.currentTree(), tree2);
-}
-
-void TestProject::setCurrentTree_from_id()
-{
-  Project project("projectName");
-
-  Tree* tree1 = new Tree(1);
-  project.add(tree1);
-  Tree* tree2 = new Tree(2);
-  project.add(tree2);
-
-  QCOMPARE(project.currentTree(), tree1);
-
-  project.setCurrentTree(tree2->id());
+  project.setCurrentTree(tree2);
 
   QCOMPARE(project.currentTree(), tree2);
 }

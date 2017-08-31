@@ -63,6 +63,9 @@ void ProjectXmlReader::loadCurrentTree(const QDomElement& projectNode, Project& 
   if (!currentTreeNode.isNull())
   {
     if (currentTreeNode.hasAttribute("id"))
-      project.setCurrentTree(currentTreeNode.attribute("id").toInt());
+    {
+      Tree* tree = project.tree(currentTreeNode.attribute("id").toInt());
+      project.setCurrentTree(tree);
+    }
   }
 }

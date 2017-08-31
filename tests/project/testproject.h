@@ -12,8 +12,7 @@ class TestProject : public QObject
     void setFileName();
     void addTree();
     void addTree_currentTree();
-    void setCurrentTree_from_droid();
-    void setCurrentTree_from_id();
+    void setCurrentTree();
 };
 
 #endif // TESTINTERVAL_H
