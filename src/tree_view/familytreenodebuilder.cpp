@@ -3,21 +3,21 @@
 
 FamilyTreeNodeBuilder::FamilyTreeNodeBuilder(QWidget* parent)
   : QDialog(parent)
-  , m_ui(new Ui::FamilyTreeNodeBuilder)
+  , _ui(new Ui::FamilyTreeNodeBuilder)
 {
-  m_ui->setupUi(this);
+  _ui->setupUi(this);
 }
 
 FamilyTreeNodeBuilder::~FamilyTreeNodeBuilder()
 {
-  delete m_ui;
+  delete _ui;
 }
 
 Person* FamilyTreeNodeBuilder::person() const
 {
-  const QString firstName = m_ui->firstNameLineEdit->text();
-  const QString lastName = m_ui->lastNameLineEdit->text();
-  const QDate birthDate = m_ui->birthDateEdit->date();
+  const QString firstName = _ui->firstNameLineEdit->text();
+  const QString lastName = _ui->lastNameLineEdit->text();
+  const QDate birthDate = _ui->birthDateEdit->date();
 
   return new Person(firstName, lastName, birthDate);
 }

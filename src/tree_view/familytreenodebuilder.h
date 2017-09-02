@@ -17,7 +17,7 @@ class FamilyTreeNodeBuilder : public QDialog
     Person* person() const;
 
   private:
-    Ui::FamilyTreeNodeBuilder* m_ui;
+    Ui::FamilyTreeNodeBuilder* _ui;
 };
 
 #endif // FAMILYTREENODEBUILDER_H
