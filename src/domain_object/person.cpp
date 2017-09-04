@@ -13,9 +13,19 @@ QString Person::firstName() const
   return d()->firstName();
 }
 
+void Person::setFirstName(const QString& firstName)
+{
+  d()->setFirstName(firstName);
+}
+
 QString Person::lastName() const
 {
   return d()->lastName();
+}
+
+void Person::setLastName(const QString& lastName)
+{
+  d()->setLastName(lastName);
 }
 
 QDate Person::birthDate() const
@@ -23,14 +33,9 @@ QDate Person::birthDate() const
   return d()->birthDate();
 }
 
-Person* Person::father() const
+void Person::setBirthDate(const QDate& birthDate)
 {
-  return d()->father();
-}
-
-Person* Person::mother() const
-{
-  return d()->mother();
+  d()->setBirthDate(birthDate);
 }
 
 Tree* Person::tree() const
@@ -43,9 +48,19 @@ void Person::setTree(Tree* tree)
   d()->setTree(tree);
 }
 
+Person* Person::father() const
+{
+  return d()->father();
+}
+
 void Person::setFather(Person* father)
 {
   d()->setFather(father);
+}
+
+Person* Person::mother() const
+{
+  return d()->mother();
 }
 
 void Person::setMother(Person* mother)
