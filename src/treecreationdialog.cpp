@@ -5,6 +5,8 @@
 #include "project/projectmanager.h"
 #include "project/project.h"
 
+using namespace Business;
+
 TreeCreationDialog::TreeCreationDialog(QWidget* parent)
   : QDialog(parent),
     _ui(new Ui::TreeCreationDialog)

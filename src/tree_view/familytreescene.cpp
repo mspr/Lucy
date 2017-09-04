@@ -10,6 +10,8 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QDebug>
 
+using namespace Business;
+
 FamilyTreeScene::FamilyTreeScene(const QRectF& sceneRect, Tree* tree, QObject* parent)
   : QGraphicsScene(sceneRect, parent)
 {

@@ -29,38 +29,42 @@ class QSqlQuery;
     return _facade;                                     \
   }                                                     \
 
-class DomainObject_p : public QObject
+namespace Business
 {
-  Q_OBJECT
+  class DomainObject_p : public QObject
+  {
+    Q_OBJECT
 
-  public:
-    DomainObject_p();
-    DomainObject_p(const int id);
-    virtual ~DomainObject_p();
+    public:
+      DomainObject_p();
+      DomainObject_p(const int id);
+      virtual ~DomainObject_p();
 
-    void tryLoad();
+      void tryLoad();
 
-    QUuid droid() const;
-    int id() const;
+      QUuid droid() const;
+      int id() const;
 
-    virtual void deleteFromDatabase();
-    virtual void updateInDatabase() = 0;
-    virtual void insertIntoDatabase() = 0;
+      virtual void deleteFromDatabase();
+      virtual void updateInDatabase() = 0;
+      virtual void insertIntoDatabase() = 0;
 
-  signals:
-    void dirty();
+    signals:
+      void dirty();
 
-  protected:
-    virtual void load_impl(QSqlQuery& query) = 0;
-    virtual QString databaseTableName() const = 0;
+    protected:
+      virtual void load_impl(QSqlQuery& query) = 0;
+      virtual QString databaseTableName() const = 0;
 
-    void setDirty();
+      void setDirty();
 
-  protected:
-    int _id;
-    QUuid _droid;
-    bool _isLoaded;
-    bool _isDirty;
-};
+    protected:
+      int _id;
+      QUuid _droid;
+      bool _isLoaded;
+      bool _isDirty;
+  };
+
+} // Business
 
 #endif // DOMAINOBJECT_P_H

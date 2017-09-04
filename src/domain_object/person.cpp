@@ -1,6 +1,8 @@
 #include "person.h"
 #include "person_p.h"
 
+using namespace Business;
+
 DEFINE_PIMPL(Person)
 
 Person::Person(const QString& firstName, const QString& lastName, const QDate& birthDate)

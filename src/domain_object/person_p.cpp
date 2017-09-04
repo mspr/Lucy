@@ -7,6 +7,8 @@
 #include <QSqlError>
 #include <QDebug>
 
+using namespace Business;
+
 DEFINE_FACADE(Person)
 
 Person_p::Person_p(Person* facade, const int id)

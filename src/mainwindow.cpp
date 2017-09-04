@@ -14,6 +14,7 @@
 #include <QDebug>
 
 using namespace Output;
+using namespace Business;
 
 MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent)

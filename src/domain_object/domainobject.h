@@ -4,7 +4,7 @@
 #include <QScopedPointer>
 #include <QUuid>
 
-class DomainObject_p;
+namespace Business { class DomainObject_p; }
 
 #define DECLARE_PIMPL(T)                                \
   public:                                               \
@@ -31,16 +31,20 @@ class DomainObject_p;
     return d();                                         \
   }
 
-class DomainObject
+namespace Business
 {
-  public:
-    DomainObject();
-    virtual ~DomainObject();
+  class DomainObject
+  {
+    public:
+      DomainObject();
+      virtual ~DomainObject();
 
-    QUuid droid() const;
-    int id() const;
+      QUuid droid() const;
+      int id() const;
 
-    virtual DomainObject_p* getD() const = 0;
-};
+      virtual DomainObject_p* getD() const = 0;
+  };
+
+} // Business
 
 #endif // DOMAINOBJECT_H

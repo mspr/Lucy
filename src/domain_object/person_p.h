@@ -5,44 +5,48 @@
 
 #include <QDate>
 
-class Person;
-class Tree;
-
-class Person_p : public DomainObject_p
+namespace Business
 {
-  DECLARE_FACADE(Person)
+  class Person;
+  class Tree;
 
-  public:
-    Person_p(Person* facade, const QString& firstName, const QString& lastName, const QDate& birthDate);
+  class Person_p : public DomainObject_p
+  {
+    DECLARE_FACADE(Person)
 
-    QString firstName() const;
-    QString lastName() const;
-    QDate birthDate() const;
-    Person* father() const;
-    Person* mother() const;
-    Tree* tree() const;
+    public:
+      Person_p(Person* facade, const QString& firstName, const QString& lastName, const QDate& birthDate);
 
-    void setTree(Tree* tree);
-    void setFirstName(const QString& firstName);
-    void setLastName(const QString& lastName);
-    void setBirthDate(const QDate& birthDate);
-    void setFather(Person* father);
-    void setMother(Person* mother);
+      QString firstName() const;
+      QString lastName() const;
+      QDate birthDate() const;
+      Person* father() const;
+      Person* mother() const;
+      Tree* tree() const;
 
-    virtual void insertIntoDatabase();
-    virtual void updateInDatabase();
+      void setTree(Tree* tree);
+      void setFirstName(const QString& firstName);
+      void setLastName(const QString& lastName);
+      void setBirthDate(const QDate& birthDate);
+      void setFather(Person* father);
+      void setMother(Person* mother);
 
-  protected:
-    virtual void load_impl(QSqlQuery& query) override;
-    virtual QString databaseTableName() const override;
+      virtual void insertIntoDatabase();
+      virtual void updateInDatabase();
 
-  private:
-    Tree* _tree;
-    QString _firstName;
-    QString _lastName;
-    QDate _birthDate;
-    Person* _father;
-    Person* _mother;
-};
+    protected:
+      virtual void load_impl(QSqlQuery& query) override;
+      virtual QString databaseTableName() const override;
+
+    private:
+      Tree* _tree;
+      QString _firstName;
+      QString _lastName;
+      QDate _birthDate;
+      Person* _father;
+      Person* _mother;
+  };
+
+} // Business
 
 #endif // PERSON_P_H

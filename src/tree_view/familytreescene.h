@@ -5,6 +5,9 @@
 #include <QGraphicsScene>
 #include <QList>
 
+namespace Business { class Person; }
+namespace Business { class Tree; }
+
 class QGraphicsSceneMouseEvent;
 class FamilyTreeNodeView;
 
@@ -13,17 +16,17 @@ class FamilyTreeScene : public QGraphicsScene
   Q_OBJECT
 
   public:
-    FamilyTreeScene(const QRectF& sceneRect, Tree* tree, QObject* parent = nullptr);
+    FamilyTreeScene(const QRectF& sceneRect, Business::Tree* tree, QObject* parent = nullptr);
 
-    FamilyTreeNodeView* createReferenceNode(Person* person, const QPointF& scenePos);
-    FamilyTreeNodeView* createNode(Person* person, const QPointF& scenePos);
+    FamilyTreeNodeView* createReferenceNode(Business::Person* person, const QPointF& scenePos);
+    FamilyTreeNodeView* createNode(Business::Person* person, const QPointF& scenePos);
 
   protected:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent*) override;
 
   private:
     void extendTreeFromNodeRecursively(FamilyTreeNodeView* node);
-    FamilyTreeNodeView* extendTreeFromNode(FamilyTreeNodeView* node, Person* person, Qt::MouseButton button);
+    FamilyTreeNodeView* extendTreeFromNode(FamilyTreeNodeView* node, Business::Person* person, Qt::MouseButton button);
 
   private:
     QHash<QGraphicsItem*, int> _levelByTreeNode;

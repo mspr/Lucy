@@ -5,26 +5,30 @@
 
 #include <QDate>
 
-class Person_p;
-class Tree;
-
-class Person : public DomainObject
+namespace Business
 {
-  DECLARE_PIMPL(Person)
+  class Person_p;
+  class Tree;
 
-  public:
-    Person(const QString& firstName, const QString& lastName, const QDate& birthDate);
+  class Person : public DomainObject
+  {
+    DECLARE_PIMPL(Person)
 
-    QString firstName() const;
-    QString lastName() const;
-    QDate birthDate() const;
-    Person* father() const;
-    Person* mother() const;
-    Tree* tree() const;
+    public:
+      Person(const QString& firstName, const QString& lastName, const QDate& birthDate);
 
-    void setTree(Tree* tree);
-    void setFather(Person* father);
-    void setMother(Person* mother);
-};
+      QString firstName() const;
+      QString lastName() const;
+      QDate birthDate() const;
+      Person* father() const;
+      Person* mother() const;
+      Tree* tree() const;
+
+      void setTree(Tree* tree);
+      void setFather(Person* father);
+      void setMother(Person* mother);
+  };
+
+} // Business
 
 #endif // PERSON_H

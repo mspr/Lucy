@@ -1,6 +1,8 @@
 #include "domainobject.h"
 #include "domainobject_p.h"
 
+using namespace Business;
+
 DomainObject::DomainObject()
 {
 }

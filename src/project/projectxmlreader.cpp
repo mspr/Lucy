@@ -5,6 +5,8 @@
 #include <QFile>
 #include <QDebug>
 
+using namespace Business;
+
 /*static*/ QSharedPointer<Project> ProjectXmlReader::load(const QString& fileName)
 {
   QSharedPointer<Project> project = nullptr;

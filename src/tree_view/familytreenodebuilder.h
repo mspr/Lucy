@@ -14,7 +14,7 @@ class FamilyTreeNodeBuilder : public QDialog
     explicit FamilyTreeNodeBuilder(QWidget* parent = nullptr);
     ~FamilyTreeNodeBuilder();
 
-    Person* person() const;
+    Business::Person* person() const;
 
   private:
     Ui::FamilyTreeNodeBuilder* _ui;

@@ -4,6 +4,8 @@
 
 #include <QtTest/QTest>
 
+using namespace Business;
+
 void TestProject::createProject()
 {
   const QString projectName = "projectName";

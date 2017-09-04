@@ -5,24 +5,28 @@
 
 #include <QString>
 
-class Tree_p;
-class Person;
-
-class Tree : public DomainObject
+namespace Business
 {
-  DECLARE_PIMPL(Tree)
+  class Tree_p;
+  class Person;
 
-  public:
-    Tree(const QString& name);
+  class Tree : public DomainObject
+  {
+    DECLARE_PIMPL(Tree)
 
-  public:
-    QString name() const;
-    QList<Person*> persons() const;
-    Person* reference() const;
+    public:
+      Tree(const QString& name);
 
-    void setName(const QString& name);
-    void addPerson(Person* person);
-    void setReference(Person* person);
-};
+    public:
+      QString name() const;
+      QList<Person*> persons() const;
+      Person* reference() const;
+
+      void setName(const QString& name);
+      void addPerson(Person* person);
+      void setReference(Person* person);
+  };
+
+} // Business
 
 #endif // TREE_H

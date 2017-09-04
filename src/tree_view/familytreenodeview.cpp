@@ -4,6 +4,8 @@
 #include <QGraphicsScene>
 #include <QPainter>
 
+using namespace Business;
+
 int FamilyTreeNodeView::_width = 100;
 int FamilyTreeNodeView::_height = 50;
 int FamilyTreeNodeView::_margin = 5;

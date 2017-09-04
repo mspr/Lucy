@@ -5,6 +5,8 @@
 #include <QSqlError>
 #include <QDebug>
 
+using namespace Business;
+
 DomainObject_p::DomainObject_p(const int id)
   : _id(id)
   , _droid(QUuid::createUuid())

@@ -1,6 +1,8 @@
 #include "projectxmlwriter.h"
 #include "domain_object/tree.h"
 
+using namespace Business;
+
 void ProjectXmlWriter::write(Project* project)
 {
   Q_ASSERT(project != nullptr);

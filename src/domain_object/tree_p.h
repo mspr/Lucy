@@ -3,35 +3,39 @@
 
 #include "domainobject_p.h"
 
-class Tree;
-class Person;
-
-class Tree_p : public DomainObject_p
+namespace Business
 {
-  DECLARE_FACADE(Tree)
+  class Tree;
+  class Person;
 
-  public:
-    Tree_p(Tree* facade, const QString& name);
+  class Tree_p : public DomainObject_p
+  {
+    DECLARE_FACADE(Tree)
 
-    QString name() const;
-    QList<Person*> persons() const;
-    Person* reference() const;
+    public:
+      Tree_p(Tree* facade, const QString& name);
 
-    void setName(const QString& name);
-    void addPerson(Person* person);
-    void setReference(Person* person);
+      QString name() const;
+      QList<Person*> persons() const;
+      Person* reference() const;
 
-    virtual void insertIntoDatabase();
-    virtual void updateInDatabase();
+      void setName(const QString& name);
+      void addPerson(Person* person);
+      void setReference(Person* person);
 
-  protected:
-    virtual void load_impl(QSqlQuery& query) override;
-    virtual QString databaseTableName() const override;
+      virtual void insertIntoDatabase();
+      virtual void updateInDatabase();
 
-  private:
-    QString _name;
-    QList<Person*> _persons;
-    Person* _reference;
-};
+    protected:
+      virtual void load_impl(QSqlQuery& query) override;
+      virtual QString databaseTableName() const override;
+
+    private:
+      QString _name;
+      QList<Person*> _persons;
+      Person* _reference;
+  };
+
+} // Business
 
 #endif // TREE_P_H

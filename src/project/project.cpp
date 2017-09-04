@@ -7,6 +7,8 @@
 
 #include <QDebug>
 
+using namespace Business;
+
 Project::Project(const QString& name)
   : _name(name)
   , _currentTree(nullptr)

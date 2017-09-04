@@ -1,6 +1,8 @@
 #include "familytreenodebuilder.h"
 #include "ui_familytreenodebuilder.h"
 
+using namespace Business;
+
 FamilyTreeNodeBuilder::FamilyTreeNodeBuilder(QWidget* parent)
   : QDialog(parent)
   , _ui(new Ui::FamilyTreeNodeBuilder)

@@ -7,6 +7,8 @@
 #include <QSqlError>
 #include <QDebug>
 
+using namespace Business;
+
 DEFINE_FACADE(Tree)
 
 Tree_p::Tree_p(Tree* facade, const int id)
