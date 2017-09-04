@@ -61,6 +61,13 @@ void Project::add(Tree* tree)
   emit treeAdded(tree->droid());
 }
 
+void Project::add(Person* person)
+{
+  Q_ASSERT(person != nullptr);
+
+  add_impl(person);
+}
+
 void Project::add_impl(DomainObject* object)
 {
   Q_ASSERT(object != nullptr);
@@ -136,7 +143,8 @@ void Project::onObjectDirty()
   DomainObject* dirtyObject = dynamic_cast<DomainObject*>(sender());
   Q_ASSERT(dirtyObject != nullptr);
 
-  _objectsToUpdate.append(dirtyObject);
+  if (!_objectsToAdd.contains(dirtyObject) && !_objectsToDelete.contains(dirtyObject))
+    _objectsToUpdate.append(dirtyObject);
 
   emit updated();
 }
