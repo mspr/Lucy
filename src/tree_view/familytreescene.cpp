@@ -6,6 +6,8 @@
 #include "project/project.h"
 #include "domain_object/person.h"
 #include "math.h"
+#include "application.h"
+#include "personupdaterview.h"
 
 #include <QGraphicsSceneMouseEvent>
 #include <QDebug>
@@ -109,20 +111,20 @@ void FamilyTreeScene::mousePressEvent(QGraphicsSceneMouseEvent* e)
 {
   if (e->button() == Qt::MiddleButton)
   {
-    qDebug() << "FamilyTreeScene::mousePressEvent " << e->scenePos();
+    qDebug() << e->scenePos();
     return;
   }
 
-  QGraphicsItem* itemAtPos = itemAt(e->scenePos(), QTransform());
-  if (itemAtPos != nullptr)
+  if (Application::keyboardModifiers() & Qt::ControlModifier)
   {
-    // TODO Change press event filter to catch it from group item directly
-    FamilyTreeNodeView* node = dynamic_cast<FamilyTreeNodeView*>(itemAtPos->parentItem());
+    FamilyTreeNodeView* node = nodeAtPos(e->scenePos());
     if (node != nullptr)
     {
       Q_ASSERT(_levelByTreeNode.contains(node));
 
-      Tree* currentTree = ProjectManager::getInstance()->currentProject()->currentTree();
+      QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
+      Q_ASSERT(!currentProject.isNull());
+      Tree* currentTree = currentProject->currentTree();
       Q_ASSERT(currentTree != nullptr);
 
       FamilyTreeNodeBuilder familyTreeNodeBuilder;
@@ -138,12 +140,33 @@ void FamilyTreeScene::mousePressEvent(QGraphicsSceneMouseEvent* e)
           node->person()->setMother(person);
 
         currentTree->addPerson(person);
+        currentProject->add(person);
 
         extendTreeFromNode(node, person, button);
       }
     }
   }
-  else if (e->button() == Qt::RightButton)
+}
+
+void FamilyTreeScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* e)
+{
+  FamilyTreeNodeView* node = nodeAtPos(e->scenePos());
+  if (node != nullptr)
   {
+    PersonUpdaterView personUpdaterView(node->person());
+    personUpdaterView.exec();
   }
+
+  FamilyTreeScene::mouseDoubleClickEvent(e);
+}
+
+FamilyTreeNodeView* FamilyTreeScene::nodeAtPos(const QPointF& scenePos) const
+{
+  FamilyTreeNodeView* node = nullptr;
+
+  QGraphicsItem* itemAtPos = itemAt(scenePos, QTransform());
+  if (itemAtPos != nullptr)
+    node = dynamic_cast<FamilyTreeNodeView*>(itemAtPos->parentItem());
+
+  return node;
 }

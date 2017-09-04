@@ -24,6 +24,7 @@ class Project : public QObject
     void setFileInfo(const QFileInfo& fileInfo);
 
     void add(Business::Tree* tree);
+    void add(Business::Person* person);
     void setCurrentTree(Business::Tree* tree);
 
     QList<Business::Tree*> trees() const;
