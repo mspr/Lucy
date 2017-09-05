@@ -1,5 +1,5 @@
 #include "familytreenodeview.h"
-#include "domain_object/person.h"
+#include "business/person.h"
 
 #include <QGraphicsScene>
 #include <QPainter>

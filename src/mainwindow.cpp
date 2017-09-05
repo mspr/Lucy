@@ -6,7 +6,7 @@
 #include "project/projectmanager.h"
 #include "project/project.h"
 #include "treecreationdialog.h"
-#include "domain_object/tree.h"
+#include "business/tree.h"
 
 #include <QFileDialog>
 #include <QMessageBox>

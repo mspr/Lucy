@@ -1,6 +1,6 @@
 #include "personupdaterview.h"
 #include "ui_personupdaterview.h"
-#include "domain_object/person.h"
+#include "business/person.h"
 
 using namespace Business;
 

@@ -26,7 +26,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 include(../defaults.pri)
 include(output/output.pri)
 include(tree_view/tree_view.pri)
-include(domain_object/domain_object.pri)
+include(business/business.pri)
 include(project/project.pri)
 
 SOURCES += \

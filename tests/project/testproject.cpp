@@ -1,6 +1,6 @@
 #include "testproject.h"
 #include "project/project.h"
-#include "domain_object/tree.h"
+#include "business/tree.h"
 
 #include <QtTest/QTest>
 

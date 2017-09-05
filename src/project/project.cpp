@@ -1,9 +1,9 @@
 #include "project.h"
 #include "projectxmlwriter.h"
-#include "domain_object/domainobject.h"
-#include "domain_object/domainobject_p.h"
-#include "domain_object/person.h"
-#include "domain_object/tree.h"
+#include "business/domainobject.h"
+#include "business/domainobject_p.h"
+#include "business/person.h"
+#include "business/tree.h"
 
 #include <QDebug>
 

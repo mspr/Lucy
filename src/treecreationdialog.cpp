@@ -1,15 +1,15 @@
 #include "treecreationdialog.h"
 #include "ui_treecreationdialog.h"
-#include "domain_object/person.h"
-#include "domain_object/tree.h"
+#include "business/person.h"
+#include "business/tree.h"
 #include "project/projectmanager.h"
 #include "project/project.h"
 
 using namespace Business;
 
 TreeCreationDialog::TreeCreationDialog(QWidget* parent)
-  : QDialog(parent),
-    _ui(new Ui::TreeCreationDialog)
+  : QDialog(parent)
+  , _ui(new Ui::TreeCreationDialog)
 {
   _ui->setupUi(this);
 }

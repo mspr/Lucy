@@ -1,7 +1,6 @@
 #ifndef FAMILYTREESCENE_H
 #define FAMILYTREESCENE_H
 
-#include "domain_object/tree.h"
 #include <QGraphicsScene>
 #include <QList>
 

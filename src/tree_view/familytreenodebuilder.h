@@ -2,7 +2,7 @@
 #define FAMILYTREENODEBUILDER_H
 
 #include <QDialog>
-#include "domain_object/person.h"
+#include "business/person.h"
 
 namespace Ui { class FamilyTreeNodeBuilder; }
 
