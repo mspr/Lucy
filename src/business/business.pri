@@ -6,7 +6,9 @@ HEADERS += \
     $$PWD/tree_p.h \
     $$PWD/person_p.h \
     $$PWD/job.h \
-    $$PWD/job_p.h
+    $$PWD/job_p.h \
+    $$PWD/location.h \
+    $$PWD/location_p.h
 
 SOURCES += \
     $$PWD/tree.cpp \
@@ -16,4 +18,6 @@ SOURCES += \
     $$PWD/tree_p.cpp \
     $$PWD/person_p.cpp \
     $$PWD/job.cpp \
-    $$PWD/job_p.cpp
+    $$PWD/job_p.cpp \
+    $$PWD/location.cpp \
+    $$PWD/location_p.cpp

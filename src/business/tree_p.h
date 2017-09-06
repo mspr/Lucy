@@ -16,15 +16,16 @@ namespace Business
       Tree_p(Tree* facade, const QString& name);
 
       QString name() const;
-      QList<Person*> persons() const;
-      Person* reference() const;
-
       void setName(const QString& name);
+
+      QList<Person*> persons() const;
       void addPerson(Person* person);
+
+      Person* reference() const;
       void setReference(Person* person);
 
-      virtual void insertIntoDatabase();
-      virtual void updateInDatabase();
+      virtual void insertIntoDatabase() override;
+      virtual void updateInDatabase() override;
 
     protected:
       virtual void load_impl(QSqlQuery& query) override;

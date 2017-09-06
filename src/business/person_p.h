@@ -19,30 +19,37 @@ namespace Business
       Person_p(Person* facade, const QString& firstName, const QString& lastName, const QDate& birthDate);
 
       QString firstName() const;
-      QString lastName() const;
-      QDate birthDate() const;
-      QString birthPlace() const;
-      QDate deathDate() const;
-      QString deathPlace() const;
-      Person* father() const;
-      Person* mother() const;
-      Tree* tree() const;
-      QList<Job*> jobs() const;
-
-      void setTree(Tree* tree);
       void setFirstName(const QString& firstName);
+
+      QString lastName() const;
       void setLastName(const QString& lastName);
+
+      QDate birthDate() const;
       void setBirthDate(const QDate& birthDate);
+
+      QString birthPlace() const;
       void setBirthPlace(const QString& birthPlace);
+
+      QDate deathDate() const;
       void setDeathDate(const QDate& deathDate);
+
+      QString deathPlace() const;
       void setDeathPlace(const QString& deathPlace);
+
+      Person* father() const;
       void setFather(Person* father);
+
+      Person* mother() const;
       void setMother(Person* mother);
 
+      Tree* tree() const;
+      void setTree(Tree* tree);
+
+      QList<Job*> jobs() const;
       void addJob(Job* job);
 
-      virtual void insertIntoDatabase();
-      virtual void updateInDatabase();
+      virtual void insertIntoDatabase() override;
+      virtual void updateInDatabase() override;
 
     protected:
       virtual void load_impl(QSqlQuery& query) override;
