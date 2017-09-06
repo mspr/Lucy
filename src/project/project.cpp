@@ -156,7 +156,7 @@ void Project::save()
   if (isDirty())
   {
     if (fileInfo().fileName().isEmpty())
-      _fileInfo = QFileInfo(_name + fileFormat());
+      _fileInfo = QFileInfo(_name + "." + fileFormat());
 
     commit();
 

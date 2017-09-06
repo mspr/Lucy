@@ -16,6 +16,9 @@ class TestProject : public QObject
     void setCurrentTree();
     void tree_from_droid();
     void tree_from_id();
+    void save_not_dirty();
+    void save_dirty();
+    void cleanupTestCase();
 };
 
 #endif // TESTINTERVAL_H
