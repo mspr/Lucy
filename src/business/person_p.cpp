@@ -1,6 +1,7 @@
 #include "person_p.h"
 #include "person.h"
 #include "tree.h"
+#include "job.h"
 
 #include <QSqlQuery>
 #include <QVariant>
@@ -65,6 +66,11 @@ Person* Person_p::mother() const
 Tree* Person_p::tree() const
 {
   return _tree;
+}
+
+QList<Job*> Person_p::jobs() const
+{
+  return _jobs;
 }
 
 void Person_p::load_impl(QSqlQuery& query)
@@ -158,10 +164,20 @@ void Person_p::setFather(Person* father)
 {
   Q_ASSERT(father != nullptr);
   _father = father;
+  //setDirty();
 }
 
 void Person_p::setMother(Person* mother)
 {
   Q_ASSERT(mother != nullptr);
   _mother = mother;
+  //setDirty();
+}
+
+void Person_p::addJob(Job* job)
+{
+  Q_ASSERT(job != nullptr);
+  Q_ASSERT(!_jobs.contains(job));
+  _jobs.append(job);
+  //setDirty();
 }

@@ -9,6 +9,7 @@ namespace Business
 {
   class Person_p;
   class Tree;
+  class Job;
 
   class Person : public DomainObject
   {
@@ -34,6 +35,9 @@ namespace Business
 
       Person* mother() const;
       void setMother(Person* mother);
+
+      QList<Job*> jobs() const;
+      void addJob(Job* job);
   };
 
 } // Business

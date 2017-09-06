@@ -69,3 +69,13 @@ void Person::setMother(Person* mother)
 {
   d()->setMother(mother);
 }
+
+QList<Job*> Person::jobs() const
+{
+  return d()->jobs();
+}
+
+void Person::addJob(Job* job)
+{
+  d()->addJob(job);
+}
