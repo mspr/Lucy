@@ -18,7 +18,7 @@ Person_p::Person_p(Person* facade, const int id)
   , _father(nullptr)
   , _mother(nullptr)
 {
-    Q_ASSERT(_facade != nullptr);
+  Q_ASSERT(_facade != nullptr);
 }
 
 Person_p::Person_p(Person* facade, const QString& firstName, const QString& lastName, const QDate& birthDate)
@@ -30,6 +30,7 @@ Person_p::Person_p(Person* facade, const QString& firstName, const QString& last
   , _father(nullptr)
   , _mother(nullptr)
 {
+  Q_ASSERT(_facade != nullptr);
 }
 
 Person_p::~Person_p()

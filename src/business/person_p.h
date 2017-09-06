@@ -20,6 +20,9 @@ namespace Business
       QString firstName() const;
       QString lastName() const;
       QDate birthDate() const;
+      QString birthPlace() const;
+      QDate deathDate() const;
+      QString deathPlace() const;
       Person* father() const;
       Person* mother() const;
       Tree* tree() const;
@@ -28,6 +31,9 @@ namespace Business
       void setFirstName(const QString& firstName);
       void setLastName(const QString& lastName);
       void setBirthDate(const QDate& birthDate);
+      void setBirthPlace(const QString& birthPlace);
+      void setDeathDate(const QDate& deathDate);
+      void setDeathPlace(const QString& deathPlace);
       void setFather(Person* father);
       void setMother(Person* mother);
 
@@ -43,6 +49,9 @@ namespace Business
       QString _firstName;
       QString _lastName;
       QDate _birthDate;
+      QString _birthPlace;
+      QDate _deathDate;
+      QString _deathPlace;
       Person* _father;
       Person* _mother;
   };

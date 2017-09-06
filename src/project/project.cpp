@@ -11,6 +11,7 @@ using namespace Business;
 
 Project::Project(const QString& name)
   : _name(name)
+  , _isDirty(false)
   , _currentTree(nullptr)
 {
   Q_ASSERT(!_name.isEmpty());
@@ -47,7 +48,7 @@ QString Project::name() const
 
 bool Project::isDirty() const
 {
-  return !_objectsToDelete.isEmpty() || !_objectsToUpdate.isEmpty() || !_objectsToAdd.isEmpty();
+  return _isDirty;
 }
 
 void Project::add(Tree* tree)
@@ -77,7 +78,7 @@ void Project::add_impl(DomainObject* object)
   if (object->id() == -1)
   {
     _objectsToAdd.append(object);
-    emit updated();
+    setDirty();
   }
   else
   {
@@ -92,7 +93,7 @@ void Project::setCurrentTree(Tree* tree)
   if (_currentTree != tree)
   {
     _currentTree = tree;
-    emit updated();
+    setDirty();
   }
 }
 
@@ -146,9 +147,16 @@ void Project::onObjectDirty()
   Q_ASSERT(dirtyObject != nullptr);
 
   if (!_objectsToAdd.contains(dirtyObject) && !_objectsToDelete.contains(dirtyObject))
+  {
     _objectsToUpdate.append(dirtyObject);
+    setDirty();
+  }
+}
 
-  emit updated();
+void Project::setDirty()
+{
+  _isDirty = true;
+  emit dirty();
 }
 
 void Project::save()
@@ -176,6 +184,8 @@ void Project::commit()
 
   for (int i=0; i<_objectsToAdd.count(); ++i)
     _objectsToAdd.at(i)->getD()->insertIntoDatabase();
+
+  _isDirty = false;
 
   emit upToDate();
 }

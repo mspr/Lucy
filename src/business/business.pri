@@ -4,7 +4,9 @@ HEADERS += \
     $$PWD/domainobject.h \
     $$PWD/domainobject_p.h \
     $$PWD/tree_p.h \
-    $$PWD/person_p.h
+    $$PWD/person_p.h \
+    $$PWD/job.h \
+    $$PWD/job_p.h
 
 SOURCES += \
     $$PWD/tree.cpp \
@@ -12,4 +14,6 @@ SOURCES += \
     $$PWD/domainobject.cpp \
     $$PWD/domainobject_p.cpp \
     $$PWD/tree_p.cpp \
-    $$PWD/person_p.cpp
+    $$PWD/person_p.cpp \
+    $$PWD/job.cpp \
+    $$PWD/job_p.cpp

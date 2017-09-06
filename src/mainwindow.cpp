@@ -149,7 +149,7 @@ void MainWindow::onProjectOpen()
 
   QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
   connect(currentProject.data(), Project::treeAdded, this, MainWindow::onTreeAdded);
-  connect(currentProject.data(), Project::updated, this, MainWindow::onProjectUpdated);
+  connect(currentProject.data(), Project::dirty, this, MainWindow::onProjectDirty);
   connect(currentProject.data(), Project::upToDate, this, MainWindow::onProjectUpToDate);
   connect(currentProject.data(), Project::destroyed, this, MainWindow::onProjectClosed);
 
@@ -181,7 +181,7 @@ void MainWindow::onTreeAdded(QUuid droid)
   _treeTabWidget->addTab(familyTreeView, treeAdded->name());
 }
 
-void MainWindow::onProjectUpdated()
+void MainWindow::onProjectDirty()
 {
   _ui->actionSave->setEnabled(true);
   _ui->actionSaveAs->setEnabled(true);
