@@ -8,6 +8,7 @@
 #include "math.h"
 #include "application.h"
 #include "personupdaterview.h"
+#include "personbuilderwizard.h"
 
 #include <QGraphicsSceneMouseEvent>
 #include <QDebug>
@@ -127,10 +128,14 @@ void FamilyTreeScene::mousePressEvent(QGraphicsSceneMouseEvent* e)
       Tree* currentTree = currentProject->currentTree();
       Q_ASSERT(currentTree != nullptr);
 
-      FamilyTreeNodeBuilder familyTreeNodeBuilder;
-      if (familyTreeNodeBuilder.exec())
+//      FamilyTreeNodeBuilder familyTreeNodeBuilder;
+//      if (familyTreeNodeBuilder.exec())
+//      {
+//        Person* person = familyTreeNodeBuilder.person();
+      PersonBuilderWizard personBuilderWizard;
+      if (personBuilderWizard.exec())
       {
-        Person* person = familyTreeNodeBuilder.person();
+        Person* person = personBuilderWizard.person();
 
         const Qt::MouseButton button = e->button();
 

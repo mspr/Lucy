@@ -4,7 +4,8 @@ SOURCES += \
     tree_view/familytreeview.cpp \
     $$PWD/familytreenodebuilder.cpp \
     $$PWD/personupdaterview.cpp \
-    $$PWD/configuration/personviewconfigurationmainview.cpp
+    $$PWD/configuration/personviewconfigurationmainview.cpp \
+    $$PWD/personbuilderwizard.cpp
 
 HEADERS += \
     tree_view/familytreenodeview.h \
@@ -12,9 +13,11 @@ HEADERS += \
     tree_view/familytreeview.h \
     $$PWD/familytreenodebuilder.h \
     $$PWD/personupdaterview.h \
-    $$PWD/configuration/personviewconfigurationmainview.h
+    $$PWD/configuration/personviewconfigurationmainview.h \
+    $$PWD/personbuilderwizard.h
 
 FORMS += \
     $$PWD/familytreenodebuilder.ui \
     $$PWD/personupdaterview.ui \
-    $$PWD/configuration/personviewconfigurationmainview.ui
+    $$PWD/configuration/personviewconfigurationmainview.ui \
+    $$PWD/personbuilderwizard.ui
