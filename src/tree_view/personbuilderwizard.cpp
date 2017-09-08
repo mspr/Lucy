@@ -1,6 +1,7 @@
 #include "personbuilderwizard.h"
 #include "ui_personbuilderwizard.h"
 #include "business/person.h"
+#include "business/location.h"
 
 using namespace Business;
 
@@ -42,7 +43,13 @@ void PersonBuilderWizard::done(int result)
 
   const QString firstName = _ui->firstNameLineEdit->text();
   const QString lastName = _ui->lastNameLineEdit->text();
+
   const QDate birthDate = _ui->dateEdit->date();
+//  const QString birthCountry = _ui->countryLineEdit->text();
+//  const QString birthDepartment = _ui->departmentLineEdit->text();
+//  const QString birthCity = _ui->cityLineEdit->text();
+
+  //Location* birthLocation = new Location(birthCountry, birthDepartment, birthCity);
 
   _person = new Person(firstName, lastName, birthDate);
 
