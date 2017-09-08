@@ -1,4 +1,11 @@
 #include "birth_p.h"
+#include "location.h"
+#include "location_p.h"
+
+#include <QSqlQuery>
+#include <QSqlError>
+#include <QVariant>
+#include <QDebug>
 
 using namespace Business;
 
@@ -53,12 +60,38 @@ void Birth_p::updateInDatabase()
 
 void Birth_p::insertIntoDatabase()
 {
+  QString queryStr = "INSERT INTO public.\"Birth\" (\"BirthDate\", \"Location\") VALUES (:birthDate, :location);";
 
+  QSqlQuery query;
+  query.prepare(queryStr);
+  query.bindValue(":birthDate", QVariant::fromValue(_date));
+
+  if (_location != nullptr)
+  {
+    _location->d()->insertIntoDatabase();
+    query.bindValue(":location", QVariant::fromValue(_location->id()));
+  }
+
+  if (query.exec())
+  {
+    _id = query.lastInsertId().toInt();
+    _isLoaded = true;
+  }
+  else
+  {
+    const QSqlError sqlError = query.lastError();
+    qCritical() << "Fail to insert Birth into database:" << sqlError.text();
+  }
 }
 
-void Birth_p::load_impl(QSqlQuery& /*query*/)
+void Birth_p::load_impl(QSqlQuery& query)
 {
+  Q_ASSERT(_location == nullptr);
 
+  _date = query.value(1).toDate();
+
+  const int locationId = query.value(2).toInt();
+  _location = new Location(locationId);
 }
 
 QString Birth_p::databaseTableName() const

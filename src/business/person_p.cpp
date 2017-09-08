@@ -3,6 +3,7 @@
 #include "tree.h"
 #include "job.h"
 #include "birth.h"
+#include "birth_p.h"
 
 #include <QSqlQuery>
 #include <QVariant>
@@ -134,17 +135,19 @@ void Person_p::load_impl(QSqlQuery& query)
   Q_ASSERT(_father == nullptr);
   Q_ASSERT(_mother == nullptr);
 
-    _firstName = query.value(1).toString();
-    _lastName = query.value(3).toString();
-//    _birthDate = query.value(4).toDate();
+  _firstName = query.value(1).toString();
+  _lastName = query.value(3).toString();
 
-    const int fatherId = query.value(5).toInt();
-    if (fatherId != 0)
-      _father = new Person(fatherId);
+  const int birthId = query.value(4).toInt();
+  _birth = new Birth(birthId);
 
-    const int motherId = query.value(6).toInt();
-    if (motherId != 0)
-      _mother = new Person(motherId);
+  const int fatherId = query.value(5).toInt();
+  if (fatherId != 0)
+    _father = new Person(fatherId);
+
+  const int motherId = query.value(6).toInt();
+  if (motherId != 0)
+    _mother = new Person(motherId);
 }
 
 QString Person_p::databaseTableName() const
@@ -154,13 +157,15 @@ QString Person_p::databaseTableName() const
 
 void Person_p::insertIntoDatabase()
 {
-  QString queryStr = "INSERT INTO public.\"Person\" (\"FirstName\", \"BirthDate\", \"LastName\", \"Father\", \"Mother\") VALUES (:firstName, :birthDate, :lastName, :father, :mother);";
+  _birth->d()->insertIntoDatabase();
+
+  QString queryStr = "INSERT INTO public.\"Person\" (\"FirstName\", \"Birth\", \"LastName\", \"Father\", \"Mother\") VALUES (:firstName, :birth, :lastName, :father, :mother);";
 
   QSqlQuery query;
   query.prepare(queryStr);
   query.bindValue(":firstName", QVariant::fromValue(_firstName));
   query.bindValue(":lastName", QVariant::fromValue(_lastName));
-//  query.bindValue(":birthDate", QVariant::fromValue(_birthDate));
+  query.bindValue(":birth", QVariant::fromValue(_birth->id()));
 
   if (_father != nullptr)
   {
