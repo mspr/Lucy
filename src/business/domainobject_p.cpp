@@ -83,6 +83,19 @@ void DomainObject_p::insertIntoDatabase()
   }
 }
 
+void DomainObject_p::updateInDatabase()
+{
+  Q_ASSERT(_id != -1);
+  Q_ASSERT(_isLoaded);
+
+  QSqlQuery query = prepareUpdateInDatabaseQuery();
+  if (!query.exec())
+  {
+    const QSqlError sqlError = query.lastError();
+    qCritical() << "Fail to update " << databaseTableName() + " in database:" << sqlError.text();
+  }
+}
+
 void DomainObject_p::deleteFromDatabase()
 {
   QString queryStr = "DELETE FROM public.\"" + databaseTableName() + "\" WHERE \"Id\" = :id";

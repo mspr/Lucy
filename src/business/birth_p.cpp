@@ -56,9 +56,17 @@ void Birth_p::setLocation(Location* location)
   _location = location;
 }
 
-void Birth_p::updateInDatabase()
+QSqlQuery Birth_p::prepareUpdateInDatabaseQuery()
 {
+  QString queryStr = "UPDATE public.\"Birth\" SET \"BirthDate\" = :birthDate, \"Location\" = :location WHERE Id = :id;";
 
+  QSqlQuery query;
+  query.prepare(queryStr);
+  query.bindValue(":birthDate", QVariant::fromValue(_date));
+  query.bindValue(":location", QVariant::fromValue(_location->id()));
+  query.bindValue(":id", QVariant::fromValue(_id));
+
+  return query;
 }
 
 QSqlQuery Birth_p::prepareInsertIntoDatabaseQuery()

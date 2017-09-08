@@ -46,7 +46,7 @@ namespace Business
       int id() const;
 
       void deleteFromDatabase();
-      virtual void updateInDatabase() = 0;
+      void updateInDatabase();
       void insertIntoDatabase();
 
     signals:
@@ -55,6 +55,7 @@ namespace Business
     protected:
       virtual void load_impl(QSqlQuery& query) = 0;
       virtual QSqlQuery prepareInsertIntoDatabaseQuery() = 0;
+      virtual QSqlQuery prepareUpdateInDatabaseQuery() = 0;
       virtual QString databaseTableName() const = 0;
 
       void setDirty();

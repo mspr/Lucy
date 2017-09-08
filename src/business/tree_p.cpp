@@ -33,6 +33,44 @@ Tree_p::~Tree_p()
   _persons.clear();
 }
 
+QString Tree_p::name() const
+{
+  return _name;
+}
+
+void Tree_p::setName(const QString& name)
+{
+  _name = name;
+  setDirty();
+}
+
+QList<Person*> Tree_p::persons() const
+{
+  return _persons;
+}
+
+void Tree_p::addPerson(Person* person)
+{
+  Q_ASSERT(person != nullptr);
+  Q_ASSERT(!_persons.contains(person));
+
+  person->setTree(facade());
+  _persons.append(person);
+}
+
+Person* Tree_p::reference() const
+{
+  return _reference;
+}
+
+void Tree_p::setReference(Person* person)
+{
+  Q_ASSERT(person != nullptr);
+  Q_ASSERT(_persons.contains(person));
+
+  _reference = person;
+}
+
 void Tree_p::load_impl(QSqlQuery& query)
 {
   _name = query.value(1).toString();
@@ -116,45 +154,7 @@ QSqlQuery Tree_p::prepareInsertIntoDatabaseQuery()
 //  }
 }
 
-void Tree_p::updateInDatabase()
+QSqlQuery Tree_p::prepareUpdateInDatabaseQuery()
 {
-
-}
-
-QString Tree_p::name() const
-{
-  return _name;
-}
-
-QList<Person*> Tree_p::persons() const
-{
-  return _persons;
-}
-
-Person* Tree_p::reference() const
-{
-  return _reference;
-}
-
-void Tree_p::setName(const QString& name)
-{
-  _name = name;
-  setDirty();
-}
-
-void Tree_p::addPerson(Person* person)
-{
-  Q_ASSERT(person != nullptr);
-  Q_ASSERT(!_persons.contains(person));
-
-  person->setTree(facade());
-  _persons.append(person);
-}
-
-void Tree_p::setReference(Person* person)
-{
-  Q_ASSERT(person != nullptr);
-  Q_ASSERT(_persons.contains(person));
-
-  _reference = person;
+  return QSqlQuery("");
 }

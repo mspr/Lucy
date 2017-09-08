@@ -58,9 +58,18 @@ void Location_p::setCity(const QString& city)
   _city = city;
 }
 
-void Location_p::updateInDatabase()
+QSqlQuery Location_p::prepareUpdateInDatabaseQuery()
 {
+  QString queryStr = "UPDATE public.\"Location\" SET \"Country\" = :country, \"Department\" = :department, \"City\" = :city WHERE Id = :id;";
 
+  QSqlQuery query;
+  query.prepare(queryStr);
+  query.bindValue(":country", QVariant::fromValue(_country));
+  query.bindValue(":department", QVariant::fromValue(_department));
+  query.bindValue(":city", QVariant::fromValue(_city));
+  query.bindValue(":id", QVariant::fromValue(_id));
+
+  return query;
 }
 
 void Location_p::load_impl(QSqlQuery& query)

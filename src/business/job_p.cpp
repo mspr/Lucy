@@ -56,8 +56,17 @@ void Job_p::setLocation(Location* location)
   _location = location;
 }
 
-void Job_p::updateInDatabase()
+QSqlQuery Job_p::prepareUpdateInDatabaseQuery()
 {
+  QString queryStr = "UPDATE public.\"Job\" SET \"Title\" = :title, \"Location\" = :location WHERE Id = :id;";
+
+  QSqlQuery query;
+  query.prepare(queryStr);
+  query.bindValue(":title", QVariant::fromValue(_title));
+  query.bindValue(":location", QVariant::fromValue(_location->id()));
+  query.bindValue(":id", QVariant::fromValue(_id));
+
+  return query;
 }
 
 void Job_p::load_impl(QSqlQuery& query)

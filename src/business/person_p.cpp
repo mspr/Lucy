@@ -183,7 +183,7 @@ QSqlQuery Person_p::prepareInsertIntoDatabaseQuery()
   return query;
 }
 
-void Person_p::updateInDatabase()
+QSqlQuery Person_p::prepareUpdateInDatabaseQuery()
 {
-
+  return QSqlQuery("");
 }
