@@ -1,6 +1,9 @@
 #include "job_p.h"
+#include "location.h"
+#include "location_p.h"
 
 #include <QSqlQuery>
+#include <QVariant>
 
 using namespace Business;
 
@@ -50,17 +53,33 @@ void Job_p::setLocation(Location* location)
 
 void Job_p::updateInDatabase()
 {
-
 }
 
-void Job_p::load_impl(QSqlQuery& /*query*/)
+void Job_p::load_impl(QSqlQuery& query)
 {
+  Q_ASSERT(_location == nullptr);
 
+  _title = query.value(1).toString();
+
+  const int locationId = query.value(2).toInt();
+  _location = new Location(locationId);
 }
 
 QSqlQuery Job_p::prepareInsertIntoDatabaseQuery()
 {
-  return QSqlQuery("");
+  QString queryStr = "INSERT INTO public.\"Job\" (\"Title\", \"Location\") VALUES (:title, :location);";
+
+  QSqlQuery query;
+  query.prepare(queryStr);
+  query.bindValue(":title", QVariant::fromValue(_title));
+
+  if (_location != nullptr)
+  {
+    _location->d()->insertIntoDatabase();
+    query.bindValue(":location", QVariant::fromValue(_location->id()));
+  }
+
+  return query;
 }
 
 QString Job_p::databaseTableName() const
