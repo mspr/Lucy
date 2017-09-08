@@ -27,6 +27,7 @@ namespace Business
     protected:
       virtual void load_impl(QSqlQuery& query) override;
       virtual QSqlQuery prepareInsertIntoDatabaseQuery() override;
+      virtual void onInsertIntoDatabaseSucceeded() override;
       virtual QSqlQuery prepareUpdateInDatabaseQuery() override;
       virtual QString databaseTableName() const override;
 

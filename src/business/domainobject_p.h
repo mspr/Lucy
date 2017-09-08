@@ -55,6 +55,7 @@ namespace Business
     protected:
       virtual void load_impl(QSqlQuery& query) = 0;
       virtual QSqlQuery prepareInsertIntoDatabaseQuery() = 0;
+      virtual void onInsertIntoDatabaseSucceeded();
       virtual QSqlQuery prepareUpdateInDatabaseQuery() = 0;
       virtual QString databaseTableName() const = 0;
 

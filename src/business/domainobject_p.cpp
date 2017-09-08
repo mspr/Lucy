@@ -75,12 +75,18 @@ void DomainObject_p::insertIntoDatabase()
   {
     _id = query.lastInsertId().toInt();
     _isLoaded = true;
+
+    onInsertIntoDatabaseSucceeded();
   }
   else
   {
     const QSqlError sqlError = query.lastError();
     qCritical() << "Fail to insert " << databaseTableName() + " into database:" << sqlError.text();
   }
+}
+
+void DomainObject_p::onInsertIntoDatabaseSucceeded()
+{
 }
 
 void DomainObject_p::updateInDatabase()
