@@ -1,6 +1,7 @@
 #include "location_p.h"
 
 #include <QSqlQuery>
+#include <QVariant>
 
 using namespace Business;
 
@@ -62,14 +63,24 @@ void Location_p::updateInDatabase()
 
 }
 
-void Location_p::load_impl(QSqlQuery& /*query*/)
+void Location_p::load_impl(QSqlQuery& query)
 {
-
+  _country = query.value(1).toString();
+  _department = query.value(2).toString();
+  _city = query.value(3).toString();
 }
 
 QSqlQuery Location_p::prepareInsertIntoDatabaseQuery()
 {
-  return QSqlQuery();
+  QString queryStr = "INSERT INTO public.\"Location\" (\"Country\", \"Department\", \"City\") VALUES (:country, :department, :city);";
+
+  QSqlQuery query;
+  query.prepare(queryStr);
+  query.bindValue(":country", QVariant::fromValue(_country));
+  query.bindValue(":department", QVariant::fromValue(_department));
+  query.bindValue(":city", QVariant::fromValue(_city));
+
+  return query;
 }
 
 QString Location_p::databaseTableName() const
