@@ -68,7 +68,7 @@ QString Tree_p::databaseTableName() const
   return "Tree";
 }
 
-void Tree_p::insertIntoDatabase()
+QSqlQuery Tree_p::prepareInsertIntoDatabaseQuery()
 {
   Q_ASSERT(_reference != nullptr);
 
@@ -77,41 +77,43 @@ void Tree_p::insertIntoDatabase()
   query.prepare(queryStr);
   query.bindValue(":treeName", QVariant::fromValue(_name));
 
-  if (query.exec())
-  {
-    _id = query.lastInsertId().toInt();
+  return query;
 
-    // Insert persons recursively from the reference
-    _reference->getD()->insertIntoDatabase();
+//  if (query.exec())
+//  {
+//    _id = query.lastInsertId().toInt();
 
-    for (int i=0; i<_persons.count(); ++i)
-    {
-      Person* person = _persons.at(i);
-      const int personId = person->id();
-      Q_ASSERT(personId != -1);
+//    // Insert persons recursively from the reference
+//    _reference->getD()->insertIntoDatabase();
 
-      const bool isReference = (person == _reference);
+//    for (int i=0; i<_persons.count(); ++i)
+//    {
+//      Person* person = _persons.at(i);
+//      const int personId = person->id();
+//      Q_ASSERT(personId != -1);
 
-      QString queryStr = "INSERT INTO public.\"TreePerson\" (\"TreeId\", \"PersonId\", \"IsReference\") VALUES (:treeId, :personId, :isReference);";
-      QSqlQuery query;
-      query.prepare(queryStr);
-      query.bindValue(":treeId", QVariant::fromValue(_id));
-      query.bindValue(":personId", QVariant::fromValue(personId));
-      query.bindValue(":isReference", QVariant::fromValue(isReference));
-      if (!query.exec())
-      {
-        const QSqlError sqlError = query.lastError();
-        qCritical() << "Fail to insert Tree into database:" << sqlError.text();
-      }
-    }
+//      const bool isReference = (person == _reference);
 
-    _isLoaded = true;
-  }
-  else
-  {
-    const QSqlError sqlError = query.lastError();
-    qCritical() << "Fail to insert Tree into database:" << sqlError.text();
-  }
+//      QString queryStr = "INSERT INTO public.\"TreePerson\" (\"TreeId\", \"PersonId\", \"IsReference\") VALUES (:treeId, :personId, :isReference);";
+//      QSqlQuery query;
+//      query.prepare(queryStr);
+//      query.bindValue(":treeId", QVariant::fromValue(_id));
+//      query.bindValue(":personId", QVariant::fromValue(personId));
+//      query.bindValue(":isReference", QVariant::fromValue(isReference));
+//      if (!query.exec())
+//      {
+//        const QSqlError sqlError = query.lastError();
+//        qCritical() << "Fail to insert Tree into database:" << sqlError.text();
+//      }
+//    }
+
+//    _isLoaded = true;
+//  }
+//  else
+//  {
+//    const QSqlError sqlError = query.lastError();
+//    qCritical() << "Fail to insert Tree into database:" << sqlError.text();
+//  }
 }
 
 void Tree_p::updateInDatabase()

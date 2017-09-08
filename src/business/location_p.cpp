@@ -1,5 +1,7 @@
 #include "location_p.h"
 
+#include <QSqlQuery>
+
 using namespace Business;
 
 DEFINE_FACADE(Location)
@@ -60,14 +62,14 @@ void Location_p::updateInDatabase()
 
 }
 
-void Location_p::insertIntoDatabase()
+void Location_p::load_impl(QSqlQuery& /*query*/)
 {
 
 }
 
-void Location_p::load_impl(QSqlQuery& /*query*/)
+QSqlQuery Location_p::prepareInsertIntoDatabaseQuery()
 {
-
+  return QSqlQuery();
 }
 
 QString Location_p::databaseTableName() const

@@ -7,8 +7,6 @@
 
 #include <QSqlQuery>
 #include <QVariant>
-#include <QSqlError>
-#include <QDebug>
 
 using namespace Business;
 
@@ -155,7 +153,7 @@ QString Person_p::databaseTableName() const
   return "Person";
 }
 
-void Person_p::insertIntoDatabase()
+QSqlQuery Person_p::prepareInsertIntoDatabaseQuery()
 {
   _birth->d()->insertIntoDatabase();
 
@@ -179,16 +177,7 @@ void Person_p::insertIntoDatabase()
     query.bindValue(":mother", QVariant::fromValue(_mother->id()));
   }
 
-  if (query.exec())
-  {
-    _id = query.lastInsertId().toInt();
-    _isLoaded = true;
-  }
-  else
-  {
-    const QSqlError sqlError = query.lastError();
-    qCritical() << "Fail to insert Person into database:" << sqlError.text();
-  }
+  return query;
 }
 
 void Person_p::updateInDatabase()

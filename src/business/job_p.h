@@ -21,10 +21,10 @@ namespace Business
       void setPlace(const QString& place);
 
       virtual void updateInDatabase() override;
-      virtual void insertIntoDatabase() override;
 
     protected:
       virtual void load_impl(QSqlQuery& query) override;
+      virtual QSqlQuery prepareInsertIntoDatabaseQuery() override;
       virtual QString databaseTableName() const override;
 
     private:

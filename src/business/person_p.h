@@ -46,11 +46,11 @@ namespace Business
       QList<Job*> jobs() const;
       void addJob(Job* job);
 
-      virtual void insertIntoDatabase() override;
       virtual void updateInDatabase() override;
 
     protected:
       virtual void load_impl(QSqlQuery& query) override;
+      virtual QSqlQuery prepareInsertIntoDatabaseQuery() override;
       virtual QString databaseTableName() const override;
 
     private:

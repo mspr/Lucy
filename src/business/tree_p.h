@@ -24,11 +24,11 @@ namespace Business
       Person* reference() const;
       void setReference(Person* person);
 
-      virtual void insertIntoDatabase() override;
       virtual void updateInDatabase() override;
 
     protected:
       virtual void load_impl(QSqlQuery& query) override;
+      virtual QSqlQuery prepareInsertIntoDatabaseQuery() override;
       virtual QString databaseTableName() const override;
 
     private:

@@ -68,6 +68,21 @@ void DomainObject_p::tryLoad()
   }
 }
 
+void DomainObject_p::insertIntoDatabase()
+{
+  QSqlQuery query = prepareInsertIntoDatabaseQuery();
+  if (query.exec())
+  {
+    _id = query.lastInsertId().toInt();
+    _isLoaded = true;
+  }
+  else
+  {
+    const QSqlError sqlError = query.lastError();
+    qCritical() << "Fail to insert " << databaseTableName() + " into database:" << sqlError.text();
+  }
+}
+
 void DomainObject_p::deleteFromDatabase()
 {
   QString queryStr = "DELETE FROM public.\"" + databaseTableName() + "\" WHERE \"Id\" = :id";

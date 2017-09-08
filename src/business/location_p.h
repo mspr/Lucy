@@ -24,10 +24,10 @@ namespace Business
       void setCity(const QString& city);
 
       virtual void updateInDatabase() override;
-      virtual void insertIntoDatabase() override;
 
     protected:
       virtual void load_impl(QSqlQuery& query) override;
+      virtual QSqlQuery prepareInsertIntoDatabaseQuery() override;
       virtual QString databaseTableName() const override;
 
     private:

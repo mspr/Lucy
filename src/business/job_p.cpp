@@ -1,5 +1,7 @@
 #include "job_p.h"
 
+#include <QSqlQuery>
+
 using namespace Business;
 
 DEFINE_FACADE(Job)
@@ -49,14 +51,14 @@ void Job_p::updateInDatabase()
 
 }
 
-void Job_p::insertIntoDatabase()
+void Job_p::load_impl(QSqlQuery& /*query*/)
 {
 
 }
 
-void Job_p::load_impl(QSqlQuery& /*query*/)
+QSqlQuery Job_p::prepareInsertIntoDatabaseQuery()
 {
-
+  return QSqlQuery("");
 }
 
 QString Job_p::databaseTableName() const
