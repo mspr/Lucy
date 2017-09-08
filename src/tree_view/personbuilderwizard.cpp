@@ -1,7 +1,11 @@
 #include "personbuilderwizard.h"
 #include "ui_personbuilderwizard.h"
+#include "project/projectmanager.h"
+#include "project/project.h"
+#include "business/tree.h"
 #include "business/person.h"
 #include "business/location.h"
+#include "business/birth.h"
 
 using namespace Business;
 
@@ -20,9 +24,6 @@ PersonBuilderWizard::~PersonBuilderWizard()
 
 Person* PersonBuilderWizard::person() const
 {
-//  Person* person = _person;
-//  _person = nullptr;
-
   return _person;
 }
 
@@ -38,20 +39,27 @@ void PersonBuilderWizard::open()
 
 void PersonBuilderWizard::done(int result)
 {
-  if (_person != nullptr)
-    delete _person;
+  QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
+  Q_ASSERT(!currentProject.isNull());
+  Tree* currentTree = currentProject->currentTree();
+  Q_ASSERT(currentTree != nullptr);
 
   const QString firstName = _ui->firstNameLineEdit->text();
   const QString lastName = _ui->lastNameLineEdit->text();
 
   const QDate birthDate = _ui->dateEdit->date();
-//  const QString birthCountry = _ui->countryLineEdit->text();
-//  const QString birthDepartment = _ui->departmentLineEdit->text();
-//  const QString birthCity = _ui->cityLineEdit->text();
-
-  //Location* birthLocation = new Location(birthCountry, birthDepartment, birthCity);
+  const QString birthCountry = _ui->countryLineEdit->text();
+  const QString birthDepartment = _ui->departmentLineEdit->text();
+  const QString birthCity = _ui->cityLineEdit->text();
+//  Location* birthLocation = new Location(birthCountry, birthDepartment, birthCity);
+//  Birth* birth = new Birth(birthDate, birthLocation);
 
   _person = new Person(firstName, lastName, birthDate);
+
+  currentTree->addPerson(_person);
+//  currentProject->add(birthLocation);
+//  currentProject->add(birth);
+  currentProject->add(_person);
 
   QWizard::done(result);
 }

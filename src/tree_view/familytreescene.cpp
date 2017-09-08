@@ -123,29 +123,16 @@ void FamilyTreeScene::mousePressEvent(QGraphicsSceneMouseEvent* e)
     {
       Q_ASSERT(_levelByTreeNode.contains(node));
 
-      QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
-      Q_ASSERT(!currentProject.isNull());
-      Tree* currentTree = currentProject->currentTree();
-      Q_ASSERT(currentTree != nullptr);
-
-//      FamilyTreeNodeBuilder familyTreeNodeBuilder;
-//      if (familyTreeNodeBuilder.exec())
-//      {
-//        Person* person = familyTreeNodeBuilder.person();
       PersonBuilderWizard personBuilderWizard;
       if (personBuilderWizard.exec())
       {
         Person* person = personBuilderWizard.person();
 
         const Qt::MouseButton button = e->button();
-
         if (button == Qt::LeftButton)
           node->person()->setFather(person);
         else if (button == Qt::RightButton)
           node->person()->setMother(person);
-
-        currentTree->addPerson(person);
-        currentProject->add(person);
 
         extendTreeFromNode(node, person, button);
       }
