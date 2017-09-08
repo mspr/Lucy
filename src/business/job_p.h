@@ -6,19 +6,20 @@
 namespace Business
 {
   class Job;
+  class Location;
 
   class Job_p : public DomainObject_p
   {
     DECLARE_FACADE(Job)
 
     public:
-      Job_p(Job* facade, const QString& title, const QString& place);
+      Job_p(Job* facade, const QString& title, Location* location);
 
       QString title() const;
       void setTitle(const QString& title);
 
-      QString place() const;
-      void setPlace(const QString& place);
+      Location* location() const;
+      void setLocation(Location* location);
 
       virtual void updateInDatabase() override;
 
@@ -29,7 +30,7 @@ namespace Business
 
     private:
       QString _title;
-      QString _place;
+      Location* _location;
   };
 
 } // Business

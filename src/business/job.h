@@ -6,19 +6,20 @@
 namespace Business
 {
   class Job_p;
+  class Location;
 
   class Job : public DomainObject
   {
     DECLARE_PIMPL(Job)
 
     public:
-      Job(const QString& title, const QString& place);
+      Job(const QString& title, Location* location = nullptr);
 
       QString title() const;
       void setTitle(const QString& title);
 
-      QString place() const;
-      void setPlace(const QString& place);
+      Location* location() const;
+      void setLocation(Location* location);
   };
 
 } // Business

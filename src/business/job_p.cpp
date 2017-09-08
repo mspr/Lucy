@@ -9,15 +9,16 @@ DEFINE_FACADE(Job)
 Job_p::Job_p(Job* facade, const int id)
   : DomainObject_p(id)
   , _facade(facade)
+  , _location(nullptr)
 {
   Q_ASSERT(_facade != nullptr);
 }
 
-Job_p::Job_p(Job* facade, const QString& title, const QString& place)
+Job_p::Job_p(Job* facade, const QString& title, Location* location)
   : DomainObject_p()
   , _facade(facade)
   , _title(title)
-  , _place(place)
+  , _location(location)
 {
   Q_ASSERT(_facade != nullptr);
 }
@@ -36,14 +37,15 @@ void Job_p::setTitle(const QString& title)
   _title = title;
 }
 
-QString Job_p::place() const
+Location* Job_p::location() const
 {
-  return _place;
+  return _location;
 }
 
-void Job_p::setPlace(const QString& place)
+void Job_p::setLocation(Location* location)
 {
-  _place = place;
+  Q_ASSERT(location != nullptr);
+  _location = location;
 }
 
 void Job_p::updateInDatabase()

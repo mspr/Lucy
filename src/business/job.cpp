@@ -5,8 +5,8 @@ using namespace Business;
 
 DEFINE_PIMPL(Job)
 
-Job::Job(const QString& title, const QString& place)
-  : _pimpl(new Job_p(this, title, place))
+Job::Job(const QString& title, Location* location)
+  : _pimpl(new Job_p(this, title, location))
 {
 }
 
@@ -20,12 +20,12 @@ void Job::setTitle(const QString& title)
   d()->setTitle(title);
 }
 
-QString Job::place() const
+Location* Job::location() const
 {
-  return d()->place();
+  return d()->location();
 }
 
-void Job::setPlace(const QString& place)
+void Job::setLocation(Location* location)
 {
-  d()->setPlace(place);
+  d()->setLocation(location);
 }
