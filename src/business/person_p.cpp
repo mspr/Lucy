@@ -43,6 +43,9 @@ Person_p::~Person_p()
     delete _birth;
     _birth = nullptr;
   }
+
+  qDeleteAll(_jobs);
+  _jobs.clear();
 }
 
 QString Person_p::firstName() const

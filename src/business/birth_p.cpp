@@ -28,6 +28,11 @@ Birth_p::Birth_p(Birth* facade, const QDate& date, Location* location)
 
 Birth_p::~Birth_p()
 {
+  if (_location != nullptr)
+  {
+    delete _location;
+    _location = nullptr;
+  }
 }
 
 QDate Birth_p::date() const

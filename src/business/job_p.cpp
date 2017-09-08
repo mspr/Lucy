@@ -28,6 +28,11 @@ Job_p::Job_p(Job* facade, const QString& title, Location* location)
 
 Job_p::~Job_p()
 {
+  if (_location != nullptr)
+  {
+    delete _location;
+    _location = nullptr;
+  }
 }
 
 QString Job_p::title() const
