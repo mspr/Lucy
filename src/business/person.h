@@ -9,6 +9,7 @@ namespace Business
 {
   class Person_p;
   class Tree;
+  class Birth;
   class Job;
 
   class Person : public DomainObject
@@ -16,7 +17,7 @@ namespace Business
     DECLARE_PIMPL(Person)
 
     public:
-      Person(const QString& firstName, const QString& lastName, const QDate& birthDate);
+      Person(const QString& firstName, const QString& lastName, Birth* birth);
 
       QString firstName() const;
       void setFirstName(const QString& firstName);
@@ -24,8 +25,8 @@ namespace Business
       QString lastName() const;
       void setLastName(const QString& lastName);
 
-      QDate birthDate() const;
-      void setBirthDate(const QDate& birthDate);
+      Birth* birth() const;
+      void setBirth(Birth* birth);
 
       Tree* tree() const;
       void setTree(Tree* tree);

@@ -19,7 +19,6 @@ Birth_p::Birth_p(Birth* facade, const QDate& date, Location* location)
   , _location(location)
 {
   Q_ASSERT(_facade != nullptr);
-  Q_ASSERT(_location != nullptr);
 }
 
 Birth_p::~Birth_p()

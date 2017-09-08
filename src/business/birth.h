@@ -14,7 +14,7 @@ namespace Business
     DECLARE_PIMPL(Birth)
 
     public:
-      Birth(const QDate& date, Location* location);
+      Birth(const QDate& date, Location* location = nullptr);
 
       QDate date() const;
       void setDate(const QDate& date);

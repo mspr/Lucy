@@ -52,9 +52,9 @@ void PersonBuilderWizard::done(int result)
   const QString birthDepartment = _ui->departmentLineEdit->text();
   const QString birthCity = _ui->cityLineEdit->text();
 //  Location* birthLocation = new Location(birthCountry, birthDepartment, birthCity);
-//  Birth* birth = new Birth(birthDate, birthLocation);
+  Birth* birth = new Birth(birthDate);
 
-  _person = new Person(firstName, lastName, birthDate);
+  _person = new Person(firstName, lastName, birth);
 
   currentTree->addPerson(_person);
 //  currentProject->add(birthLocation);

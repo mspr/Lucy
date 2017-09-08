@@ -5,8 +5,8 @@ using namespace Business;
 
 DEFINE_PIMPL(Person)
 
-Person::Person(const QString& firstName, const QString& lastName, const QDate& birthDate)
-  : _pimpl(new Person_p(this, firstName, lastName, birthDate))
+Person::Person(const QString& firstName, const QString& lastName, Birth* birth)
+  : _pimpl(new Person_p(this, firstName, lastName, birth))
 {
 }
 
@@ -30,14 +30,14 @@ void Person::setLastName(const QString& lastName)
   d()->setLastName(lastName);
 }
 
-QDate Person::birthDate() const
+Birth* Person::birth() const
 {
-  return d()->birthDate();
+  return d()->birth();
 }
 
-void Person::setBirthDate(const QDate& birthDate)
+void Person::setBirth(Birth* birth)
 {
-  d()->setBirthDate(birthDate);
+  d()->setBirth(birth);
 }
 
 Tree* Person::tree() const

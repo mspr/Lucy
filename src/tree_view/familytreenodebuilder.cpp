@@ -1,5 +1,6 @@
 #include "familytreenodebuilder.h"
 #include "ui_familytreenodebuilder.h"
+#include "business/birth.h"
 
 using namespace Business;
 
@@ -19,7 +20,9 @@ Person* FamilyTreeNodeBuilder::person() const
 {
   const QString firstName = _ui->firstNameLineEdit->text();
   const QString lastName = _ui->lastNameLineEdit->text();
-  const QDate birthDate = _ui->birthDateEdit->date();
 
-  return new Person(firstName, lastName, birthDate);
+  const QDate birthDate = _ui->birthDateEdit->date();
+  Birth* birth = new Birth(birthDate);
+
+  return new Person(firstName, lastName, birth);
 }

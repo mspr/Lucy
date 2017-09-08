@@ -2,6 +2,7 @@
 #include "person.h"
 #include "tree.h"
 #include "job.h"
+#include "birth.h"
 
 #include <QSqlQuery>
 #include <QVariant>
@@ -16,26 +17,33 @@ Person_p::Person_p(Person* facade, const int id)
   : DomainObject_p(id)
   , _facade(facade)
   , _tree(nullptr)
+  , _birth(nullptr)
   , _father(nullptr)
   , _mother(nullptr)
 {
   Q_ASSERT(_facade != nullptr);
 }
 
-Person_p::Person_p(Person* facade, const QString& firstName, const QString& lastName, const QDate& birthDate)
+Person_p::Person_p(Person* facade, const QString& firstName, const QString& lastName, Birth* birth)
   : DomainObject_p()
   , _facade(facade)
   , _firstName(firstName)
   , _lastName(lastName)
-  , _birthDate(birthDate)
+  , _birth(birth)
   , _father(nullptr)
   , _mother(nullptr)
 {
   Q_ASSERT(_facade != nullptr);
+  Q_ASSERT(_birth != nullptr);
 }
 
 Person_p::~Person_p()
 {
+  if (_birth != nullptr)
+  {
+    delete _birth;
+    _birth = nullptr;
+  }
 }
 
 QString Person_p::firstName() const
@@ -43,14 +51,33 @@ QString Person_p::firstName() const
   return _firstName;
 }
 
+void Person_p::setFirstName(const QString& firstName)
+{
+  _firstName = firstName;
+  setDirty();
+}
+
 QString Person_p::lastName() const
 {
   return _lastName;
 }
 
-QDate Person_p::birthDate() const
+void Person_p::setLastName(const QString& lastName)
 {
-  return _birthDate;
+  _lastName = lastName;
+  setDirty();
+}
+
+Birth* Person_p::birth() const
+{
+  return _birth;
+}
+
+void Person_p::setBirth(Birth* birth)
+{
+  Q_ASSERT(birth != nullptr);
+  _birth = birth;
+//  setDirty();
 }
 
 Person* Person_p::father() const
@@ -58,9 +85,23 @@ Person* Person_p::father() const
   return _father;
 }
 
+void Person_p::setFather(Person* father)
+{
+  Q_ASSERT(father != nullptr);
+  _father = father;
+  //setDirty();
+}
+
 Person* Person_p::mother() const
 {
   return _mother;
+}
+
+void Person_p::setMother(Person* mother)
+{
+  Q_ASSERT(mother != nullptr);
+  _mother = mother;
+  //setDirty();
 }
 
 Tree* Person_p::tree() const
@@ -68,9 +109,23 @@ Tree* Person_p::tree() const
   return _tree;
 }
 
+void Person_p::setTree(Tree* tree)
+{
+  Q_ASSERT(tree != nullptr);
+  _tree = tree;
+}
+
 QList<Job*> Person_p::jobs() const
 {
   return _jobs;
+}
+
+void Person_p::addJob(Job* job)
+{
+  Q_ASSERT(job != nullptr);
+  Q_ASSERT(!_jobs.contains(job));
+  _jobs.append(job);
+  //setDirty();
 }
 
 void Person_p::load_impl(QSqlQuery& query)
@@ -81,7 +136,7 @@ void Person_p::load_impl(QSqlQuery& query)
 
     _firstName = query.value(1).toString();
     _lastName = query.value(3).toString();
-    _birthDate = query.value(4).toDate();
+//    _birthDate = query.value(4).toDate();
 
     const int fatherId = query.value(5).toInt();
     if (fatherId != 0)
@@ -105,7 +160,7 @@ void Person_p::insertIntoDatabase()
   query.prepare(queryStr);
   query.bindValue(":firstName", QVariant::fromValue(_firstName));
   query.bindValue(":lastName", QVariant::fromValue(_lastName));
-  query.bindValue(":birthDate", QVariant::fromValue(_birthDate));
+//  query.bindValue(":birthDate", QVariant::fromValue(_birthDate));
 
   if (_father != nullptr)
   {
@@ -134,50 +189,4 @@ void Person_p::insertIntoDatabase()
 void Person_p::updateInDatabase()
 {
 
-}
-
-void Person_p::setTree(Tree* tree)
-{
-  Q_ASSERT(tree != nullptr);
-  _tree = tree;
-}
-
-void Person_p::setFirstName(const QString& firstName)
-{
-  _firstName = firstName;
-  setDirty();
-}
-
-void Person_p::setLastName(const QString& lastName)
-{
-  _lastName = lastName;
-  setDirty();
-}
-
-void Person_p::setBirthDate(const QDate& birthDate)
-{
-  _birthDate = birthDate;
-  setDirty();
-}
-
-void Person_p::setFather(Person* father)
-{
-  Q_ASSERT(father != nullptr);
-  _father = father;
-  //setDirty();
-}
-
-void Person_p::setMother(Person* mother)
-{
-  Q_ASSERT(mother != nullptr);
-  _mother = mother;
-  //setDirty();
-}
-
-void Person_p::addJob(Job* job)
-{
-  Q_ASSERT(job != nullptr);
-  Q_ASSERT(!_jobs.contains(job));
-  _jobs.append(job);
-  //setDirty();
 }

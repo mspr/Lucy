@@ -9,6 +9,7 @@ namespace Business
 {
   class Person;
   class Tree;
+  class Birth;
   class Job;
 
   class Person_p : public DomainObject_p
@@ -16,7 +17,7 @@ namespace Business
     DECLARE_FACADE(Person)
 
     public:
-      Person_p(Person* facade, const QString& firstName, const QString& lastName, const QDate& birthDate);
+      Person_p(Person* facade, const QString& firstName, const QString& lastName, Birth* birth);
 
       QString firstName() const;
       void setFirstName(const QString& firstName);
@@ -24,11 +25,8 @@ namespace Business
       QString lastName() const;
       void setLastName(const QString& lastName);
 
-      QDate birthDate() const;
-      void setBirthDate(const QDate& birthDate);
-
-      QString birthPlace() const;
-      void setBirthPlace(const QString& birthPlace);
+      Birth* birth() const;
+      void setBirth(Birth* birth);
 
       QDate deathDate() const;
       void setDeathDate(const QDate& deathDate);
@@ -59,8 +57,7 @@ namespace Business
       Tree* _tree;
       QString _firstName;
       QString _lastName;
-      QDate _birthDate;
-      QString _birthPlace;
+      Birth* _birth;
       QDate _deathDate;
       QString _deathPlace;
       Person* _father;

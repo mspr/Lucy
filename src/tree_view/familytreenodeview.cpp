@@ -1,5 +1,6 @@
 #include "familytreenodeview.h"
 #include "business/person.h"
+#include "business/birth.h"
 
 #include <QGraphicsScene>
 #include <QPainter>
@@ -21,7 +22,7 @@ FamilyTreeNodeView::FamilyTreeNodeView(const QPointF& sceneCenterPos, Person* pe
   QGraphicsSimpleTextItem* personLastNameViewItem = new QGraphicsSimpleTextItem(_person->lastName(), this);
   personLastNameViewItem->setPos(0, 10);
   addToGroup(personLastNameViewItem);
-  QGraphicsSimpleTextItem* personBirthDateViewItem = new QGraphicsSimpleTextItem(_person->birthDate().toString(), this);
+  QGraphicsSimpleTextItem* personBirthDateViewItem = new QGraphicsSimpleTextItem(_person->birth()->date().toString(), this);
   personBirthDateViewItem->setPos(0, 20);
   addToGroup(personBirthDateViewItem);
 
