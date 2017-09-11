@@ -3,6 +3,7 @@
 #include "business/person.h"
 #include "business/tree.h"
 #include "business/birth.h"
+#include "business/gender.h"
 #include "project/projectmanager.h"
 #include "project/project.h"
 
@@ -36,7 +37,7 @@ int TreeCreationDialog::exec()
     Birth* birth = new Birth(birthDate);
 
     Tree* tree = new Tree(treeName);
-    Person* person = new Person(firstName, lastName, birth);
+    Person* person = new Person(Gender::Masculine, firstName, lastName, birth);
     tree->addPerson(person);
     tree->setReference(person);
 

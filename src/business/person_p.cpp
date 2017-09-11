@@ -23,9 +23,10 @@ Person_p::Person_p(Person* facade, const int id)
   Q_ASSERT(_facade != nullptr);
 }
 
-Person_p::Person_p(Person* facade, const QString& firstName, const QString& lastName, Birth* birth)
+Person_p::Person_p(Person* facade, Gender gender, const QString& firstName, const QString& lastName, Birth* birth)
   : DomainObject_p()
   , _facade(facade)
+  , _gender(gender)
   , _firstName(firstName)
   , _lastName(lastName)
   , _birth(birth)
@@ -46,6 +47,16 @@ Person_p::~Person_p()
 
   qDeleteAll(_jobs);
   _jobs.clear();
+}
+
+Gender Person_p::gender() const
+{
+  return _gender;
+}
+
+void Person_p::setGender(Gender gender)
+{
+  _gender = gender;
 }
 
 QString Person_p::firstName() const

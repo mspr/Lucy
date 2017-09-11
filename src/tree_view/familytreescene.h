@@ -30,9 +30,12 @@ class FamilyTreeScene : public QGraphicsScene
 
     FamilyTreeNodeView* nodeAtPos(const QPointF& scenePos) const;
 
+    void adjustNodes();
+
   private:
     QHash<QGraphicsItem*, int> _levelByTreeNode;
     QHash<QGraphicsItem*, double> _inclinationByTreeNode;
+    FamilyTreeNodeView* _referenceNode;
 };
 
 #endif // FAMILYTREESCENE_H

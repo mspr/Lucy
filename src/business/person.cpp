@@ -5,9 +5,19 @@ using namespace Business;
 
 DEFINE_PIMPL(Person)
 
-Person::Person(const QString& firstName, const QString& lastName, Birth* birth)
-  : _pimpl(new Person_p(this, firstName, lastName, birth))
+Person::Person(Gender gender, const QString& firstName, const QString& lastName, Birth* birth)
+  : _pimpl(new Person_p(this, gender, firstName, lastName, birth))
 {
+}
+
+Gender Person::gender() const
+{
+  return d()->gender();
+}
+
+void Person::setGender(Gender gender)
+{
+  d()->setGender(gender);
 }
 
 QString Person::firstName() const

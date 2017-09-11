@@ -3,6 +3,7 @@
 #include "business/tree.h"
 #include "business/person.h"
 #include "business/birth.h"
+#include "business/gender.h"
 
 #include <QtTest/QTest>
 
@@ -130,7 +131,7 @@ void TestProject::save_dirty()
   Project project(projectName);
 
   Tree* tree = new Tree("treeName");
-  Person* person = new Person("Maxime", "Spriet", new Birth(QDate()));
+  Person* person = new Person(Gender::Masculine, "Maxime", "Spriet", new Birth(QDate()));
   tree->addPerson(person);
   tree->setReference(person);
 

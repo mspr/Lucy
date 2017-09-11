@@ -21,6 +21,7 @@ FamilyTreeScene::FamilyTreeScene(const QRectF& sceneRect, Tree* tree, QObject* p
   Q_ASSERT(tree != nullptr);
 
   FamilyTreeNodeView* referenceNode = createReferenceNode(tree->reference(), QPointF(0, 0));
+  _referenceNode = referenceNode;
   extendTreeFromNodeRecursively(referenceNode);
 }
 
@@ -47,46 +48,83 @@ void FamilyTreeScene::extendTreeFromNodeRecursively(FamilyTreeNodeView* node)
   }
 }
 
+//FamilyTreeNodeView* FamilyTreeScene::extendTreeFromNode(FamilyTreeNodeView* node, Person* person, Qt::MouseButton button)
+//{
+//  Q_ASSERT(node != nullptr);
+//  Q_ASSERT(person != nullptr);
+//  Q_ASSERT(_levelByTreeNode.contains(node));
+//  Q_ASSERT(_inclinationByTreeNode.contains(node));
+
+//  const int radius = 200;
+
+//  const int previousNodeLevel = _levelByTreeNode.value(node);
+//  const int newTreeLevel = previousNodeLevel + 1;
+//  Q_ASSERT(newTreeLevel > 0);
+
+//  const QPointF previousNodeRectCenter = node->boundingRect().center();
+//  const QPointF previousNodeCenterScenePos = node->scenePos() + previousNodeRectCenter;
+
+//  double inclination = 5*M_PI/12 * 1.0/newTreeLevel;
+
+//  double angle = _inclinationByTreeNode.value(node);
+
+//  if (button == Qt::LeftButton)
+//    inclination *= -1;
+//  else if (button == Qt::RightButton)
+//    inclination *= 1;
+
+//  angle += inclination;
+
+//  const double x = previousNodeCenterScenePos.x() + radius*sin(angle);
+//  const double y = previousNodeCenterScenePos.y() - radius*cos(angle);
+//  const QPointF scenePos = QPointF(x, y);
+
+//  qDebug() << previousNodeCenterScenePos << " >> " << scenePos;
+
+//  FamilyTreeNodeView* newNode = createNode(person, scenePos);
+//  Q_ASSERT(newNode != nullptr);
+
+//  _levelByTreeNode.insert(newNode, newTreeLevel);
+//  _inclinationByTreeNode.insert(newNode, angle);
+
+//  return newNode;
+//}
+
 FamilyTreeNodeView* FamilyTreeScene::extendTreeFromNode(FamilyTreeNodeView* node, Person* person, Qt::MouseButton button)
 {
   Q_ASSERT(node != nullptr);
   Q_ASSERT(person != nullptr);
   Q_ASSERT(_levelByTreeNode.contains(node));
-  Q_ASSERT(_inclinationByTreeNode.contains(node));
 
-  const int radius = 200;
+  const QPointF previousNodeRectCenter = node->boundingRect().center();
+  const QPointF previousNodeCenterScenePos = node->scenePos() + previousNodeRectCenter;
+
+  double xOffset = (node == _referenceNode ? 500 : 100);
+  if (button == Qt::LeftButton)
+    xOffset *= -1;
+
+  const double x = previousNodeCenterScenePos.x() + xOffset;
+  const double y = previousNodeCenterScenePos.y() - 100;
+  const QPointF scenePos = QPointF(x, y);
+
+  FamilyTreeNodeView* newNode = createNode(person, scenePos);
+  Q_ASSERT(newNode != nullptr);
 
   const int previousNodeLevel = _levelByTreeNode.value(node);
   const int newTreeLevel = previousNodeLevel + 1;
   Q_ASSERT(newTreeLevel > 0);
 
-  const QPointF previousNodeRectCenter = node->boundingRect().center();
-  const QPointF previousNodeCenterScenePos = node->scenePos() + previousNodeRectCenter;
-
-  double inclination = 5*M_PI/12 * 1.0/newTreeLevel;
-
-  double angle = _inclinationByTreeNode.value(node);
-
-  if (button == Qt::LeftButton)
-    inclination *= -1;
-  else if (button == Qt::RightButton)
-    inclination *= 1;
-
-  angle += inclination;
-
-  const double x = previousNodeCenterScenePos.x() + radius*sin(angle);
-  const double y = previousNodeCenterScenePos.y() - radius*cos(angle);
-  const QPointF scenePos = QPointF(x, y);
-
-  qDebug() << previousNodeCenterScenePos << " >> " << scenePos;
-
-  FamilyTreeNodeView* newNode = createNode(person, scenePos);
-  Q_ASSERT(newNode != nullptr);
-
   _levelByTreeNode.insert(newNode, newTreeLevel);
-  _inclinationByTreeNode.insert(newNode, angle);
 
   return newNode;
+}
+
+void FamilyTreeScene::adjustNodes()
+{
+  for (int i=0; i<_levelByTreeNode.count(); ++i)
+  {
+
+  }
 }
 
 FamilyTreeNodeView* FamilyTreeScene::createReferenceNode(Person* person, const QPointF& scenePos)

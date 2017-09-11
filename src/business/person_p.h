@@ -8,6 +8,7 @@
 namespace Business
 {
   class Person;
+  enum class Gender;
   class Tree;
   class Birth;
   class Job;
@@ -17,7 +18,10 @@ namespace Business
     DECLARE_FACADE(Person)
 
     public:
-      Person_p(Person* facade, const QString& firstName, const QString& lastName, Birth* birth);
+      Person_p(Person* facade, Gender gender, const QString& firstName, const QString& lastName, Birth* birth);
+
+      Gender gender() const;
+      void setGender(Gender gender);
 
       QString firstName() const;
       void setFirstName(const QString& firstName);
@@ -54,6 +58,7 @@ namespace Business
 
     private:
       Tree* _tree;
+      Gender _gender;
       QString _firstName;
       QString _lastName;
       Birth* _birth;

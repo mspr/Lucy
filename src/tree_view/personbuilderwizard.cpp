@@ -6,6 +6,7 @@
 #include "business/person.h"
 #include "business/location.h"
 #include "business/birth.h"
+#include "business/gender.h"
 
 using namespace Business;
 
@@ -46,6 +47,7 @@ void PersonBuilderWizard::done(int result)
 
   const QString firstName = _ui->firstNameLineEdit->text();
   const QString lastName = _ui->lastNameLineEdit->text();
+  const Gender gender = _ui->feminineGenderPushButton->isChecked() ? Gender::Feminine : Gender::Masculine;
 
   const QDate birthDate = _ui->dateEdit->date();
   const QString birthCountry = _ui->countryLineEdit->text();
@@ -54,7 +56,7 @@ void PersonBuilderWizard::done(int result)
   Location* birthLocation = new Location(birthCountry, birthDepartment, birthCity);
   Birth* birth = new Birth(birthDate, birthLocation);
 
-  _person = new Person(firstName, lastName, birth);
+  _person = new Person(gender, firstName, lastName, birth);
 
   currentTree->addPerson(_person);
 //  currentProject->add(birthLocation);
