@@ -51,8 +51,8 @@ void PersonBuilderWizard::done(int result)
   const QString birthCountry = _ui->countryLineEdit->text();
   const QString birthDepartment = _ui->departmentLineEdit->text();
   const QString birthCity = _ui->cityLineEdit->text();
-//  Location* birthLocation = new Location(birthCountry, birthDepartment, birthCity);
-  Birth* birth = new Birth(birthDate);
+  Location* birthLocation = new Location(birthCountry, birthDepartment, birthCity);
+  Birth* birth = new Birth(birthDate, birthLocation);
 
   _person = new Person(firstName, lastName, birth);
 
