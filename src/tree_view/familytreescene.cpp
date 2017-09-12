@@ -123,23 +123,37 @@ void FamilyTreeScene::adjustNodes()
 {
   _referenceNode->setPos(QPointF(0, 0));
 
-  const int oldGenerationsCount = countOldGenerations();
-  int xBaseOffset = oldGenerationsCount * 200;
+  adjustRecursively(_referenceNode);
+}
+
+void FamilyTreeScene::adjustRecursively(FamilyTreeNodeView* node)
+{
+  Q_ASSERT(node != nullptr);
+
+  const QPointF nodeCenterScenePos = node->scenePos();
+  int xOffset = 200;
   const int yOffset = 100;
 
-  Person* mother = _referenceNode->person()->mother();
+  if (node == _referenceNode)
+  {
+    const int oldGenerationsCount = countOldGenerations();
+    xOffset = oldGenerationsCount * 200;
+  }
+
+  Person* mother = node->person()->mother();
   if (mother != nullptr)
   {
     FamilyTreeNodeView* motherView = getView(mother);
-    motherView->setSceneCenterPos(QPointF(xBaseOffset, yOffset));
+    motherView->setSceneCenterPos(nodeCenterScenePos + QPointF(xOffset, yOffset));
+    adjustRecursively(motherView);
   }
 
-  Person* father = _referenceNode->person()->father();
+  Person* father = node->person()->father();
   if (father != nullptr)
   {
-    xBaseOffset *= -1;
     FamilyTreeNodeView* fatherView = getView(father);
-    fatherView->setSceneCenterPos(QPointF(xBaseOffset, yOffset));
+    fatherView->setSceneCenterPos(nodeCenterScenePos + QPointF(-xOffset, yOffset));
+    adjustRecursively(fatherView);
   }
 }
 

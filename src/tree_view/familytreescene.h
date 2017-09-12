@@ -31,6 +31,7 @@ class FamilyTreeScene : public QGraphicsScene
     FamilyTreeNodeView* nodeAtPos(const QPointF& scenePos) const;
 
     void adjustNodes();
+    void adjustRecursively(FamilyTreeNodeView* node);
     int countOldGenerations() const;
     FamilyTreeNodeView* getView(Business::Person* person) const;
 
