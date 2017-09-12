@@ -80,6 +80,11 @@ void Person::setMother(Person* mother)
   d()->setMother(mother);
 }
 
+void Person::setParent(Person* parent)
+{
+  d()->setParent(parent);
+}
+
 QList<Job*> Person::jobs() const
 {
   return d()->jobs();

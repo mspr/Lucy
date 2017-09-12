@@ -26,7 +26,7 @@ class FamilyTreeScene : public QGraphicsScene
 
   private:
     void extendTreeFromNodeRecursively(FamilyTreeNodeView* node);
-    FamilyTreeNodeView* extendTreeFromNode(FamilyTreeNodeView* node, Business::Person* person, Qt::MouseButton button);
+    FamilyTreeNodeView* extendTreeFromNode(FamilyTreeNodeView* node, Business::Person* person);
 
     FamilyTreeNodeView* nodeAtPos(const QPointF& scenePos) const;
 

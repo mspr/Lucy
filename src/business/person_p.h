@@ -40,9 +40,9 @@ namespace Business
 
       Person* father() const;
       void setFather(Person* father);
-
       Person* mother() const;
       void setMother(Person* mother);
+      void setParent(Person* parent);
 
       Tree* tree() const;
       void setTree(Tree* tree);

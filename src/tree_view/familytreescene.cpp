@@ -2,6 +2,7 @@
 #include "familytreenodeview.h"
 #include "familytreenodebuilder.h"
 #include "business/person.h"
+#include "business/gender.h"
 #include "business/tree.h"
 #include "project/projectmanager.h"
 #include "project/project.h"
@@ -34,7 +35,7 @@ void FamilyTreeScene::extendTreeFromNodeRecursively(FamilyTreeNodeView* node)
   Person* father = person->father();
   if (father != nullptr)
   {
-    FamilyTreeNodeView* fatherNode = extendTreeFromNode(node, father, Qt::LeftButton);
+    FamilyTreeNodeView* fatherNode = extendTreeFromNode(node, father);
     Q_ASSERT(fatherNode != nullptr);
     extendTreeFromNodeRecursively(fatherNode);
   }
@@ -42,7 +43,7 @@ void FamilyTreeScene::extendTreeFromNodeRecursively(FamilyTreeNodeView* node)
   Person* mother = person->mother();
   if (mother != nullptr)
   {
-    FamilyTreeNodeView* motherNode = extendTreeFromNode(node, mother, Qt::RightButton);
+    FamilyTreeNodeView* motherNode = extendTreeFromNode(node, mother);
     Q_ASSERT(motherNode != nullptr);
     extendTreeFromNodeRecursively(motherNode);
   }
@@ -90,7 +91,7 @@ void FamilyTreeScene::extendTreeFromNodeRecursively(FamilyTreeNodeView* node)
 //  return newNode;
 //}
 
-FamilyTreeNodeView* FamilyTreeScene::extendTreeFromNode(FamilyTreeNodeView* node, Person* person, Qt::MouseButton button)
+FamilyTreeNodeView* FamilyTreeScene::extendTreeFromNode(FamilyTreeNodeView* node, Person* person)
 {
   Q_ASSERT(node != nullptr);
   Q_ASSERT(person != nullptr);
@@ -100,7 +101,7 @@ FamilyTreeNodeView* FamilyTreeScene::extendTreeFromNode(FamilyTreeNodeView* node
   const QPointF previousNodeCenterScenePos = node->scenePos() + previousNodeRectCenter;
 
   double xOffset = (node == _referenceNode ? 500 : 100);
-  if (button == Qt::LeftButton)
+  if (person->gender() == Gender::Masculine)
     xOffset *= -1;
 
   const double x = previousNodeCenterScenePos.x() + xOffset;
@@ -223,13 +224,9 @@ void FamilyTreeScene::mousePressEvent(QGraphicsSceneMouseEvent* e)
       {
         Person* person = personBuilderWizard.person();
 
-        const Qt::MouseButton button = e->button();
-        if (button == Qt::LeftButton)
-          node->person()->setFather(person);
-        else if (button == Qt::RightButton)
-          node->person()->setMother(person);
+        node->person()->setParent(person);
 
-        extendTreeFromNode(node, person, button);
+        extendTreeFromNode(node, person);
       }
     }
   }

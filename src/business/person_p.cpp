@@ -1,5 +1,6 @@
 #include "person_p.h"
 #include "person.h"
+#include "gender.h"
 #include "tree.h"
 #include "job.h"
 #include "birth.h"
@@ -115,6 +116,16 @@ void Person_p::setMother(Person* mother)
   Q_ASSERT(mother != nullptr);
   _mother = mother;
   //setDirty();
+}
+
+void Person_p::setParent(Person* parent)
+{
+  Q_ASSERT(parent != nullptr);
+
+  if (parent->gender() == Gender::Masculine)
+    setFather(parent);
+  else
+    setMother(parent);
 }
 
 Tree* Person_p::tree() const
