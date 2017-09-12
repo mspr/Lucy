@@ -31,10 +31,13 @@ class FamilyTreeScene : public QGraphicsScene
     FamilyTreeNodeView* nodeAtPos(const QPointF& scenePos) const;
 
     void adjustNodes();
+    int countOldGenerations() const;
+    FamilyTreeNodeView* getView(Business::Person* person) const;
 
   private:
     QHash<QGraphicsItem*, int> _levelByTreeNode;
     QHash<QGraphicsItem*, double> _inclinationByTreeNode;
+    QList<FamilyTreeNodeView*> _nodes;
     FamilyTreeNodeView* _referenceNode;
 };
 

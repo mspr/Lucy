@@ -121,10 +121,53 @@ FamilyTreeNodeView* FamilyTreeScene::extendTreeFromNode(FamilyTreeNodeView* node
 
 void FamilyTreeScene::adjustNodes()
 {
-  for (int i=0; i<_levelByTreeNode.count(); ++i)
-  {
+  _referenceNode->setPos(QPointF(0, 0));
 
+  const int oldGenerationsCount = countOldGenerations();
+  int xBaseOffset = oldGenerationsCount * 200;
+  const int yOffset = 100;
+
+  Person* mother = _referenceNode->person()->mother();
+  if (mother != nullptr)
+  {
+    FamilyTreeNodeView* motherView = getView(mother);
+    motherView->setSceneCenterPos(QPointF(xBaseOffset, yOffset));
   }
+
+  Person* father = _referenceNode->person()->father();
+  if (father != nullptr)
+  {
+    xBaseOffset *= -1;
+    FamilyTreeNodeView* fatherView = getView(father);
+    fatherView->setSceneCenterPos(QPointF(xBaseOffset, yOffset));
+  }
+}
+
+FamilyTreeNodeView* FamilyTreeScene::getView(Person* person) const
+{
+  Q_ASSERT(person != nullptr);
+
+  for (int i=0; i<_nodes.count(); ++i)
+  {
+    FamilyTreeNodeView* view = _nodes.at(i);
+    if (view->person() == person)
+      return view;
+  }
+
+  Q_ASSERT(false);
+
+  return nullptr;
+}
+
+int FamilyTreeScene::countOldGenerations() const
+{
+  int generationsCount = 1;
+
+  int remainingNodes = _nodes.count();
+  while (remainingNodes /= 2 > 1)
+    ++generationsCount;
+
+  return generationsCount;
 }
 
 FamilyTreeNodeView* FamilyTreeScene::createReferenceNode(Person* person, const QPointF& scenePos)

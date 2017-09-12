@@ -26,6 +26,11 @@ FamilyTreeNodeView::FamilyTreeNodeView(const QPointF& sceneCenterPos, Person* pe
   personBirthDateViewItem->setPos(0, 20);
   addToGroup(personBirthDateViewItem);
 
+  setSceneCenterPos(sceneCenterPos);
+}
+
+void FamilyTreeNodeView::setSceneCenterPos(const QPointF& sceneCenterPos)
+{
   setPos(sceneCenterPos.x() - _width/2, sceneCenterPos.y() - _height/2);
 }
 

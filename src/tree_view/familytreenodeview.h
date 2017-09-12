@@ -16,6 +16,8 @@ class FamilyTreeNodeView : public QGraphicsItemGroup
 
     Business::Person* person() const;
 
+    void setSceneCenterPos(const QPointF& sceneCenterPos);
+
   public:
     static int _width;
     static int _height;
