@@ -85,10 +85,10 @@ void FamilyTreeScene::adjustNodes()
 {
   _referenceNode->setPos(QPointF(0, 0));
 
-  adjustRecursively(_referenceNode);
+  adjustNodesRecursively(_referenceNode);
 }
 
-void FamilyTreeScene::adjustRecursively(FamilyTreeNodeView* node)
+void FamilyTreeScene::adjustNodesRecursively(FamilyTreeNodeView* node)
 {
   Q_ASSERT(node != nullptr);
 
@@ -107,7 +107,7 @@ void FamilyTreeScene::adjustRecursively(FamilyTreeNodeView* node)
   {
     FamilyTreeNodeView* motherView = getView(mother);
     motherView->setSceneCenterPos(nodeCenterScenePos + QPointF(xOffset, yOffset));
-    adjustRecursively(motherView);
+    adjustNodesRecursively(motherView);
   }
 
   Person* father = node->person()->father();
@@ -115,7 +115,7 @@ void FamilyTreeScene::adjustRecursively(FamilyTreeNodeView* node)
   {
     FamilyTreeNodeView* fatherView = getView(father);
     fatherView->setSceneCenterPos(nodeCenterScenePos + QPointF(-xOffset, yOffset));
-    adjustRecursively(fatherView);
+    adjustNodesRecursively(fatherView);
   }
 }
 
@@ -161,6 +161,7 @@ FamilyTreeNodeView* FamilyTreeScene::createNode(Person* person, const QPointF& s
 {
   FamilyTreeNodeView* node = new FamilyTreeNodeView(scenePos, person);
   addItem(node);
+  _nodes.append(node);
 
   return node;
 }
