@@ -29,6 +29,11 @@ FamilyTreeNodeView::FamilyTreeNodeView(const QPointF& sceneCenterPos, Person* pe
   setSceneCenterPos(sceneCenterPos);
 }
 
+QPointF FamilyTreeNodeView::sceneCenterPos() const
+{
+  return pos() + QPointF(_width/2, _height/2);
+}
+
 void FamilyTreeNodeView::setSceneCenterPos(const QPointF& sceneCenterPos)
 {
   setPos(sceneCenterPos.x() - _width/2, sceneCenterPos.y() - _height/2);

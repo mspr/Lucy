@@ -10,6 +10,7 @@
 #include "application.h"
 #include "personupdaterview.h"
 #include "personbuilderwizard.h"
+#include "personviewcreationmarker.h"
 
 #include <QGraphicsSceneMouseEvent>
 #include <QDebug>
@@ -163,6 +164,17 @@ FamilyTreeNodeView* FamilyTreeScene::createNode(Person* person, const QPointF& s
   addItem(node);
   _nodes.append(node);
 
+  const QRectF boundingRect = node->boundingRect();
+  const QPointF sceneCenterPos = node->sceneCenterPos();
+
+  PersonViewCreationMarker* fatherViewCreationMarker = new PersonViewCreationMarker(QPixmap(":/images/fatherGender.png"), node);
+  fatherViewCreationMarker->setPos(sceneCenterPos - QPointF(boundingRect.width()/2, boundingRect.height()/2));
+  addItem(fatherViewCreationMarker);
+
+  PersonViewCreationMarker* motherViewCreationMarker = new PersonViewCreationMarker(QPixmap(":/images/motherGender.png"), node);
+  motherViewCreationMarker->setPos(sceneCenterPos + QPointF(-boundingRect.width()/2, boundingRect.height()/2));
+  addItem(motherViewCreationMarker);
+
   return node;
 }
 
@@ -174,25 +186,7 @@ void FamilyTreeScene::mousePressEvent(QGraphicsSceneMouseEvent* e)
     return;
   }
 
-  if (Application::keyboardModifiers() & Qt::ControlModifier)
-  {
-    FamilyTreeNodeView* node = nodeAtPos(e->scenePos());
-    if (node != nullptr)
-    {
-      Q_ASSERT(_levelByTreeNode.contains(node));
-
-      PersonBuilderWizard personBuilderWizard;
-      if (personBuilderWizard.exec())
-      {
-        Person* person = personBuilderWizard.person();
-
-        node->person()->setParent(person);
-
-        extendTreeFromNode(node, person);
-        adjustNodes();
-      }
-    }
-  }
+  QGraphicsScene::mousePressEvent(e);
 }
 
 void FamilyTreeScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* e)
@@ -204,7 +198,7 @@ void FamilyTreeScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* e)
     personUpdaterView.exec();
   }
 
-  FamilyTreeScene::mouseDoubleClickEvent(e);
+  QGraphicsScene::mouseDoubleClickEvent(e);
 }
 
 FamilyTreeNodeView* FamilyTreeScene::nodeAtPos(const QPointF& scenePos) const
