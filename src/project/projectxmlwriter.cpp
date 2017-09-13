@@ -1,11 +1,13 @@
 #include "projectxmlwriter.h"
-#include "domain_object/tree.h"
+#include "business/tree.h"
+
+using namespace Business;
 
 void ProjectXmlWriter::write(Project* project)
 {
   Q_ASSERT(project != nullptr);
 
-  const QString fileName = project->fileName();
+  const QString fileName = project->fileInfo().fileName();
   QFile file(fileName);
   if (file.open(QIODevice::WriteOnly))
   {

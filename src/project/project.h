@@ -3,10 +3,11 @@
 
 #include <QList>
 #include <QUuid>
+#include <QFileInfo>
 
-class Person;
-class Tree;
-class DomainObject;
+namespace Business { class Person; }
+namespace Business { class Tree; }
+namespace Business { class DomainObject; }
 
 class Project : public QObject
 {
@@ -16,45 +17,47 @@ class Project : public QObject
     Project(const QString& name);
     ~Project();
 
-    QString fileName() const;
+    QFileInfo fileInfo() const;
     QString name() const;
     bool isDirty() const;
 
-    void setFileName(const QString& fileName);
+    void setFileInfo(const QFileInfo& fileInfo);
 
-    void add(Tree* tree);
-    void add(Person* person);
-    void setCurrentTree(Tree* tree);
-//    void setCurrentTree(QUuid droid);
+    void add(Business::Tree* tree);
+    void add(Business::Person* person);
+    void setCurrentTree(Business::Tree* tree);
 
-    QList<Tree*> trees() const;
-    Tree* currentTree() const;
-    Tree* tree(QUuid droid) const;
-    Tree* tree(const int id) const;
+    QList<Business::Tree*> trees() const;
+    Business::Tree* currentTree() const;
+    Business::Tree* tree(QUuid droid) const;
+    Business::Tree* tree(const int id) const;
 
     void save();
 
-  public slots:
-    void onObjectDirty();
+    static QString fileFormat();
 
   signals:
     void treeAdded(QUuid droid);
-    void updated();
+    void dirty();
     void upToDate();
 
   private:
-    void add_impl(DomainObject* object);
-
+    void add_impl(Business::DomainObject* object);
     void commit();
 
+  private slots:
+    void onObjectDirty();
+    void setDirty();
+
   private:
-    QString _fileName;
+    QFileInfo _fileInfo;
     QString _name;
-    QList<Tree*> _trees;
-    QList<DomainObject*> _objectsToDelete;
-    QList<DomainObject*> _objectsToAdd;
-    QList<DomainObject*> _objectsToUpdate;
-    Tree* _currentTree;
+    bool _isDirty;
+    QList<Business::Tree*> _trees;
+    QList<Business::DomainObject*> _objectsToDelete;
+    QList<Business::DomainObject*> _objectsToAdd;
+    QList<Business::DomainObject*> _objectsToUpdate;
+    Business::Tree* _currentTree;
 };
 
 #endif // PROJECT_H

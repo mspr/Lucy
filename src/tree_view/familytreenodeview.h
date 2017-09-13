@@ -3,18 +3,21 @@
 
 #include <QGraphicsItemGroup>
 
-class Person;
+namespace Business { class Person; }
 
 class FamilyTreeNodeView : public QGraphicsItemGroup
 {
   public:
-    FamilyTreeNodeView(const QPointF& scenePos, Person* person, QGraphicsItem* parent = nullptr);
+    FamilyTreeNodeView(const QPointF& scenePos, Business::Person* person, QGraphicsItem* parent = nullptr);
 
     virtual QRectF boundingRect() const override;
     virtual QPainterPath shape() const override;
     virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget = nullptr) override;
 
-    Person* person() const;
+    Business::Person* person() const;
+
+    QPointF sceneCenterPos() const;
+    void setSceneCenterPos(const QPointF& sceneCenterPos);
 
   public:
     static int _width;
@@ -22,7 +25,7 @@ class FamilyTreeNodeView : public QGraphicsItemGroup
     static int _margin;
 
   private:
-    Person* _person;
+    Business::Person* _person;
 };
 
 #endif // FAMILYTREENODEVIEW_H

@@ -9,10 +9,16 @@ class TestProject : public QObject
 
   private slots:
     void createProject();
-    void setFileName();
+    void fileFormat();
+    void setFileInfo();
     void addTree();
     void addTree_currentTree();
     void setCurrentTree();
+    void tree_from_droid();
+    void tree_from_id();
+    void save_not_dirty();
+    void save_dirty();
+    void cleanupTestCase();
 };
 
 #endif // TESTINTERVAL_H

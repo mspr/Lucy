@@ -10,27 +10,27 @@ using namespace Output;
 
 OutputWindow::OutputWindow(QWidget* parent)
   : QDockWidget(parent)
-  , m_ui(new Ui::OutputWindow)
+  , _ui(new Ui::OutputWindow)
 {
-  m_ui->setupUi(this);
+  _ui->setupUi(this);
 
   setAllowedAreas(Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea);
   setTitleBarWidget(new QWidget());
 
-  m_ui->scrollArea->setVerticalScrollBar(new OutputScrollBar(m_ui->scrollArea));
-  m_ui->scrollAreaWidgetContents->layout()->setSizeConstraint(QLayout::SetFixedSize);
+  _ui->scrollArea->setVerticalScrollBar(new OutputScrollBar(_ui->scrollArea));
+  _ui->scrollAreaWidgetContents->layout()->setSizeConstraint(QLayout::SetFixedSize);
 
   MessageHandler::registerOutputWindow(this);
 }
 
 OutputWindow::~OutputWindow()
 {
-  delete m_ui;
+  delete _ui;
 }
 
 void OutputWindow::showMessage(QtMsgType type, const QString& msg)
 {
-  QGridLayout* layout = qobject_cast<QGridLayout*>(m_ui->scrollAreaWidgetContents->layout());
+  QGridLayout* layout = qobject_cast<QGridLayout*>(_ui->scrollAreaWidgetContents->layout());
   Q_ASSERT_X(layout != nullptr, "showMessage()", "nullptr");
   const int rowIdx = layout->rowCount();
 

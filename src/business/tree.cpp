@@ -1,6 +1,8 @@
 #include "tree.h"
 #include "tree_p.h"
 
+using namespace Business;
+
 DEFINE_PIMPL(Tree)
 
 Tree::Tree(const QString& name)

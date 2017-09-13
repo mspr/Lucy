@@ -2,7 +2,7 @@
 #define FAMILYTREENODEBUILDER_H
 
 #include <QDialog>
-#include "domain_object/person.h"
+#include "business/person.h"
 
 namespace Ui { class FamilyTreeNodeBuilder; }
 
@@ -14,10 +14,10 @@ class FamilyTreeNodeBuilder : public QDialog
     explicit FamilyTreeNodeBuilder(QWidget* parent = nullptr);
     ~FamilyTreeNodeBuilder();
 
-    Person* person() const;
+    Business::Person* person() const;
 
   private:
-    Ui::FamilyTreeNodeBuilder* m_ui;
+    Ui::FamilyTreeNodeBuilder* _ui;
 };
 
 #endif // FAMILYTREENODEBUILDER_H

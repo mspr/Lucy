@@ -18,7 +18,7 @@ namespace Output
       void showMessage(QtMsgType type, const QString& msg);
 
     private:
-      Ui::OutputWindow* m_ui;
+      Ui::OutputWindow* _ui;
   };
 
 } // Output

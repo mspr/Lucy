@@ -1,23 +1,30 @@
 #include "familytreenodebuilder.h"
 #include "ui_familytreenodebuilder.h"
+#include "business/birth.h"
+#include "business/gender.h"
+
+using namespace Business;
 
 FamilyTreeNodeBuilder::FamilyTreeNodeBuilder(QWidget* parent)
   : QDialog(parent)
-  , m_ui(new Ui::FamilyTreeNodeBuilder)
+  , _ui(new Ui::FamilyTreeNodeBuilder)
 {
-  m_ui->setupUi(this);
+  _ui->setupUi(this);
 }
 
 FamilyTreeNodeBuilder::~FamilyTreeNodeBuilder()
 {
-  delete m_ui;
+  delete _ui;
 }
 
 Person* FamilyTreeNodeBuilder::person() const
 {
-  const QString firstName = m_ui->firstNameLineEdit->text();
-  const QString lastName = m_ui->lastNameLineEdit->text();
-  const QDate birthDate = m_ui->birthDateEdit->date();
+  const QString firstName = _ui->firstNameLineEdit->text();
+  const QString lastName = _ui->lastNameLineEdit->text();
+  const Gender gender = _ui->feminineGenderPushButton->isChecked() ? Gender::Feminine : Gender::Masculine;
 
-  return new Person(firstName, lastName, birthDate);
+  const QDate birthDate = _ui->birthDateEdit->date();
+  Birth* birth = new Birth(birthDate);
+
+  return new Person(gender, firstName, lastName, birth);
 }

@@ -1,9 +1,11 @@
 #include "projectxmlreader.h"
-#include "domain_object/tree.h"
+#include "business/tree.h"
 
 #include <QtXml/QDomDocument>
 #include <QFile>
 #include <QDebug>
+
+using namespace Business;
 
 /*static*/ QSharedPointer<Project> ProjectXmlReader::load(const QString& fileName)
 {
@@ -30,7 +32,7 @@
 
       const QString projectName = projectElem.attribute("name");
       project.reset(new Project(projectName));
-      project->setFileName(fileName);
+      project->setFileInfo(QFileInfo(fileName));
 
       loadTrees(projectElem, *project);
       loadCurrentTree(projectElem, *project);

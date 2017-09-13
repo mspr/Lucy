@@ -3,12 +3,12 @@
 
 #include <QGraphicsView>
 
-class Tree;
+namespace Business { class Tree; }
 
 class FamilyTreeView : public QGraphicsView
 {
   public:
-    FamilyTreeView(Tree* tree, QWidget* parent = nullptr);
+    FamilyTreeView(Business::Tree* tree, QWidget* parent = nullptr);
 
   protected:
     virtual void keyPressEvent(QKeyEvent*) override;

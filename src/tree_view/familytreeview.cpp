@@ -6,6 +6,8 @@
 #include <QMouseEvent>
 #include <QDebug>
 
+using namespace Business;
+
 FamilyTreeView::FamilyTreeView(Tree* tree, QWidget* parent)
   : QGraphicsView(parent)
 {

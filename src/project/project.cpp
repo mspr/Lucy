@@ -1,15 +1,17 @@
 #include "project.h"
 #include "projectxmlwriter.h"
-#include "domain_object/domainobject.h"
-#include "domain_object/domainobject_p.h"
-#include "domain_object/person.h"
-#include "domain_object/tree.h"
+#include "business/domainobject.h"
+#include "business/domainobject_p.h"
+#include "business/person.h"
+#include "business/tree.h"
 
-#include "QDebug"
+#include <QDebug>
 
+using namespace Business;
 
 Project::Project(const QString& name)
   : _name(name)
+  , _isDirty(false)
   , _currentTree(nullptr)
 {
   Q_ASSERT(!_name.isEmpty());
@@ -21,15 +23,22 @@ Project::~Project()
   _trees.clear();
 }
 
-void Project::setFileName(const QString& fileName)
+void Project::setFileInfo(const QFileInfo& fileInfo)
 {
-  Q_ASSERT(!fileName.isEmpty());
-  _fileName = fileName;
+  Q_ASSERT(!fileInfo.baseName().isEmpty());
+  Q_ASSERT(fileInfo.completeSuffix() == fileFormat());
+
+  _fileInfo = fileInfo;
 }
 
-QString Project::fileName() const
+QFileInfo Project::fileInfo() const
 {
-  return _fileName;
+  return _fileInfo;
+}
+
+/*static*/ QString Project::fileFormat()
+{
+  return "lcy";
 }
 
 QString Project::name() const
@@ -39,7 +48,7 @@ QString Project::name() const
 
 bool Project::isDirty() const
 {
-  return !_objectsToDelete.isEmpty() || !_objectsToUpdate.isEmpty() || !_objectsToAdd.isEmpty();
+  return _isDirty;
 }
 
 void Project::add(Tree* tree)
@@ -69,7 +78,7 @@ void Project::add_impl(DomainObject* object)
   if (object->id() == -1)
   {
     _objectsToAdd.append(object);
-    emit updated();
+    setDirty();
   }
   else
   {
@@ -84,21 +93,9 @@ void Project::setCurrentTree(Tree* tree)
   if (_currentTree != tree)
   {
     _currentTree = tree;
-    emit updated();
+    setDirty();
   }
 }
-
-//void Project::setCurrentTree(QUuid droid)
-//{
-//  Tree* currentTree = tree(droid);
-//  Q_ASSERT(currentTree != nullptr);
-
-//  if (_currentTree != currentTree)
-//  {
-//    _currentTree = currentTree;
-//    emit updated();
-//  }
-//}
 
 Tree* Project::currentTree() const
 {
@@ -149,17 +146,25 @@ void Project::onObjectDirty()
   DomainObject* dirtyObject = dynamic_cast<DomainObject*>(sender());
   Q_ASSERT(dirtyObject != nullptr);
 
-  _objectsToUpdate.append(dirtyObject);
+  if (!_objectsToAdd.contains(dirtyObject) && !_objectsToDelete.contains(dirtyObject))
+  {
+    _objectsToUpdate.append(dirtyObject);
+    setDirty();
+  }
+}
 
-  emit updated();
+void Project::setDirty()
+{
+  _isDirty = true;
+  emit dirty();
 }
 
 void Project::save()
 {
   if (isDirty())
   {
-    if (fileName().isEmpty())
-      _fileName = _name + ".lcy";
+    if (fileInfo().fileName().isEmpty())
+      _fileInfo = QFileInfo(_name + "." + fileFormat());
 
     commit();
 
@@ -179,6 +184,8 @@ void Project::commit()
 
   for (int i=0; i<_objectsToAdd.count(); ++i)
     _objectsToAdd.at(i)->getD()->insertIntoDatabase();
+
+  _isDirty = false;
 
   emit upToDate();
 }

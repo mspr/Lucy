@@ -5,6 +5,8 @@
 #include <QSqlError>
 #include <QDebug>
 
+using namespace Business;
+
 DomainObject_p::DomainObject_p(const int id)
   : _id(id)
   , _droid(QUuid::createUuid())
@@ -63,6 +65,40 @@ void DomainObject_p::tryLoad()
       const QSqlError sqlError = query.lastError();
       qCritical() << "Fail to select data from " << databaseTableName() << " table from database:" << sqlError.text();
     }
+  }
+}
+
+void DomainObject_p::insertIntoDatabase()
+{
+  QSqlQuery query = prepareInsertIntoDatabaseQuery();
+  if (query.exec())
+  {
+    _id = query.lastInsertId().toInt();
+    _isLoaded = true;
+
+    onInsertIntoDatabaseSucceeded();
+  }
+  else
+  {
+    const QSqlError sqlError = query.lastError();
+    qCritical() << "Fail to insert " << databaseTableName() + " into database:" << sqlError.text();
+  }
+}
+
+void DomainObject_p::onInsertIntoDatabaseSucceeded()
+{
+}
+
+void DomainObject_p::updateInDatabase()
+{
+  Q_ASSERT(_id != -1);
+  Q_ASSERT(_isLoaded);
+
+  QSqlQuery query = prepareUpdateInDatabaseQuery();
+  if (!query.exec())
+  {
+    const QSqlError sqlError = query.lastError();
+    qCritical() << "Fail to update " << databaseTableName() + " in database:" << sqlError.text();
   }
 }
 
