@@ -36,22 +36,23 @@ class Project : public QObject
 
     static QString fileFormat();
 
-  public slots:
-    void onObjectDirty();
-
   signals:
     void treeAdded(QUuid droid);
-    void updated();
+    void dirty();
     void upToDate();
 
   private:
     void add_impl(Business::DomainObject* object);
-
     void commit();
+
+  private slots:
+    void onObjectDirty();
+    void setDirty();
 
   private:
     QFileInfo _fileInfo;
     QString _name;
+    bool _isDirty;
     QList<Business::Tree*> _trees;
     QList<Business::DomainObject*> _objectsToDelete;
     QList<Business::DomainObject*> _objectsToAdd;

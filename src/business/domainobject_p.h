@@ -45,15 +45,18 @@ namespace Business
       QUuid droid() const;
       int id() const;
 
-      virtual void deleteFromDatabase();
-      virtual void updateInDatabase() = 0;
-      virtual void insertIntoDatabase() = 0;
+      void deleteFromDatabase();
+      void updateInDatabase();
+      void insertIntoDatabase();
 
     signals:
       void dirty();
 
     protected:
       virtual void load_impl(QSqlQuery& query) = 0;
+      virtual QSqlQuery prepareInsertIntoDatabaseQuery() = 0;
+      virtual void onInsertIntoDatabaseSucceeded();
+      virtual QSqlQuery prepareUpdateInDatabaseQuery() = 0;
       virtual QString databaseTableName() const = 0;
 
       void setDirty();

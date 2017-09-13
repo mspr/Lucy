@@ -8,43 +8,65 @@
 namespace Business
 {
   class Person;
+  enum class Gender;
   class Tree;
+  class Birth;
+  class Job;
 
   class Person_p : public DomainObject_p
   {
     DECLARE_FACADE(Person)
 
     public:
-      Person_p(Person* facade, const QString& firstName, const QString& lastName, const QDate& birthDate);
+      Person_p(Person* facade, Gender gender, const QString& firstName, const QString& lastName, Birth* birth);
+
+      Gender gender() const;
+      void setGender(Gender gender);
 
       QString firstName() const;
-      QString lastName() const;
-      QDate birthDate() const;
-      Person* father() const;
-      Person* mother() const;
-      Tree* tree() const;
-
-      void setTree(Tree* tree);
       void setFirstName(const QString& firstName);
-      void setLastName(const QString& lastName);
-      void setBirthDate(const QDate& birthDate);
-      void setFather(Person* father);
-      void setMother(Person* mother);
 
-      virtual void insertIntoDatabase();
-      virtual void updateInDatabase();
+      QString lastName() const;
+      void setLastName(const QString& lastName);
+
+      Birth* birth() const;
+      void setBirth(Birth* birth);
+
+      QDate deathDate() const;
+      void setDeathDate(const QDate& deathDate);
+
+      QString deathPlace() const;
+      void setDeathPlace(const QString& deathPlace);
+
+      Person* father() const;
+      void setFather(Person* father);
+      Person* mother() const;
+      void setMother(Person* mother);
+      void setParent(Person* parent);
+
+      Tree* tree() const;
+      void setTree(Tree* tree);
+
+      QList<Job*> jobs() const;
+      void addJob(Job* job);
 
     protected:
       virtual void load_impl(QSqlQuery& query) override;
+      virtual QSqlQuery prepareInsertIntoDatabaseQuery() override;
+      virtual QSqlQuery prepareUpdateInDatabaseQuery() override;
       virtual QString databaseTableName() const override;
 
     private:
       Tree* _tree;
+      Gender _gender;
       QString _firstName;
       QString _lastName;
-      QDate _birthDate;
+      Birth* _birth;
+      QDate _deathDate;
+      QString _deathPlace;
       Person* _father;
       Person* _mother;
+      QList<Job*> _jobs;
   };
 
 } // Business

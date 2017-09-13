@@ -5,9 +5,19 @@ using namespace Business;
 
 DEFINE_PIMPL(Person)
 
-Person::Person(const QString& firstName, const QString& lastName, const QDate& birthDate)
-  : _pimpl(new Person_p(this, firstName, lastName, birthDate))
+Person::Person(Gender gender, const QString& firstName, const QString& lastName, Birth* birth)
+  : _pimpl(new Person_p(this, gender, firstName, lastName, birth))
 {
+}
+
+Gender Person::gender() const
+{
+  return d()->gender();
+}
+
+void Person::setGender(Gender gender)
+{
+  d()->setGender(gender);
 }
 
 QString Person::firstName() const
@@ -30,14 +40,14 @@ void Person::setLastName(const QString& lastName)
   d()->setLastName(lastName);
 }
 
-QDate Person::birthDate() const
+Birth* Person::birth() const
 {
-  return d()->birthDate();
+  return d()->birth();
 }
 
-void Person::setBirthDate(const QDate& birthDate)
+void Person::setBirth(Birth* birth)
 {
-  d()->setBirthDate(birthDate);
+  d()->setBirth(birth);
 }
 
 Tree* Person::tree() const
@@ -68,4 +78,19 @@ Person* Person::mother() const
 void Person::setMother(Person* mother)
 {
   d()->setMother(mother);
+}
+
+void Person::setParent(Person* parent)
+{
+  d()->setParent(parent);
+}
+
+QList<Job*> Person::jobs() const
+{
+  return d()->jobs();
+}
+
+void Person::addJob(Job* job)
+{
+  d()->addJob(job);
 }

@@ -1,6 +1,9 @@
 #include "testproject.h"
 #include "project/project.h"
 #include "business/tree.h"
+#include "business/person.h"
+#include "business/birth.h"
+#include "business/gender.h"
 
 #include <QtTest/QTest>
 
@@ -47,6 +50,7 @@ void TestProject::addTree()
 
   QCOMPARE(project.trees().count(), 1);
   QCOMPARE(project.trees().first(), tree);
+  QCOMPARE(project.isDirty(), true);
 }
 
 void TestProject::addTree_currentTree()
@@ -103,4 +107,50 @@ void TestProject::tree_from_id()
   project.add(tree);
 
   QCOMPARE(project.tree(id), tree);
+}
+
+void TestProject::save_not_dirty()
+{
+  const QString projectName = "projectName";
+  const QString projectFullPath = projectName + "." + Project::fileFormat();
+
+  Project project(projectName);
+
+  QCOMPARE(project.isDirty(), false);
+
+  project.save();
+
+  QCOMPARE(QFile::exists(projectFullPath), false);
+}
+
+void TestProject::save_dirty()
+{
+  const QString projectName = "projectName";
+  const QString projectFullPath = projectName + "." + Project::fileFormat();
+
+  Project project(projectName);
+
+  Tree* tree = new Tree("treeName");
+  Person* person = new Person(Gender::Masculine, "Maxime", "Spriet", new Birth(QDate()));
+  tree->addPerson(person);
+  tree->setReference(person);
+
+  project.add(tree);
+  project.add(person);
+
+  QCOMPARE(project.isDirty(), true);
+
+  project.save();
+
+  QCOMPARE(QFile::exists(projectFullPath), true);
+}
+
+void TestProject::cleanupTestCase()
+{
+  QDir dir("./");
+  dir.setNameFilters(QStringList() << "*.lcy");
+  dir.setFilter(QDir::Files);
+
+  foreach(const QString file, dir.entryList())
+    dir.remove(file);
 }

@@ -8,7 +8,9 @@ SOURCES += \
     $$PWD/configuration/personviewconfiguration.cpp \
     $$PWD/configuration/personviewconfigurationmanager.cpp \
     $$PWD/ipersonview.cpp \
-    $$PWD/configuration/ipersonviewmodel.cpp
+    $$PWD/configuration/ipersonviewmodel.cpp \
+    $$PWD/personbuilderwizard.cpp \
+    $$PWD/personviewcreationmarker.cpp
 
 HEADERS += \
     tree_view/familytreenodeview.h \
@@ -20,9 +22,12 @@ HEADERS += \
     $$PWD/configuration/personviewconfiguration.h \
     $$PWD/configuration/personviewconfigurationmanager.h \
     $$PWD/ipersonview.h \
-    $$PWD/configuration/ipersonviewmodel.h
+    $$PWD/configuration/ipersonviewmodel.h \
+    $$PWD/personbuilderwizard.h \
+    $$PWD/personviewcreationmarker.h
 
 FORMS += \
     $$PWD/familytreenodebuilder.ui \
     $$PWD/personupdaterview.ui \
-    $$PWD/configuration/personviewconfigurationmainview.ui
+    $$PWD/configuration/personviewconfigurationmainview.ui \
+    $$PWD/personbuilderwizard.ui
