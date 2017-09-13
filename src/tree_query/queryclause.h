@@ -1,9 +1,8 @@
 #ifndef QUERYCLAUSE_H
 #define QUERYCLAUSE_H
 
+#include "queryoperator.h"
 #include <QVariant>
-
-class QueryOperator;
 
 class QueryClause
 {
@@ -11,8 +10,8 @@ class QueryClause
     QueryClause();
 
   private:
+    QueryOperator _operator;
     QVariant _value;
-    QHash<QMetaType::Type, QList<QueryOperator*>> operatorsByType;
 };
 
 #endif // QUERYCLAUSE_H

@@ -6,9 +6,11 @@
 class QueryOperator
 {
   public:
+    QueryOperator();
     QueryOperator(const QString& text);
 
-    QString toString() const;
+    QString text() const;
+    void setText(const QString& text);
 
   private:
     QString _text;
