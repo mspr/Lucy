@@ -1,12 +1,24 @@
 #include "queryfield.h"
 
-QueryField::QueryField(const QString& name)
-  : _name(name)
+QueryField::QueryField(const QString& name, QMetaType::Type type)
+  : _droid(QUuid::createUuid())
+  , _name(name)
+  , _type(type)
 {
   Q_ASSERT(!_name.isEmpty());
+}
+
+QUuid QueryField::droid() const
+{
+  return _droid;
 }
 
 QString QueryField::name() const
 {
   return _name;
+}
+
+QMetaType::Type QueryField::type() const
+{
+  return _type;
 }

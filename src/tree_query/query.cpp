@@ -16,3 +16,12 @@ void Query::setName(const QString& name)
   Q_ASSERT(!name.isEmpty());
   _name = name;
 }
+
+void Query::execute()
+{
+  QString queryStr = "SELECT * FROM public.\"Person\" WHERE";
+
+//  QSqlQuery query;
+//  query.prepare(queryStr);
+//  query.bindValue(":firstName", QVariant::fromValue(_firstName));
+}

@@ -14,6 +14,8 @@ class Query
     QString name() const;
     void setName(const QString& name);
 
+    void execute();
+
   private:
     QString _name;
     QList<Clause*> _clauses;
