@@ -1,14 +1,13 @@
 #ifndef QUERYFIELD_H
 #define QUERYFIELD_H
 
-#include <QString>
-#include <QMetaType>
+#include <QObject>
 #include <QUuid>
 
-class QueryField
+class QueryField : public QObject
 {
   public:
-    QueryField(const QString& name, QMetaType::Type type);
+    QueryField(const QString& name, QMetaType::Type type, QObject* parent = nullptr);
 
     QUuid droid() const;
     QString name() const;

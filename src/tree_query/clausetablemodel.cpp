@@ -1,5 +1,6 @@
 #include "clausetablemodel.h"
-#include "queryfields.h"
+#include "queryclause.h"
+#include "queryfield.h"
 
 ClauseTableModel::ClauseTableModel(QObject* parent)
   : QAbstractTableModel(parent)
@@ -24,9 +25,7 @@ QVariant ClauseTableModel::data(const QModelIndex& index, int role) const
     case Qt::DisplayRole:
     break;
     case Qt::EditRole:
-//      const QUuid fieldDroid = _clauses.at(index.row())._selectedFieldDroid;
-//      QueryField field = QueryFields::field(fieldDroid);
-//      return field.name();
+      return _clauses.at(index.row())->field()->name();
     break;
   }
 

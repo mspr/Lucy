@@ -9,7 +9,6 @@ class QueryFields : public QObject
 {
   public:
     QueryFields(QObject* parent = nullptr);
-    ~QueryFields();
 
     QList<QueryField*> fields() const;
     QueryField* field(const QUuid& droid) const;

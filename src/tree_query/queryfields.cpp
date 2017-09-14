@@ -4,13 +4,7 @@
 QueryFields::QueryFields(QObject* parent)
   : QObject(parent)
 {
-  _fields.append(new QueryField("Age", QMetaType::Int));
-}
-
-QueryFields::~QueryFields()
-{
-  qDeleteAll(_fields);
-  _fields.clear();
+  _fields.append(new QueryField("Age", QMetaType::Int, this));
 }
 
 QueryField* QueryFields::field(const QUuid& droid) const

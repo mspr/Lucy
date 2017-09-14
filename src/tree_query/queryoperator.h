@@ -6,7 +6,6 @@
 class QueryOperator
 {
   public:
-    QueryOperator();
     QueryOperator(const QString& text);
 
     QString text() const;

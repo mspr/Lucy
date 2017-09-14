@@ -1,7 +1,8 @@
 #include "queryfield.h"
 
-QueryField::QueryField(const QString& name, QMetaType::Type type)
-  : _droid(QUuid::createUuid())
+QueryField::QueryField(const QString& name, QMetaType::Type type, QObject* parent)
+  : QObject(parent)
+  , _droid(QUuid::createUuid())
   , _name(name)
   , _type(type)
 {

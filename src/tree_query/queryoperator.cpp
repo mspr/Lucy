@@ -1,9 +1,5 @@
 #include "queryoperator.h"
 
-QueryOperator::QueryOperator()
-{
-}
-
 QueryOperator::QueryOperator(const QString& text)
   : _text(text)
 {

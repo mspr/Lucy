@@ -2,7 +2,8 @@
 #define CLAUSETABLEMODEL_H
 
 #include <QAbstractTableModel>
-#include "queryclause.h"
+
+class QueryClause;
 
 class ClauseTableModel : public QAbstractTableModel
 {
@@ -14,7 +15,7 @@ class ClauseTableModel : public QAbstractTableModel
     virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
 
   private:
-    QList<QueryClause> _clauses;
+    QList<QueryClause*> _clauses;
 };
 
 #endif // CLAUSETABLEMODEL_H
