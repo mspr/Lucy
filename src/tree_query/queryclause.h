@@ -4,6 +4,7 @@
 #include "queryfield.h"
 #include "queryoperator.h"
 #include <QVariant>
+#include <QUuid>
 
 class QueryClause
 {

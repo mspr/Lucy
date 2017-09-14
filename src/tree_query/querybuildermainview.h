@@ -5,6 +5,8 @@
 
 namespace Ui { class QueryBuilderMainView; }
 
+class QueryBuilderMainModel;
+
 class QueryBuilderMainView : public QDockWidget
 {
   Q_OBJECT
@@ -15,6 +17,7 @@ class QueryBuilderMainView : public QDockWidget
 
   private:
     Ui::QueryBuilderMainView* _ui;
+    QueryBuilderMainModel* _model;
 };
 
 #endif // QUERYBUILDERMAINVIEW_H

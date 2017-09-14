@@ -1,22 +1,22 @@
 #ifndef QUERYFIELDS_H
 #define QUERYFIELDS_H
 
-#include "queryfield.h"
-#include <QList>
+#include <QObject>
 
-class QueryFields
+class QueryField;
+
+class QueryFields : public QObject
 {
   public:
-    static QList<QueryField> fields();
+    QueryFields(QObject* parent = nullptr);
+    ~QueryFields();
+
+    QList<QueryField*> fields() const;
+    QueryField* field(const QUuid& droid) const;
+    QList<QString> fieldNames() const;
 
   private:
-    QueryFields() = delete;
-
-  private:
-    static QList<QueryField> initializeFields();
-
-  private:
-    static QList<QueryField> _fields;
+    QList<QueryField*> _fields;
 };
 
 #endif // QUERYFIELDS_H

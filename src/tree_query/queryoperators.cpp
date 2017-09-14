@@ -1,26 +1,31 @@
 #include "queryoperators.h"
+#include "queryoperator.h"
 
-QHash<QMetaType::Type, QList<QueryOperator>> QueryOperators::_operatorsByType = QueryOperators::initializeOperatorsByType();
-
-/*static*/ QHash<QMetaType::Type, QList<QueryOperator>> QueryOperators::initializeOperatorsByType()
+QueryOperators::QueryOperators()
 {
-  QHash<QMetaType::Type, QList<QueryOperator>> operatorsByType;
+  QueryOperator* opGreaterThan = new QueryOperator(">");
+  _operators.append(opGreaterThan);
+  QueryOperator* opEqual = new QueryOperator("=");
+  _operators.append(opEqual);
+  QueryOperator* opDifferent = new QueryOperator("<>");
+  _operators.append(opDifferent);
 
-  QueryOperator opGreaterThan(">");
-  QueryOperator opEqual("=");
-  QueryOperator opDifferent("<>");
-
-  QList<QueryOperator> operatorsForInt;
+  QList<QueryOperator*> operatorsForInt;
   operatorsForInt.append(opGreaterThan);
   operatorsForInt.append(opEqual);
   operatorsForInt.append(opDifferent);
 
-  operatorsByType.insert(QMetaType::Int, operatorsForInt);
-
-  return operatorsByType;
+  _operatorsByType.insert(QMetaType::Int, operatorsForInt);
 }
 
-/*static*/ QList<QueryOperator> QueryOperators::operatorsByType(QMetaType::Type type)
+QueryOperators::~QueryOperators()
+{
+  qDeleteAll(_operators);
+  _operators.clear();
+  _operatorsByType.clear();
+}
+
+QList<QueryOperator*> QueryOperators::operatorsByType(QMetaType::Type type) const
 {
   return _operatorsByType.value(type);
 }
