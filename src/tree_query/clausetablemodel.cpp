@@ -1,11 +1,11 @@
 #include "clausetablemodel.h"
 #include "queryclause.h"
 #include "queryfield.h"
+#include "queryoperator.h"
 
 ClauseTableModel::ClauseTableModel(QObject* parent)
   : QAbstractTableModel(parent)
 {
-
 }
 
 int ClauseTableModel::rowCount(const QModelIndex& /*parent*/) const
@@ -20,12 +20,24 @@ int ClauseTableModel::columnCount(const QModelIndex& /*parent*/) const
 
 QVariant ClauseTableModel::data(const QModelIndex& index, int role) const
 {
-  switch (role)
+  switch(index.column())
   {
-    case Qt::DisplayRole:
+    case 0:
+      switch (role)
+      {
+        case Qt::DisplayRole:
+          return _clauses.at(index.row())->field()->name();
+        break;
+        case Qt::EditRole:
+          return _clauses.at(index.row())->field()->name();
+        break;
+      }
     break;
-    case Qt::EditRole:
-      return _clauses.at(index.row())->field()->name();
+    case 1:
+      return _clauses.at(index.row())->queryOperator()->text();
+    break;
+    case 2:
+      return _clauses.at(index.row())->value();
     break;
   }
 

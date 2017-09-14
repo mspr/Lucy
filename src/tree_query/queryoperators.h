@@ -1,16 +1,15 @@
 #ifndef QUERYOPERATORS_H
 #define QUERYOPERATORS_H
 
-#include <QMetaType>
+#include <QObject>
 #include <QHash>
 
 class QueryOperator;
 
-class QueryOperators
+class QueryOperators : public QObject
 {
   public:
     QueryOperators();
-    ~QueryOperators();
 
     QList<QueryOperator*> operatorsByType(QMetaType::Type) const;
 

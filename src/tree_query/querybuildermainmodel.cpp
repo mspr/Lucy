@@ -11,6 +11,11 @@ QueryBuilderMainModel::QueryBuilderMainModel(QObject* parent)
   _clauseTableModel = new ClauseTableModel(this);
 }
 
+QueryFields* QueryBuilderMainModel::queryFields() const
+{
+  return _queryFields;
+}
+
 QueryListModel* QueryBuilderMainModel::queryListModel() const
 {
   return _queryListModel;

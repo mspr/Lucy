@@ -3,11 +3,11 @@
 
 QueryOperators::QueryOperators()
 {
-  QueryOperator* opGreaterThan = new QueryOperator(">");
+  QueryOperator* opGreaterThan = new QueryOperator(">", this);
   _operators.append(opGreaterThan);
-  QueryOperator* opEqual = new QueryOperator("=");
+  QueryOperator* opEqual = new QueryOperator("=", this);
   _operators.append(opEqual);
-  QueryOperator* opDifferent = new QueryOperator("<>");
+  QueryOperator* opDifferent = new QueryOperator("<>", this);
   _operators.append(opDifferent);
 
   QList<QueryOperator*> operatorsForInt;
@@ -16,13 +16,6 @@ QueryOperators::QueryOperators()
   operatorsForInt.append(opDifferent);
 
   _operatorsByType.insert(QMetaType::Int, operatorsForInt);
-}
-
-QueryOperators::~QueryOperators()
-{
-  qDeleteAll(_operators);
-  _operators.clear();
-  _operatorsByType.clear();
 }
 
 QList<QueryOperator*> QueryOperators::operatorsByType(QMetaType::Type type) const

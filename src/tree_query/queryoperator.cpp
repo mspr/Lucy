@@ -1,7 +1,8 @@
 #include "queryoperator.h"
 
-QueryOperator::QueryOperator(const QString& text)
-  : _text(text)
+QueryOperator::QueryOperator(const QString& text, QObject* parent)
+  : QObject(parent)
+  , _text(text)
 {
   Q_ASSERT(!_text.isEmpty());
 }

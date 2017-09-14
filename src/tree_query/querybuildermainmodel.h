@@ -12,6 +12,7 @@ class QueryBuilderMainModel : QObject
   public:
     QueryBuilderMainModel(QObject* parent = nullptr);
 
+    QueryFields* queryFields() const;
     QueryListModel* queryListModel() const;
     ClauseTableModel* clauseTableModel() const;
 

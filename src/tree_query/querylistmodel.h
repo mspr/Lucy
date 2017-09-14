@@ -3,6 +3,8 @@
 
 #include <QAbstractListModel>
 
+class Query;
+
 class QueryListModel : public QAbstractListModel
 {
   public:
@@ -11,6 +13,9 @@ class QueryListModel : public QAbstractListModel
     virtual int columnCount(const QModelIndex& parent) const override;
     virtual int rowCount(const QModelIndex& parent) const override;
     virtual QVariant data(const QModelIndex& index, int role) const override;
+
+  private:
+    QList<Query*> _queries;
 };
 
 #endif // QUERYLISTMODEL_H

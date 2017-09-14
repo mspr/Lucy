@@ -1,12 +1,12 @@
 #ifndef QUERYOPERATOR_H
 #define QUERYOPERATOR_H
 
-#include <QString>
+#include <QObject>
 
-class QueryOperator
+class QueryOperator : public QObject
 {
   public:
-    QueryOperator(const QString& text);
+    QueryOperator(const QString& text, QObject* parent = nullptr);
 
     QString text() const;
     void setText(const QString& text);
