@@ -3,11 +3,11 @@
 
 QueryOperators::QueryOperators()
 {
-  QueryOperator* opGreaterThan = new QueryOperator(">", this);
+  QueryOperator* opGreaterThan = new QueryOperator(">", ">", this);
   _operators.append(opGreaterThan);
-  QueryOperator* opEqual = new QueryOperator("=", this);
+  QueryOperator* opEqual = new QueryOperator("=", "=", this);
   _operators.append(opEqual);
-  QueryOperator* opDifferent = new QueryOperator("<>", this);
+  QueryOperator* opDifferent = new QueryOperator("<>", "<>", this);
   _operators.append(opDifferent);
 
   QList<QueryOperator*> operatorsForInt;

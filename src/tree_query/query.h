@@ -4,7 +4,7 @@
 #include <QString>
 #include <QList>
 
-class Clause;
+class QueryClause;
 
 class Query
 {
@@ -18,7 +18,7 @@ class Query
 
   private:
     QString _name;
-    QList<Clause*> _clauses;
+    QList<QueryClause*> _clauses;
 };
 
 #endif // QUERY_H
