@@ -16,6 +16,17 @@ QueryOperators::QueryOperators()
   operatorsForInt.append(opDifferent);
 
   _operatorsByType.insert(QMetaType::Int, operatorsForInt);
+
+  QueryOperator* opContains = new QueryOperator("Contains", "Contains", this);
+  _operators.append(opContains);
+  QueryOperator* opDoesNotContain = new QueryOperator("Does not contain", "Does not contain", this);
+  _operators.append(opDoesNotContain);
+
+  QList<QueryOperator*> operatorsForString;
+  operatorsForString.append(opContains);
+  operatorsForString.append(opDoesNotContain);
+
+  _operatorsByType.insert(QMetaType::QString, operatorsForString);
 }
 
 QList<QueryOperator*> QueryOperators::operatorsByType(QMetaType::Type type) const

@@ -4,7 +4,9 @@
 QueryFields::QueryFields(QObject* parent)
   : QObject(parent)
 {
-  _fields.append(new QueryField("Age", QMetaType::Int, this));
+  _fields.append(new QueryField("Birth Date", QMetaType::QDate, this));
+  _fields.append(new QueryField("Death Age", QMetaType::Int, this));
+  _fields.append(new QueryField("First Name", QMetaType::QString, this));
 }
 
 QueryField* QueryFields::field(const QUuid& droid) const
