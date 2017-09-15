@@ -2,8 +2,8 @@
 #include "ui_querybuildermainview.h"
 #include "querybuildermainmodel.h"
 #include "querylistmodel.h"
-#include "clausetablemodel.h"
-#include "clausetabledelegate.h"
+#include "queryclausetablemodel.h"
+#include "queryclausetabledelegate.h"
 
 QueryBuilderMainView::QueryBuilderMainView(QWidget* parent)
   : QDockWidget(parent)
@@ -14,7 +14,7 @@ QueryBuilderMainView::QueryBuilderMainView(QWidget* parent)
 
   _ui->queryListView->setModel(_model->queryListModel());
 
-  ClauseTableDelegate* clauseTableDelegate = new ClauseTableDelegate(_model->queryFields(), this);
+  QueryClauseTableDelegate* clauseTableDelegate = new QueryClauseTableDelegate(_model->queryFields(), this);
   _ui->clauseTableView->setModel(_model->clauseTableModel());
   _ui->clauseTableView->setItemDelegate(clauseTableDelegate);
 }

@@ -1,24 +1,24 @@
-#include "clausetablemodel.h"
+#include "queryclausetablemodel.h"
 #include "queryclause.h"
 #include "queryfield.h"
 #include "queryoperator.h"
 
-ClauseTableModel::ClauseTableModel(QObject* parent)
+QueryClauseTableModel::QueryClauseTableModel(QObject* parent)
   : QAbstractTableModel(parent)
 {
 }
 
-int ClauseTableModel::rowCount(const QModelIndex& /*parent*/) const
+int QueryClauseTableModel::rowCount(const QModelIndex& /*parent*/) const
 {
   return _clauses.count();
 }
 
-int ClauseTableModel::columnCount(const QModelIndex& /*parent*/) const
+int QueryClauseTableModel::columnCount(const QModelIndex& /*parent*/) const
 {
   return 3;
 }
 
-QVariant ClauseTableModel::data(const QModelIndex& index, int role) const
+QVariant QueryClauseTableModel::data(const QModelIndex& index, int role) const
 {
   switch(index.column())
   {

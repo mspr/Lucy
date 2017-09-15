@@ -1,14 +1,14 @@
-#ifndef CLAUSETABLEMODEL_H
-#define CLAUSETABLEMODEL_H
+#ifndef QUERYCLAUSETABLEMODEL_H
+#define QUERYCLAUSETABLEMODEL_H
 
 #include <QAbstractTableModel>
 
 class QueryClause;
 
-class ClauseTableModel : public QAbstractTableModel
+class QueryClauseTableModel : public QAbstractTableModel
 {
   public:
-    ClauseTableModel(QObject* parent = nullptr);
+    QueryClauseTableModel(QObject* parent = nullptr);
 
     virtual int rowCount(const QModelIndex& parent = QModelIndex()) const override;
     virtual int columnCount(const QModelIndex& parent = QModelIndex()) const override;
@@ -18,4 +18,4 @@ class ClauseTableModel : public QAbstractTableModel
     QList<QueryClause*> _clauses;
 };
 
-#endif // CLAUSETABLEMODEL_H
+#endif // QUERYCLAUSETABLEMODEL_H

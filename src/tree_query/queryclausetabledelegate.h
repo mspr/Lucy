@@ -1,14 +1,14 @@
-#ifndef CLAUSETABLEDELEGATE_H
-#define CLAUSETABLEDELEGATE_H
+#ifndef QUERYCLAUSETABLEDELEGATE_H
+#define QUERYCLAUSETABLEDELEGATE_H
 
 #include <QStyledItemDelegate>
 
 class QueryFields;
 
-class ClauseTableDelegate : public QStyledItemDelegate
+class QueryClauseTableDelegate : public QStyledItemDelegate
 {
   public:
-    ClauseTableDelegate(QueryFields* fields, QObject* parent = nullptr);
+    QueryClauseTableDelegate(QueryFields* fields, QObject* parent = nullptr);
 
     virtual void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
     virtual QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;
@@ -21,4 +21,4 @@ class ClauseTableDelegate : public QStyledItemDelegate
     QueryFields* _fields;
 };
 
-#endif // CLAUSETABLEDELEGATE_H
+#endif // QUERYCLAUSETABLEDELEGATE_H

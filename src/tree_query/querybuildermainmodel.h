@@ -5,7 +5,7 @@
 
 class QueryFields;
 class QueryListModel;
-class ClauseTableModel;
+class QueryClauseTableModel;
 
 class QueryBuilderMainModel : public QObject
 {
@@ -16,7 +16,7 @@ class QueryBuilderMainModel : public QObject
 
     QueryFields* queryFields() const;
     QueryListModel* queryListModel() const;
-    ClauseTableModel* clauseTableModel() const;
+    QueryClauseTableModel* clauseTableModel() const;
 
   signals:
     void queryExecuted(const QList<int>& personIds);
@@ -24,7 +24,7 @@ class QueryBuilderMainModel : public QObject
   private:
     QueryFields* _queryFields;
     QueryListModel* _queryListModel;
-    ClauseTableModel* _clauseTableModel;
+    QueryClauseTableModel* _clauseTableModel;
 };
 
 #endif // QUERYBUILDERMAINMODEL_H

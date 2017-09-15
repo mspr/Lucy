@@ -7,9 +7,9 @@ HEADERS += \
     $$PWD/queryoperator.h \
     $$PWD/queryfield.h \
     $$PWD/queryoperators.h \
-    $$PWD/clausetablemodel.h \
+    $$PWD/queryclausetablemodel.h \
     $$PWD/queryfields.h \
-    $$PWD/clausetabledelegate.h \
+    $$PWD/queryclausetabledelegate.h \
     $$PWD/querybuildermainmodel.h
 
 SOURCES += \
@@ -21,9 +21,9 @@ SOURCES += \
     $$PWD/queryoperator.cpp \
     $$PWD/queryfield.cpp \
     $$PWD/queryoperators.cpp \
-    $$PWD/clausetablemodel.cpp \
+    $$PWD/queryclausetablemodel.cpp \
     $$PWD/queryfields.cpp \
-    $$PWD/clausetabledelegate.cpp \
+    $$PWD/queryclausetabledelegate.cpp \
     $$PWD/querybuildermainmodel.cpp
 
 FORMS += \

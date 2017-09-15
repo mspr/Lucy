@@ -1,6 +1,6 @@
 #include "querybuildermainmodel.h"
 #include "querylistmodel.h"
-#include "clausetablemodel.h"
+#include "queryclausetablemodel.h"
 #include "queryfields.h"
 
 QueryBuilderMainModel::QueryBuilderMainModel(QObject* parent)
@@ -10,7 +10,7 @@ QueryBuilderMainModel::QueryBuilderMainModel(QObject* parent)
   _queryListModel = new QueryListModel(this);
   connect(_queryListModel, QueryListModel::queryExecuted, this, QueryBuilderMainModel::queryExecuted);
 
-  _clauseTableModel = new ClauseTableModel(this);
+  _clauseTableModel = new QueryClauseTableModel(this);
 }
 
 QueryFields* QueryBuilderMainModel::queryFields() const
@@ -23,7 +23,7 @@ QueryListModel* QueryBuilderMainModel::queryListModel() const
   return _queryListModel;
 }
 
-ClauseTableModel* QueryBuilderMainModel::clauseTableModel() const
+QueryClauseTableModel* QueryBuilderMainModel::clauseTableModel() const
 {
   return _clauseTableModel;
 }

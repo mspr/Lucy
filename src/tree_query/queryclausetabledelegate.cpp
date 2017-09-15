@@ -1,25 +1,25 @@
-#include "clausetabledelegate.h"
+#include "queryclausetabledelegate.h"
 #include "queryfields.h"
 #include <QComboBox>
 
-ClauseTableDelegate::ClauseTableDelegate(QueryFields* fields, QObject* parent)
+QueryClauseTableDelegate::QueryClauseTableDelegate(QueryFields* fields, QObject* parent)
   : QStyledItemDelegate(parent)
   , _fields(fields)
 {
   Q_ASSERT(_fields != nullptr);
 }
 
-void ClauseTableDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+void QueryClauseTableDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
 
 }
 
-QSize ClauseTableDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+QSize QueryClauseTableDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
   return QSize();
 }
 
-QWidget* ClauseTableDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
+QWidget* QueryClauseTableDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
   if (index.column() != 1)
     return QStyledItemDelegate::createEditor(parent, option, index);
@@ -31,7 +31,7 @@ QWidget* ClauseTableDelegate::createEditor(QWidget* parent, const QStyleOptionVi
   return fieldComboBox;
 }
 
-void ClauseTableDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const
+void QueryClauseTableDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const
 {
   QComboBox* fieldComboBox = qobject_cast<QComboBox*>(editor);
   if (fieldComboBox != nullptr)
@@ -47,7 +47,7 @@ void ClauseTableDelegate::setEditorData(QWidget* editor, const QModelIndex& inde
   }
 }
 
-void ClauseTableDelegate::setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const
+void QueryClauseTableDelegate::setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const
 {
   QComboBox* fieldComboBox = qobject_cast<QComboBox*>(editor);
   if (fieldComboBox != nullptr)
