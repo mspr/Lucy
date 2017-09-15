@@ -7,6 +7,8 @@ class Query;
 
 class QueryListModel : public QAbstractListModel
 {
+  Q_OBJECT
+
   public:
     QueryListModel(QObject* parent = nullptr);
 
@@ -14,7 +16,15 @@ class QueryListModel : public QAbstractListModel
     virtual int rowCount(const QModelIndex& parent) const override;
     virtual QVariant data(const QModelIndex& index, int role) const override;
 
+  signals:
+    void queryExecuted(const QList<int>& personIds);
+
+  public slots:
+    void setCurrentTree(int treeId);
+    void executeSelectedQuery(const QModelIndex& index);
+
   private:
+    int _currentTreeId;
     QList<Query*> _queries;
 };
 

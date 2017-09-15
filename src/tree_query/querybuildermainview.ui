@@ -73,7 +73,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_6">
+         <widget class="QPushButton" name="executeQueryPushButton">
           <property name="text">
            <string>PushButton</string>
           </property>
@@ -87,5 +87,25 @@
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>executeQueryPushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>QueryBuilderMainView</receiver>
+   <slot>onExecuteQuery()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>611</x>
+     <y>347</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>352</x>
+     <y>187</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onExecuteQuery()</slot>
+ </slots>
 </ui>

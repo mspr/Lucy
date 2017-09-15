@@ -22,35 +22,37 @@ void Query::setName(const QString& name)
   _name = name;
 }
 
-void Query::execute()
+QList<int> Query::execute()
 {
-  if (_clauses.count() == 0)
-    return;
+  QList<int> personIds;
 
-  QString queryStr = "SELECT * FROM public.\"Person\" WHERE 1 ";
-
-  for (int i=0; i<_clauses.count(); ++i)
+  if (_clauses.count() > 0)
   {
-    QueryClause* clause = _clauses.at(i);
-    const QString fieldName = clause->field()->name();
-    const QString operatorSqlText = clause->queryOperator()->sqlText();
-    const QVariant value = clause->value();
+    QString queryStr = "SELECT * FROM public.\"Person\" WHERE 1 ";
 
-    queryStr += " AND " + fieldName + operatorSqlText + value.toString();
-  }
-
-  queryStr += ";";
-
-  QSqlQuery query;
-  query.prepare(queryStr);
-  if (query.exec())
-  {
-    QList<int> personIds;
-
-    if (query.next())
+    for (int i=0; i<_clauses.count(); ++i)
     {
-      const int personId = query.value(0).toInt();
-      personIds.append(personId);
+      QueryClause* clause = _clauses.at(i);
+      const QString fieldName = clause->field()->name();
+      const QString operatorSqlText = clause->queryOperator()->sqlText();
+      const QVariant value = clause->value();
+
+      queryStr += " AND " + fieldName + operatorSqlText + value.toString();
+    }
+
+    queryStr += ";";
+
+    QSqlQuery query;
+    query.prepare(queryStr);
+    if (query.exec())
+    {
+      if (query.next())
+      {
+        const int personId = query.value(0).toInt();
+        personIds.append(personId);
+      }
     }
   }
+
+  return personIds;
 }

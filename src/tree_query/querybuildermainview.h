@@ -15,6 +15,9 @@ class QueryBuilderMainView : public QDockWidget
     explicit QueryBuilderMainView(QWidget* parent = nullptr);
     ~QueryBuilderMainView();
 
+  private slots:
+    void onExecuteQuery();
+
   private:
     Ui::QueryBuilderMainView* _ui;
     QueryBuilderMainModel* _model;

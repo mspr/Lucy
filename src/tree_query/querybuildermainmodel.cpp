@@ -8,6 +8,8 @@ QueryBuilderMainModel::QueryBuilderMainModel(QObject* parent)
   , _queryFields(new QueryFields(this))
 {
   _queryListModel = new QueryListModel(this);
+  connect(_queryListModel, QueryListModel::queryExecuted, this, QueryBuilderMainModel::queryExecuted);
+
   _clauseTableModel = new ClauseTableModel(this);
 }
 

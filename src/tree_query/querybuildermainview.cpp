@@ -23,3 +23,8 @@ QueryBuilderMainView::~QueryBuilderMainView()
 {
   delete _ui;
 }
+
+void QueryBuilderMainView::onExecuteQuery()
+{
+
+}
