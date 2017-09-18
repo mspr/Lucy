@@ -1,15 +1,15 @@
 #ifndef QUERY_H
 #define QUERY_H
 
-#include <QString>
+#include <QObject>
 #include <QList>
 
 class QueryClause;
 
-class Query
+class Query : public QObject
 {
   public:
-    Query(const QString& name);
+    Query(const QString& name, QObject* parent = nullptr);
 
     QString name() const;
     void setName(const QString& name);

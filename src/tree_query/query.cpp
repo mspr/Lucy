@@ -5,8 +5,9 @@
 
 #include <QSqlQuery>
 
-Query::Query(const QString& name)
-  : _name(name)
+Query::Query(const QString& name, QObject* parent)
+  : QObject(parent)
+  , _name(name)
 {
   Q_ASSERT(!_name.isEmpty());
 }

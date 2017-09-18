@@ -6,6 +6,7 @@
 
 include(../defaults.pri)
 include(project/project.pri)
+include(tree_query/tree_query.pri)
 
 TEMPLATE = app
 

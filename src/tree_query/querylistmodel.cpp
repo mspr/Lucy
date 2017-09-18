@@ -22,6 +22,14 @@ void QueryListModel::executeSelectedQuery(const QModelIndex& index)
     emit queryExecuted(personIds);
 }
 
+void QueryListModel::createNewQuery(const QString& queryName)
+{
+  beginInsertRows(QModelIndex(), _queries.count(), _queries.count());
+  Query* query = new Query(queryName, this);
+  _queries.append(query);
+  endInsertRows();
+}
+
 int QueryListModel::columnCount(const QModelIndex& /*parent*/) const
 {
   return 1;
