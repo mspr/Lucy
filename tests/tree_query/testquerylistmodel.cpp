@@ -3,16 +3,19 @@
 
 #include <QtTest/QTest>
 
-void TestQueryListModel::columnCount()
+void TestQueryListModel::createModel()
 {
   QueryListModel model;
 
   QCOMPARE(model.columnCount(QModelIndex()), 1);
+  QCOMPARE(model.rowCount(QModelIndex()), 0);
 }
 
-void TestQueryListModel::rowCount_empty_model()
+void TestQueryListModel::createNewQuery()
 {
   QueryListModel model;
 
-  QCOMPARE(model.rowCount(QModelIndex()), 0);
+  model.createNewQuery("queryName");
+
+  QCOMPARE(model.rowCount(QModelIndex()), 1);
 }

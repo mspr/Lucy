@@ -8,8 +8,8 @@ class TestQueryListModel : public QObject
   Q_OBJECT
 
   private slots:
-    void columnCount();
-    void rowCount_empty_model();
+    void createModel();
+    void createNewQuery();
 };
 
 #endif // TESTQUERYLISTMODEL_H
