@@ -6,7 +6,10 @@ SOURCES += \
     $$PWD/personupdaterview.cpp \
     $$PWD/configuration/personviewconfigurationmainview.cpp \
     $$PWD/personbuilderwizard.cpp \
-    $$PWD/personviewcreationmarker.cpp
+    $$PWD/personviewcreationmarker.cpp \
+    $$PWD/filtering/familytreescenefilters.cpp \
+    $$PWD/filtering/familytreesceneabstractfilter.cpp \
+    $$PWD/filtering/familytreescenevisibilityfilter.cpp
 
 HEADERS += \
     tree_view/familytreenodeview.h \
@@ -16,7 +19,10 @@ HEADERS += \
     $$PWD/personupdaterview.h \
     $$PWD/configuration/personviewconfigurationmainview.h \
     $$PWD/personbuilderwizard.h \
-    $$PWD/personviewcreationmarker.h
+    $$PWD/personviewcreationmarker.h \
+    $$PWD/filtering/familytreescenefilters.h \
+    $$PWD/filtering/familytreesceneabstractfilter.h \
+    $$PWD/filtering/familytreescenevisibilityfilter.h
 
 FORMS += \
     $$PWD/familytreenodebuilder.ui \

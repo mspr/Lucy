@@ -21,6 +21,8 @@ class FamilyTreeScene : public QGraphicsScene
     FamilyTreeNodeView* createNode(Business::Person* person, const QPointF& scenePos);
     FamilyTreeNodeView* extendTreeFromNode(FamilyTreeNodeView* node, Business::Person* person);
 
+    QList<FamilyTreeNodeView*> nodes() const;
+
   protected:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent*) override;
     virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent*) override;

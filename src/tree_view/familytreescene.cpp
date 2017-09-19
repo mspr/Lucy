@@ -120,6 +120,11 @@ void FamilyTreeScene::adjustNodesRecursively(FamilyTreeNodeView* node)
   }
 }
 
+QList<FamilyTreeNodeView*> FamilyTreeScene::nodes() const
+{
+  return _nodes;
+}
+
 FamilyTreeNodeView* FamilyTreeScene::getView(Person* person) const
 {
   Q_ASSERT(person != nullptr);
