@@ -26,7 +26,6 @@ QWidget* QueryClauseTableDelegate::createEditor(QWidget* parent, const QStyleOpt
 
   QComboBox* fieldComboBox = new QComboBox(parent);
   fieldComboBox->addItems(_fields->fieldNames());
-//  connect(editor, SIGNAL(editingFinished()), this, SLOT(commitAndCloseEditor()));
 
   return fieldComboBox;
 }
@@ -36,14 +35,14 @@ void QueryClauseTableDelegate::setEditorData(QWidget* editor, const QModelIndex&
   QComboBox* fieldComboBox = qobject_cast<QComboBox*>(editor);
   if (fieldComboBox != nullptr)
   {
-     const QString currentText = index.data(Qt::EditRole).toString();
-     const int row = fieldComboBox->findText(currentText);
-     if (row >= 0)
-         fieldComboBox->setCurrentIndex(row);
+    const QString currentText = index.data(Qt::EditRole).toString();
+    const int row = fieldComboBox->findText(currentText);
+    if (row >= 0)
+      fieldComboBox->setCurrentIndex(row);
   }
   else
   {
-      QStyledItemDelegate::setEditorData(editor, index);
+    QStyledItemDelegate::setEditorData(editor, index);
   }
 }
 
@@ -51,7 +50,7 @@ void QueryClauseTableDelegate::setModelData(QWidget* editor, QAbstractItemModel*
 {
   QComboBox* fieldComboBox = qobject_cast<QComboBox*>(editor);
   if (fieldComboBox != nullptr)
-      model->setData(index, fieldComboBox->currentText(), Qt::EditRole);
+    model->setData(index, fieldComboBox->currentText(), Qt::EditRole);
   else
-      QStyledItemDelegate::setModelData(editor, model, index);
+    QStyledItemDelegate::setModelData(editor, model, index);
 }

@@ -10,7 +10,8 @@ HEADERS += \
     $$PWD/queryclausetablemodel.h \
     $$PWD/queryfields.h \
     $$PWD/queryclausetabledelegate.h \
-    $$PWD/querybuildermainmodel.h
+    $$PWD/querybuildermainmodel.h \
+    $$PWD/querylistdelegate.h
 
 SOURCES += \
     $$PWD/querybuildermainview.cpp \
@@ -24,7 +25,8 @@ SOURCES += \
     $$PWD/queryclausetablemodel.cpp \
     $$PWD/queryfields.cpp \
     $$PWD/queryclausetabledelegate.cpp \
-    $$PWD/querybuildermainmodel.cpp
+    $$PWD/querybuildermainmodel.cpp \
+    $$PWD/querylistdelegate.cpp
 
 FORMS += \
     $$PWD/querybuildermainview.ui
