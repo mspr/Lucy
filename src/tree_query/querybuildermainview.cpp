@@ -24,6 +24,11 @@ QueryBuilderMainView::~QueryBuilderMainView()
   delete _ui;
 }
 
+void QueryBuilderMainView::createNewQuery()
+{
+  _model->queryListModel()->createNewQuery();
+}
+
 void QueryBuilderMainView::createNewClause()
 {
   _model->clauseTableModel()->createNewClause();

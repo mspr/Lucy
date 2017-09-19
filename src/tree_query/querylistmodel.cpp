@@ -24,8 +24,12 @@ void QueryListModel::executeSelectedQuery(const QModelIndex& index)
 
 void QueryListModel::createNewQuery(const QString& queryName)
 {
+  QString name = queryName;
+  if (name.isEmpty())
+    name = "Query_" + _queries.count();
+
   beginInsertRows(QModelIndex(), _queries.count(), _queries.count());
-  Query* query = new Query(queryName, this);
+  Query* query = new Query(name, this);
   _queries.append(query);
   endInsertRows();
 }

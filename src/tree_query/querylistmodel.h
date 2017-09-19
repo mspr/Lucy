@@ -12,7 +12,7 @@ class QueryListModel : public QAbstractListModel
   public:
     QueryListModel(QObject* parent = nullptr);
 
-    void createNewQuery(const QString& queryName);
+    void createNewQuery(const QString& queryName = QString());
 
     virtual int columnCount(const QModelIndex& parent) const override;
     virtual int rowCount(const QModelIndex& parent) const override;
