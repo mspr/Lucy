@@ -9,6 +9,7 @@ class TestQueryClauseTableModel : public QObject
 
   private slots:
     void createModel();
+    void createNewClause();
 };
 
 #endif // TESTQUERYCLAUSETABLEMODEL_H

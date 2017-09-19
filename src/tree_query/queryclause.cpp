@@ -1,6 +1,7 @@
 #include "queryclause.h"
 
-QueryClause::QueryClause()
+QueryClause::QueryClause(QObject* parent)
+  : QObject(parent)
 {
 }
 

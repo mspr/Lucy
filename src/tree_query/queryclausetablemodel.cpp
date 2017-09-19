@@ -8,6 +8,14 @@ QueryClauseTableModel::QueryClauseTableModel(QObject* parent)
 {
 }
 
+void QueryClauseTableModel::createNewClause()
+{
+  beginInsertRows(QModelIndex(), _clauses.count(), _clauses.count());
+  QueryClause* clause = new QueryClause(this);
+  _clauses.append(clause);
+  endInsertRows();
+}
+
 int QueryClauseTableModel::rowCount(const QModelIndex& /*parent*/) const
 {
   return _clauses.count();

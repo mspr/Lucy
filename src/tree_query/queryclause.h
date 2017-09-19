@@ -1,16 +1,16 @@
 #ifndef QUERYCLAUSE_H
 #define QUERYCLAUSE_H
 
+#include <QObject>
 #include <QVariant>
-#include <QUuid>
 
 class QueryField;
 class QueryOperator;
 
-class QueryClause
+class QueryClause : public QObject
 {
   public:
-    QueryClause();
+    QueryClause(QObject* parent = nullptr);
 
     QueryField* field() const;
     QueryOperator* queryOperator() const;
