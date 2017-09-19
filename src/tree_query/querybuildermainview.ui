@@ -55,9 +55,9 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_5">
+         <widget class="QPushButton" name="createNewClausePushButton">
           <property name="text">
-           <string>PushButton</string>
+           <string>+</string>
           </property>
          </widget>
         </item>
@@ -75,7 +75,7 @@
         <item>
          <widget class="QPushButton" name="executeQueryPushButton">
           <property name="text">
-           <string>PushButton</string>
+           <string>Execute</string>
           </property>
          </widget>
         </item>
@@ -104,8 +104,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>createNewClausePushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>QueryBuilderMainView</receiver>
+   <slot>createNewClause()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>611</x>
+     <y>310</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>352</x>
+     <y>187</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onExecuteQuery()</slot>
+  <slot>createNewClause()</slot>
  </slots>
 </ui>

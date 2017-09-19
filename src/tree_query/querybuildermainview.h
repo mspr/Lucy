@@ -16,6 +16,7 @@ class QueryBuilderMainView : public QDockWidget
     ~QueryBuilderMainView();
 
   private slots:
+    void createNewClause();
     void onExecuteQuery();
 
   private:

@@ -11,12 +11,12 @@ QueryClauseTableDelegate::QueryClauseTableDelegate(QueryFields* fields, QObject*
 
 void QueryClauseTableDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-
+  QStyledItemDelegate::paint(painter, option, index);
 }
 
 QSize QueryClauseTableDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-  return QSize();
+  return QStyledItemDelegate::sizeHint(option, index);
 }
 
 QWidget* QueryClauseTableDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
