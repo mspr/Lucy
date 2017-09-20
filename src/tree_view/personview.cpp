@@ -1,4 +1,4 @@
-#include "familytreenodeview.h"
+#include "personview.h"
 #include "business/person.h"
 #include "business/birth.h"
 
@@ -7,11 +7,11 @@
 
 using namespace Business;
 
-int FamilyTreeNodeView::_width = 100;
-int FamilyTreeNodeView::_height = 50;
-int FamilyTreeNodeView::_margin = 5;
+int PersonView::_width = 100;
+int PersonView::_height = 50;
+int PersonView::_margin = 5;
 
-FamilyTreeNodeView::FamilyTreeNodeView(const QPointF& sceneCenterPos, Person* person, QGraphicsItem* parent)
+PersonView::PersonView(const QPointF& sceneCenterPos, Person* person, QGraphicsItem* parent)
   : QGraphicsItemGroup(parent)
   , _person(person)
 {
@@ -29,32 +29,32 @@ FamilyTreeNodeView::FamilyTreeNodeView(const QPointF& sceneCenterPos, Person* pe
   setSceneCenterPos(sceneCenterPos);
 }
 
-QPointF FamilyTreeNodeView::sceneCenterPos() const
+QPointF PersonView::sceneCenterPos() const
 {
   return pos() + QPointF(_width/2, _height/2);
 }
 
-void FamilyTreeNodeView::setSceneCenterPos(const QPointF& sceneCenterPos)
+void PersonView::setSceneCenterPos(const QPointF& sceneCenterPos)
 {
   setPos(sceneCenterPos.x() - _width/2, sceneCenterPos.y() - _height/2);
 }
 
-Person* FamilyTreeNodeView::person() const
+Person* PersonView::person() const
 {
   return _person;
 }
 
-QRectF FamilyTreeNodeView::boundingRect() const
+QRectF PersonView::boundingRect() const
 {
   return QRectF(-_margin, -_margin, _width+2*_margin, _height+2*_margin);
 }
 
-QPainterPath FamilyTreeNodeView::shape() const
+QPainterPath PersonView::shape() const
 {
   return QGraphicsItemGroup::shape();
 }
 
-void FamilyTreeNodeView::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
+void PersonView::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
   QGraphicsItemGroup::paint(painter, option, widget);
 

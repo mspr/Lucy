@@ -1,5 +1,5 @@
 #include "familytreescene.h"
-#include "familytreenodeview.h"
+#include "personview.h"
 #include "familytreenodebuilder.h"
 #include "business/person.h"
 #include "business/gender.h"
@@ -22,7 +22,7 @@ FamilyTreeScene::FamilyTreeScene(const QRectF& sceneRect, Tree* tree, QObject* p
 {
   Q_ASSERT(tree != nullptr);
 
-  FamilyTreeNodeView* referenceNode = createReferenceNode(tree->reference(), QPointF(0, 0));
+  PersonView* referenceNode = createReferenceNode(tree->reference(), QPointF(0, 0));
   _referenceNode = referenceNode;
 
   extendTreeFromNodeRecursively(referenceNode);
@@ -30,7 +30,7 @@ FamilyTreeScene::FamilyTreeScene(const QRectF& sceneRect, Tree* tree, QObject* p
   adjustNodes();
 }
 
-void FamilyTreeScene::extendTreeFromNodeRecursively(FamilyTreeNodeView* node)
+void FamilyTreeScene::extendTreeFromNodeRecursively(PersonView* node)
 {
   Q_ASSERT(node != nullptr);
   Person* person = node->person();
@@ -39,7 +39,7 @@ void FamilyTreeScene::extendTreeFromNodeRecursively(FamilyTreeNodeView* node)
   Person* father = person->father();
   if (father != nullptr)
   {
-    FamilyTreeNodeView* fatherNode = extendTreeFromNode(node, father);
+    PersonView* fatherNode = extendTreeFromNode(node, father);
     Q_ASSERT(fatherNode != nullptr);
     extendTreeFromNodeRecursively(fatherNode);
   }
@@ -47,13 +47,13 @@ void FamilyTreeScene::extendTreeFromNodeRecursively(FamilyTreeNodeView* node)
   Person* mother = person->mother();
   if (mother != nullptr)
   {
-    FamilyTreeNodeView* motherNode = extendTreeFromNode(node, mother);
+    PersonView* motherNode = extendTreeFromNode(node, mother);
     Q_ASSERT(motherNode != nullptr);
     extendTreeFromNodeRecursively(motherNode);
   }
 }
 
-FamilyTreeNodeView* FamilyTreeScene::extendTreeFromNode(FamilyTreeNodeView* node, Person* person)
+PersonView* FamilyTreeScene::extendTreeFromNode(PersonView* node, Person* person)
 {
   Q_ASSERT(node != nullptr);
   Q_ASSERT(person != nullptr);
@@ -70,7 +70,7 @@ FamilyTreeNodeView* FamilyTreeScene::extendTreeFromNode(FamilyTreeNodeView* node
   const double y = previousNodeCenterScenePos.y() - 100;
   const QPointF scenePos = QPointF(x, y);
 
-  FamilyTreeNodeView* newNode = createNode(person, scenePos);
+  PersonView* newNode = createNode(person, scenePos);
   Q_ASSERT(newNode != nullptr);
 
   const int previousNodeLevel = _levelByTreeNode.value(node);
@@ -89,7 +89,7 @@ void FamilyTreeScene::adjustNodes()
   adjustNodesRecursively(_referenceNode);
 }
 
-void FamilyTreeScene::adjustNodesRecursively(FamilyTreeNodeView* node)
+void FamilyTreeScene::adjustNodesRecursively(PersonView* node)
 {
   Q_ASSERT(node != nullptr);
 
@@ -106,7 +106,7 @@ void FamilyTreeScene::adjustNodesRecursively(FamilyTreeNodeView* node)
   Person* mother = node->person()->mother();
   if (mother != nullptr)
   {
-    FamilyTreeNodeView* motherView = getView(mother);
+    PersonView* motherView = getView(mother);
     motherView->setSceneCenterPos(nodeCenterScenePos + QPointF(xOffset, yOffset));
     adjustNodesRecursively(motherView);
   }
@@ -114,24 +114,24 @@ void FamilyTreeScene::adjustNodesRecursively(FamilyTreeNodeView* node)
   Person* father = node->person()->father();
   if (father != nullptr)
   {
-    FamilyTreeNodeView* fatherView = getView(father);
+    PersonView* fatherView = getView(father);
     fatherView->setSceneCenterPos(nodeCenterScenePos + QPointF(-xOffset, yOffset));
     adjustNodesRecursively(fatherView);
   }
 }
 
-QList<FamilyTreeNodeView*> FamilyTreeScene::nodes() const
+QList<PersonView*> FamilyTreeScene::nodes() const
 {
   return _nodes;
 }
 
-FamilyTreeNodeView* FamilyTreeScene::getView(Person* person) const
+PersonView* FamilyTreeScene::getView(Person* person) const
 {
   Q_ASSERT(person != nullptr);
 
   for (int i=0; i<_nodes.count(); ++i)
   {
-    FamilyTreeNodeView* view = _nodes.at(i);
+    PersonView* view = _nodes.at(i);
     if (view->person() == person)
       return view;
   }
@@ -152,20 +152,19 @@ int FamilyTreeScene::countOldGenerations() const
   return generationsCount;
 }
 
-FamilyTreeNodeView* FamilyTreeScene::createReferenceNode(Person* person, const QPointF& scenePos)
+PersonView* FamilyTreeScene::createReferenceNode(Person* person, const QPointF& scenePos)
 {
-  FamilyTreeNodeView* node = createNode(person, scenePos);
+  PersonView* node = createNode(person, scenePos);
   Q_ASSERT(node != nullptr);
 
   _levelByTreeNode.insert(node, 0);
-  _inclinationByTreeNode.insert(node, 0);
 
   return node;
 }
 
-FamilyTreeNodeView* FamilyTreeScene::createNode(Person* person, const QPointF& scenePos)
+PersonView* FamilyTreeScene::createNode(Person* person, const QPointF& scenePos)
 {
-  FamilyTreeNodeView* node = new FamilyTreeNodeView(scenePos, person);
+  PersonView* node = new PersonView(scenePos, person);
   addItem(node);
   _nodes.append(node);
 
@@ -196,7 +195,7 @@ void FamilyTreeScene::mousePressEvent(QGraphicsSceneMouseEvent* e)
 
 void FamilyTreeScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* e)
 {
-  FamilyTreeNodeView* node = nodeAtPos(e->scenePos());
+  PersonView* node = nodeAtPos(e->scenePos());
   if (node != nullptr)
   {
     PersonUpdaterView personUpdaterView(node->person());
@@ -206,13 +205,13 @@ void FamilyTreeScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* e)
   QGraphicsScene::mouseDoubleClickEvent(e);
 }
 
-FamilyTreeNodeView* FamilyTreeScene::nodeAtPos(const QPointF& scenePos) const
+PersonView* FamilyTreeScene::nodeAtPos(const QPointF& scenePos) const
 {
-  FamilyTreeNodeView* node = nullptr;
+  PersonView* node = nullptr;
 
   QGraphicsItem* itemAtPos = itemAt(scenePos, QTransform());
   if (itemAtPos != nullptr)
-    node = dynamic_cast<FamilyTreeNodeView*>(itemAtPos->parentItem());
+    node = dynamic_cast<PersonView*>(itemAtPos->parentItem());
 
   return node;
 }

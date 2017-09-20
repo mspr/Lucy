@@ -1,14 +1,14 @@
-#ifndef FAMILYTREENODEVIEW_H
-#define FAMILYTREENODEVIEW_H
+#ifndef PERSONVIEW_H
+#define PERSONVIEW_H
 
 #include <QGraphicsItemGroup>
 
 namespace Business { class Person; }
 
-class FamilyTreeNodeView : public QGraphicsItemGroup
+class PersonView : public QGraphicsItemGroup
 {
   public:
-    FamilyTreeNodeView(const QPointF& scenePos, Business::Person* person, QGraphicsItem* parent = nullptr);
+    PersonView(const QPointF& scenePos, Business::Person* person, QGraphicsItem* parent = nullptr);
 
     virtual QRectF boundingRect() const override;
     virtual QPainterPath shape() const override;
@@ -28,4 +28,4 @@ class FamilyTreeNodeView : public QGraphicsItemGroup
     Business::Person* _person;
 };
 
-#endif // FAMILYTREENODEVIEW_H
+#endif // PERSONVIEW_H

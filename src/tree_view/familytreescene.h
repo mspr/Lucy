@@ -8,7 +8,7 @@ namespace Business { class Person; }
 namespace Business { class Tree; }
 
 class QGraphicsSceneMouseEvent;
-class FamilyTreeNodeView;
+class PersonView;
 
 class FamilyTreeScene : public QGraphicsScene
 {
@@ -17,31 +17,30 @@ class FamilyTreeScene : public QGraphicsScene
   public:
     FamilyTreeScene(const QRectF& sceneRect, Business::Tree* tree, QObject* parent = nullptr);
 
-    FamilyTreeNodeView* createReferenceNode(Business::Person* person, const QPointF& scenePos);
-    FamilyTreeNodeView* createNode(Business::Person* person, const QPointF& scenePos);
-    FamilyTreeNodeView* extendTreeFromNode(FamilyTreeNodeView* node, Business::Person* person);
+    PersonView* createReferenceNode(Business::Person* person, const QPointF& scenePos);
+    PersonView* createNode(Business::Person* person, const QPointF& scenePos);
+    PersonView* extendTreeFromNode(PersonView* node, Business::Person* person);
 
-    QList<FamilyTreeNodeView*> nodes() const;
+    QList<PersonView*> nodes() const;
 
   protected:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent*) override;
     virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent*) override;
 
   private:
-    void extendTreeFromNodeRecursively(FamilyTreeNodeView* node);
+    void extendTreeFromNodeRecursively(PersonView* node);
 
-    FamilyTreeNodeView* nodeAtPos(const QPointF& scenePos) const;
+    PersonView* nodeAtPos(const QPointF& scenePos) const;
 
     void adjustNodes();
-    void adjustNodesRecursively(FamilyTreeNodeView* node);
+    void adjustNodesRecursively(PersonView* node);
     int countOldGenerations() const;
-    FamilyTreeNodeView* getView(Business::Person* person) const;
+    PersonView* getView(Business::Person* person) const;
 
   private:
     QHash<QGraphicsItem*, int> _levelByTreeNode;
-    QHash<QGraphicsItem*, double> _inclinationByTreeNode;
-    QList<FamilyTreeNodeView*> _nodes;
-    FamilyTreeNodeView* _referenceNode;
+    QList<PersonView*> _nodes;
+    PersonView* _referenceNode;
 };
 
 #endif // FAMILYTREESCENE_H

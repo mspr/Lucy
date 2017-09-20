@@ -3,12 +3,12 @@
 
 #include <QGraphicsPixmapItem>
 
-class FamilyTreeNodeView;
+class PersonView;
 
 class PersonViewCreationMarker : public QGraphicsPixmapItem
 {
   public:
-    PersonViewCreationMarker(const QPixmap& pixmap, FamilyTreeNodeView* personView, QGraphicsItem* parent = nullptr);
+    PersonViewCreationMarker(const QPixmap& pixmap, PersonView* personView, QGraphicsItem* parent = nullptr);
 
   protected:
     virtual void hoverEnterEvent(QGraphicsSceneHoverEvent* e) override;
@@ -16,7 +16,7 @@ class PersonViewCreationMarker : public QGraphicsPixmapItem
     virtual void mousePressEvent(QGraphicsSceneMouseEvent* e) override;
 
   private:
-    FamilyTreeNodeView* _personView;
+    PersonView* _personView;
 };
 
 #endif // PERSONVIEWCREATIONMARKER_H
