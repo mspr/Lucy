@@ -1,6 +1,6 @@
 #include "familytreescene.h"
 #include "personview.h"
-#include "familytreenodebuilder.h"
+#include "personviewbuilder.h"
 #include "business/person.h"
 #include "business/gender.h"
 #include "business/tree.h"

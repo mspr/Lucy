@@ -1,23 +1,23 @@
-#include "familytreenodebuilder.h"
-#include "ui_familytreenodebuilder.h"
+#include "personviewbuilder.h"
+#include "ui_personviewbuilder.h"
 #include "business/birth.h"
 #include "business/gender.h"
 
 using namespace Business;
 
-FamilyTreeNodeBuilder::FamilyTreeNodeBuilder(QWidget* parent)
+PersonViewBuilder::PersonViewBuilder(QWidget* parent)
   : QDialog(parent)
-  , _ui(new Ui::FamilyTreeNodeBuilder)
+  , _ui(new Ui::PersonViewBuilder)
 {
   _ui->setupUi(this);
 }
 
-FamilyTreeNodeBuilder::~FamilyTreeNodeBuilder()
+PersonViewBuilder::~PersonViewBuilder()
 {
   delete _ui;
 }
 
-Person* FamilyTreeNodeBuilder::person() const
+Person* PersonViewBuilder::person() const
 {
   const QString firstName = _ui->firstNameLineEdit->text();
   const QString lastName = _ui->lastNameLineEdit->text();
