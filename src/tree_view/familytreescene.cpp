@@ -146,7 +146,7 @@ int FamilyTreeScene::countOldGenerations() const
   int generationsCount = 1;
 
   int remainingNodes = _nodes.count();
-  while (remainingNodes /= 2 > 1)
+  while ((remainingNodes /= 2) > 1)
     ++generationsCount;
 
   return generationsCount;
