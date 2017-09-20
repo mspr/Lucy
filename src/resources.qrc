@@ -9,5 +9,7 @@
         <file>images/quit.png</file>
         <file>images/tree.png</file>
         <file>images/saveAs.png</file>
+        <file>images/gender_masculine.png</file>
+        <file>images/gender_feminine.png</file>
     </qresource>
 </RCC>

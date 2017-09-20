@@ -169,14 +169,23 @@ PersonView* FamilyTreeScene::createNode(Person* person, const QPointF& scenePos)
   _nodes.append(node);
 
   const QRectF boundingRect = node->boundingRect();
+  qDebug() << "boundingRect " << boundingRect;
   const QPointF sceneCenterPos = node->sceneCenterPos();
+  qDebug() << "sceneCenterPos " << sceneCenterPos;
+  const QSize pixmapSize = QSize(20, 20);
 
-  PersonViewCreationMarker* fatherViewCreationMarker = new PersonViewCreationMarker(QPixmap(":/images/fatherGender.png"), node);
-  fatherViewCreationMarker->setPos(sceneCenterPos - QPointF(boundingRect.width()/2, boundingRect.height()/2));
+  const QPointF fatherViewSceneCenterPos = sceneCenterPos - QPointF(boundingRect.width()/2, boundingRect.height()/2);
+  qDebug() << "fatherViewSceneCenterPos " << fatherViewSceneCenterPos;
+  QPixmap masculineGenderPixmap(":/images/gender_masculine.png");
+  PersonViewCreationMarker* fatherViewCreationMarker = new PersonViewCreationMarker(masculineGenderPixmap.scaled(pixmapSize), node);
+  fatherViewCreationMarker->setPos(fatherViewSceneCenterPos);
   addItem(fatherViewCreationMarker);
 
-  PersonViewCreationMarker* motherViewCreationMarker = new PersonViewCreationMarker(QPixmap(":/images/motherGender.png"), node);
-  motherViewCreationMarker->setPos(sceneCenterPos + QPointF(-boundingRect.width()/2, boundingRect.height()/2));
+  const QPointF motherViewSceneCenterPos = sceneCenterPos + QPointF(boundingRect.width()/2, -boundingRect.height()/2);
+  qDebug() << "motherViewSceneCenterPos " << motherViewSceneCenterPos;
+  QPixmap feminineGenderPixmap(":/images/gender_feminine.png");
+  PersonViewCreationMarker* motherViewCreationMarker = new PersonViewCreationMarker(feminineGenderPixmap.scaled(pixmapSize), node);
+  motherViewCreationMarker->setPos(motherViewSceneCenterPos);
   addItem(motherViewCreationMarker);
 
   return node;
