@@ -35,14 +35,16 @@ SOURCES += \
    messagehandler.cpp \
    databaseconnection.cpp \
    treecreationdialog.cpp \
-   application.cpp
+   application.cpp \
+    recentprojectsview.cpp
 
 HEADERS += \
    mainwindow.h \
    messagehandler.h \
    databaseconnection.h \
    treecreationdialog.h \
-   application.h
+   application.h \
+    recentprojectsview.h
 
 FORMS += \
    mainwindow.ui \

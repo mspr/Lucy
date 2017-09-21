@@ -3,6 +3,7 @@
 #include "tree_view/familytreeview.h"
 #include "tree_view/familytreescene.h"
 #include "output/outputwindow.h"
+#include "recentprojectsview.h"
 #include "project/projectmanager.h"
 #include "project/project.h"
 #include "treecreationdialog.h"
@@ -26,6 +27,9 @@ MainWindow::MainWindow(QWidget* parent)
   _ui->setupUi(this);
 
   setupRecentProjectsMenu();
+
+  RecentProjectsView* recentProjectsView = new RecentProjectsView(_recentProjectsMenu->actions(), this);
+  addDockWidget(Qt::LeftDockWidgetArea, recentProjectsView);
 
   _treeTabWidget = new QTabWidget();
   setCentralWidget(_treeTabWidget);
