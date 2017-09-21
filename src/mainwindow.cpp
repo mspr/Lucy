@@ -21,10 +21,11 @@ MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent)
   , _ui(new Ui::MainWindow)
   , _recentProjectsNumber(5)
+  , _recentProjectsMenu(nullptr)
 {
   _ui->setupUi(this);
 
-  setupRecentProjectsActions();
+  setupRecentProjectsMenu();
 
   _treeTabWidget = new QTabWidget();
   setCentralWidget(_treeTabWidget);
@@ -37,36 +38,38 @@ MainWindow::MainWindow(QWidget* parent)
   setWindowState(Qt::WindowMaximized);
 }
 
-void MainWindow::setupRecentProjectsActions()
+void MainWindow::setupRecentProjectsMenu()
 {
-  Q_ASSERT(_recentProjectsActions.isEmpty());
+  Q_ASSERT(_recentProjectsMenu == nullptr);
 
-  QMenu* menuOpen = _ui->menuBar->findChild<QMenu*>("Open");
-  Q_ASSERT(menuOpen != nullptr);
+  _recentProjectsMenu = new QMenu(_ui->menuBar);
+  _recentProjectsMenu->setVisible(false);
+  _ui->menuBar->addMenu(_recentProjectsMenu);
 
   for (int i=0; i<_recentProjectsNumber; ++i)
   {
-    QAction* action = new QAction(menuOpen);
-    action->setVisible(false);
+    QAction* action = new QAction(_recentProjectsMenu);
     connect(action, &QAction::triggered, this, &MainWindow::openRecentProject);
-    _recentProjectsActions.append(action);
+    _recentProjectsMenu->addAction(action);
   }
-
-  menuOpen->addActions(_recentProjectsActions);
 }
 
-void MainWindow::updateRecentProjectsActions()
+void MainWindow::updateRecentProjectsMenu()
 {
+  Q_ASSERT(_recentProjectsMenu != nullptr);
+
   QSettings settings;
   const QStringList recentProjects = settings.value("recentProjects").toStringList();
   if (recentProjects.count() > 0)
   {
-    for (int i=0; i<_recentProjectsNumber; ++i)
+    const QList<QAction*> actions = _recentProjectsMenu->actions();
+    for (int i=0; i<actions.count(); ++i)
     {
-      QAction* action = _recentProjectsActions.at(i);
+      QAction* action = actions.at(i);
       action->setText(recentProjects.at(i));
-      action->setVisible(true);
     }
+
+    _recentProjectsMenu->setVisible(true);
   }
 }
 

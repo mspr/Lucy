@@ -16,8 +16,8 @@ class MainWindow : public QMainWindow
     ~MainWindow();
 
   private:
-    void setupRecentProjectsActions();
-    void updateRecentProjectsActions();
+    void setupRecentProjectsMenu();
+    void updateRecentProjectsMenu();
     void setupSignalSlotConnections();
     void askUserToSaveAndContinue(std::function<void()> action);
 
@@ -41,7 +41,7 @@ class MainWindow : public QMainWindow
     Ui::MainWindow* _ui;
     QTabWidget* _treeTabWidget;
     int _recentProjectsNumber;
-    QList<QAction*> _recentProjectsActions;
+    QMenu* _recentProjectsMenu;
 };
 
 #endif // MAINWINDOW_H
