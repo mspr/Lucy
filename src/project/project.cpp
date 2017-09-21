@@ -170,6 +170,8 @@ void Project::save()
 
     ProjectXmlWriter::write(this);
 
+    emit saved();
+
     qInfo() << "Project " << name() << " has been saved.";
   }
 }

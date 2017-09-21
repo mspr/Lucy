@@ -11,6 +11,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QInputDialog>
+#include <QSettings>
 #include <QDebug>
 
 using namespace Output;
@@ -19,9 +20,11 @@ using namespace Business;
 MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent)
   , _ui(new Ui::MainWindow)
+  , _recentProjectsNumber(5)
 {
   _ui->setupUi(this);
-  setWindowState(Qt::WindowMaximized);
+
+  setupRecentProjectsActions();
 
   _treeTabWidget = new QTabWidget();
   setCentralWidget(_treeTabWidget);
@@ -30,6 +33,41 @@ MainWindow::MainWindow(QWidget* parent)
   addDockWidget(Qt::BottomDockWidgetArea, outputWindow);
 
   setupSignalSlotConnections();
+
+  setWindowState(Qt::WindowMaximized);
+}
+
+void MainWindow::setupRecentProjectsActions()
+{
+  Q_ASSERT(_recentProjectsActions.isEmpty());
+
+  QMenu* menuOpen = _ui->menuBar->findChild<QMenu*>("Open");
+  Q_ASSERT(menuOpen != nullptr);
+
+  for (int i=0; i<_recentProjectsNumber; ++i)
+  {
+    QAction* action = new QAction(menuOpen);
+    action->setVisible(false);
+    connect(action, &QAction::triggered, this, &MainWindow::openRecentProject);
+    _recentProjectsActions.append(action);
+  }
+
+  menuOpen->addActions(_recentProjectsActions);
+}
+
+void MainWindow::updateRecentProjectsActions()
+{
+  QSettings settings;
+  const QStringList recentProjects = settings.value("recentProjects").toStringList();
+  if (recentProjects.count() > 0)
+  {
+    for (int i=0; i<_recentProjectsNumber; ++i)
+    {
+      QAction* action = _recentProjectsActions.at(i);
+      action->setText(recentProjects.at(i));
+      action->setVisible(true);
+    }
+  }
 }
 
 void MainWindow::setupSignalSlotConnections()
@@ -56,6 +94,11 @@ void MainWindow::newProject()
 
     askUserToSaveAndContinue(action);
   }
+}
+
+void MainWindow::openRecentProject()
+{
+
 }
 
 void MainWindow::openProject()
@@ -151,6 +194,7 @@ void MainWindow::onProjectOpen()
   connect(currentProject.data(), Project::treeAdded, this, MainWindow::onTreeAdded);
   connect(currentProject.data(), Project::dirty, this, MainWindow::onProjectDirty);
   connect(currentProject.data(), Project::upToDate, this, MainWindow::onProjectUpToDate);
+  connect(currentProject.data(), Project::saved, this, MainWindow::onProjectSaved);
   connect(currentProject.data(), Project::destroyed, this, MainWindow::onProjectClosed);
 
   setWindowTitle(currentProject.data()->name() + "[*]");
@@ -193,6 +237,20 @@ void MainWindow::onProjectUpToDate()
   _ui->actionSave->setEnabled(false);
   _ui->actionSaveAs->setEnabled(false);
   setWindowModified(false);
+}
+
+void MainWindow::onProjectSaved()
+{
+  Project* project = dynamic_cast<Project*>(sender());
+  Q_ASSERT(project != nullptr);
+
+  const QString fileName = project->fileInfo().fileName();
+
+  QSettings settings;
+  QStringList recentProjects = settings.value("recentProjects").toStringList();
+  recentProjects.removeAll(fileName);
+  recentProjects.prepend(fileName);
+  settings.setValue("recentProjects", recentProjects);
 }
 
 MainWindow::~MainWindow()

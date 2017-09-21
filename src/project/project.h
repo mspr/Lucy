@@ -40,6 +40,7 @@ class Project : public QObject
     void treeAdded(QUuid droid);
     void dirty();
     void upToDate();
+    void saved();
 
   private:
     void add_impl(Business::DomainObject* object);
