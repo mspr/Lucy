@@ -1,5 +1,5 @@
-#include "treecreationdialog.h"
-#include "ui_treecreationdialog.h"
+#include "treebuilderview.h"
+#include "ui_treebuilderview.h"
 #include "business/person.h"
 #include "business/tree.h"
 #include "business/birth.h"
@@ -9,19 +9,19 @@
 
 using namespace Business;
 
-TreeCreationDialog::TreeCreationDialog(QWidget* parent)
+TreeBuilderView::TreeBuilderView(QWidget* parent)
   : QDialog(parent)
-  , _ui(new Ui::TreeCreationDialog)
+  , _ui(new Ui::TreeBuilderView)
 {
   _ui->setupUi(this);
 }
 
-TreeCreationDialog::~TreeCreationDialog()
+TreeBuilderView::~TreeBuilderView()
 {
   delete _ui;
 }
 
-int TreeCreationDialog::exec()
+int TreeBuilderView::exec()
 {
   const int result = QDialog::exec();
   if (result)

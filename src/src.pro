@@ -34,21 +34,21 @@ SOURCES += \
    mainwindow.cpp \
    messagehandler.cpp \
    databaseconnection.cpp \
-   treecreationdialog.cpp \
+   treebuilderview.cpp \
    application.cpp \
-    recentprojectsview.cpp
+   recentprojectsview.cpp
 
 HEADERS += \
    mainwindow.h \
    messagehandler.h \
    databaseconnection.h \
-   treecreationdialog.h \
+   treebuilderview.h \
    application.h \
-    recentprojectsview.h
+   recentprojectsview.h
 
 FORMS += \
    mainwindow.ui \
-   treecreationdialog.ui
+   treebuilderview.ui
 
 RESOURCES += \
    resources.qrc

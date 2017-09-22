@@ -6,7 +6,7 @@
 #include "recentprojectsview.h"
 #include "project/projectmanager.h"
 #include "project/project.h"
-#include "treecreationdialog.h"
+#include "treebuilderview.h"
 #include "business/tree.h"
 
 #include <QFileDialog>
@@ -187,8 +187,8 @@ void MainWindow::quit()
 
 void MainWindow::createTree()
 {
-  TreeCreationDialog treeCreationDialog(this);
-  if (treeCreationDialog.exec())
+  TreeBuilderView treeBuilderView(this);
+  if (treeBuilderView.exec())
   {
   }
 }
