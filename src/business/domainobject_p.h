@@ -31,6 +31,8 @@ class QSqlQuery;
 
 namespace Business
 {
+  enum class DatabaseStatus;
+
   class DomainObject_p : public QObject
   {
     Q_OBJECT
@@ -44,6 +46,10 @@ namespace Business
 
       QUuid droid() const;
       int id() const;
+
+      bool isDirty() const;
+      bool isNew() const;
+      bool isDeleted() const;
 
       void deleteFromDatabase();
       void updateInDatabase();
@@ -63,9 +69,8 @@ namespace Business
 
     protected:
       int _id;
+      DatabaseStatus _status;
       QUuid _droid;
-      bool _isLoaded;
-      bool _isDirty;
   };
 
 } // Business

@@ -12,7 +12,8 @@ HEADERS += \
     $$PWD/birth_p.h \
     $$PWD/birth.h \
     $$PWD/gender.h \
-    $$PWD/personinfo.h
+    $$PWD/personinfo.h \
+    $$PWD/databsestatus.h
 
 SOURCES += \
     $$PWD/tree.cpp \

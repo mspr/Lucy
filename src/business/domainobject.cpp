@@ -21,3 +21,18 @@ int DomainObject::id() const
 {
   return getD()->id();
 }
+
+bool DomainObject::isDirty() const
+{
+  return getD()->isDirty();
+}
+
+bool DomainObject::isNew() const
+{
+  return getD()->isNew();
+}
+
+bool DomainObject::isDeleted() const
+{
+  return getD()->isDeleted();
+}

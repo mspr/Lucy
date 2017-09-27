@@ -1,4 +1,5 @@
 #include "domainobject_p.h"
+#include "business/databsestatus.h"
 
 #include <QSqlQuery>
 #include <QVariant>
@@ -9,17 +10,15 @@ using namespace Business;
 
 DomainObject_p::DomainObject_p(const int id)
   : _id(id)
+  , _status(DatabaseStatus::New)
   , _droid(QUuid::createUuid())
-  , _isLoaded(false)
-  , _isDirty(false)
 {
 }
 
 DomainObject_p::DomainObject_p()
   : _id(-1)
+  , _status(DatabaseStatus::New)
   , _droid(QUuid::createUuid())
-  , _isLoaded(false)
-  , _isDirty(false)
 {
 }
 
@@ -37,9 +36,24 @@ int DomainObject_p::id() const
   return _id;
 }
 
+bool DomainObject_p::isDirty() const
+{
+  return _status == DatabaseStatus::Dirty;
+}
+
+bool DomainObject_p::isNew() const
+{
+  return _status == DatabaseStatus::New;
+}
+
+bool DomainObject_p::isDeleted() const
+{
+  return _status == DatabaseStatus::Deleted;
+}
+
 void DomainObject_p::tryLoad()
 {
-  if (!_isLoaded && _id != -1)
+  if (_status == DatabaseStatus::New && _id != -1)
   {
     QString queryStr = "SELECT * FROM public.\"" + databaseTableName() + "\" WHERE \"Id\" = :id";
 
@@ -53,7 +67,7 @@ void DomainObject_p::tryLoad()
       {
         load_impl(query);
 
-        _isLoaded = true;
+        _status = DatabaseStatus::Loaded;
       }
       else
       {
@@ -70,11 +84,14 @@ void DomainObject_p::tryLoad()
 
 void DomainObject_p::insertIntoDatabase()
 {
+  Q_ASSERT(_id == -1);
+  Q_ASSERT(_status == DatabaseStatus::New);
+
   QSqlQuery query = prepareInsertIntoDatabaseQuery();
   if (query.exec())
   {
     _id = query.lastInsertId().toInt();
-    _isLoaded = true;
+    _status = DatabaseStatus::Loaded;
 
     onInsertIntoDatabaseSucceeded();
   }
@@ -92,7 +109,7 @@ void DomainObject_p::onInsertIntoDatabaseSucceeded()
 void DomainObject_p::updateInDatabase()
 {
   Q_ASSERT(_id != -1);
-  Q_ASSERT(_isLoaded);
+  Q_ASSERT(_status == DatabaseStatus::Dirty);
 
   QSqlQuery query = prepareUpdateInDatabaseQuery();
   if (!query.exec())
@@ -104,6 +121,9 @@ void DomainObject_p::updateInDatabase()
 
 void DomainObject_p::deleteFromDatabase()
 {
+  Q_ASSERT(_id != -1);
+  Q_ASSERT(_status == DatabaseStatus::Deleted);
+
   QString queryStr = "DELETE FROM public.\"" + databaseTableName() + "\" WHERE \"Id\" = :id";
 
   QSqlQuery query;
@@ -119,6 +139,6 @@ void DomainObject_p::deleteFromDatabase()
 
 void DomainObject_p::setDirty()
 {
-  _isDirty = true;
+  _status = DatabaseStatus::Dirty;
   emit dirty();
 }

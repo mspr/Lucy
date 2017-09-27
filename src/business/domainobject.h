@@ -41,6 +41,10 @@ namespace Business
       QUuid droid() const;
       int id() const;
 
+      bool isDirty() const;
+      bool isNew() const;
+      bool isDeleted() const;
+
       virtual DomainObject_p* getD() const = 0;
   };
 
