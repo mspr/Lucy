@@ -3,7 +3,8 @@
 
 using namespace Business;
 
-DomainObject::DomainObject()
+DomainObject::DomainObject(QObject* parent)
+  : QObject(parent)
 {
 }
 

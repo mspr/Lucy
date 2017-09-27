@@ -71,6 +71,26 @@ void Project::add(Person* person)
   add_impl(person);
 }
 
+void Project::remove(Person* /*person*/)
+{
+//  Q_ASSERT(person != nullptr);
+
+//  const bool newPerson = person->id() == -1;
+//  if (newPerson)
+//  {
+//    Q_ASSERT(_objectsToAdd.removeOne(person));
+//    _currentTree->remove(person);
+//    delete person;
+//  }
+//  else
+//  {
+//    Q_ASSERT(!_objectsToDelete.contains(person));
+//    _objectsToUpdate.removeOne(person);
+//    _objectsToDelete.append(person);
+//    _currentTree->remove(person);
+//  }
+}
+
 void Project::add_impl(DomainObject* object)
 {
   Q_ASSERT(object != nullptr);

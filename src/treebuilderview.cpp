@@ -42,7 +42,7 @@ int TreeBuilderView::exec()
 
     Tree* tree = new Tree(treeName);
     Person* person = new Person(personInfo);
-    tree->addPerson(person);
+    tree->add(person);
     tree->setReference(person);
 
     currentProject->add(tree);

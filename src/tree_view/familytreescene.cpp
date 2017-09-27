@@ -164,6 +164,8 @@ PersonView* FamilyTreeScene::createReferenceNode(Person* person, const QPointF& 
 
 PersonView* FamilyTreeScene::createNode(Person* person, const QPointF& scenePos)
 {
+  Q_ASSERT(person != nullptr);
+
   PersonView* node = new PersonView(scenePos, person);
   addItem(node);
   _nodes.append(node);
@@ -188,7 +190,19 @@ PersonView* FamilyTreeScene::createNode(Person* person, const QPointF& scenePos)
   motherViewCreationMarker->setPos(motherViewSceneCenterPos);
   addItem(motherViewCreationMarker);
 
+  connect(person, &Person::destroyed, this, &FamilyTreeScene::onPersonDeleted);
+
   return node;
+}
+
+void FamilyTreeScene::onPersonDeleted()
+{
+  Person* person = dynamic_cast<Person*>(sender());
+  Q_ASSERT(person != nullptr);
+
+  PersonView* personView = getView(person);
+  removeItem(personView);
+  delete personView;
 }
 
 void FamilyTreeScene::mousePressEvent(QGraphicsSceneMouseEvent* e)

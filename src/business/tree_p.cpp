@@ -49,13 +49,19 @@ QList<Person*> Tree_p::persons() const
   return _persons;
 }
 
-void Tree_p::addPerson(Person* person)
+void Tree_p::add(Person* person)
 {
   Q_ASSERT(person != nullptr);
   Q_ASSERT(!_persons.contains(person));
 
   person->setTree(facade());
   _persons.append(person);
+}
+
+void Tree_p::remove(Person* person)
+{
+  Q_ASSERT(person != nullptr);
+  Q_ASSERT(_persons.removeOne(person));
 }
 
 Person* Tree_p::reference() const
@@ -88,9 +94,9 @@ void Tree_p::load_impl(QSqlQuery& query)
       {
         const int personId = selectTreePersonQuery.value(2).toInt();
         Person* person = new Person(personId);
-        addPerson(person);
+        add(person);
 
-        _reference = person;
+        setReference(person);
       }
     }
   }

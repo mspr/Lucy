@@ -15,9 +15,14 @@ void Tree::setName(const QString& name)
   d()->setName(name);
 }
 
-void Tree::addPerson(Person* person)
+void Tree::add(Person* person)
 {
-  d()->addPerson(person);
+  d()->add(person);
+}
+
+void Tree::remove(Person* person)
+{
+  d()->remove(person);
 }
 
 void Tree::setReference(Person* person)

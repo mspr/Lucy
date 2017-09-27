@@ -23,7 +23,8 @@ namespace Business
       Person* reference() const;
 
       void setName(const QString& name);
-      void addPerson(Person* person);
+      void add(Person* person);
+      void remove(Person* person);
       void setReference(Person* person);
   };
 

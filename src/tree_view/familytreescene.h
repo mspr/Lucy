@@ -37,6 +37,9 @@ class FamilyTreeScene : public QGraphicsScene
     int countOldGenerations() const;
     PersonView* getView(Business::Person* person) const;
 
+  private slots:
+    void onPersonDeleted();
+
   private:
     QHash<QGraphicsItem*, int> _levelByTreeNode;
     QList<PersonView*> _nodes;

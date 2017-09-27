@@ -139,7 +139,7 @@ void TestProject::save_dirty()
 
   Tree* tree = new Tree("treeName");
   Person* person = new Person(personInfo);
-  tree->addPerson(person);
+  tree->add(person);
   tree->setReference(person);
 
   project.add(tree);

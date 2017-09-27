@@ -10,7 +10,8 @@ SOURCES += \
     $$PWD/filtering/familytreescenefilters.cpp \
     $$PWD/filtering/familytreesceneabstractfilter.cpp \
     $$PWD/filtering/familytreescenevisibilityfilter.cpp \
-    $$PWD/personcreatecommand.cpp
+    $$PWD/personcreatecommand.cpp \
+    $$PWD/persondeletecommand.cpp
 
 HEADERS += \
     tree_view/personview.h \
@@ -24,7 +25,8 @@ HEADERS += \
     $$PWD/filtering/familytreescenefilters.h \
     $$PWD/filtering/familytreesceneabstractfilter.h \
     $$PWD/filtering/familytreescenevisibilityfilter.h \
-    $$PWD/personcreatecommand.h
+    $$PWD/personcreatecommand.h \
+    $$PWD/persondeletecommand.h
 
 FORMS += \
     $$PWD/personviewbuilder.ui \

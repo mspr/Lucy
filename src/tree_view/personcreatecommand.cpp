@@ -27,7 +27,7 @@ void PersonCreateCommand::redo()
 
   _person = new Person(_personInfo);
 
-  currentTree->addPerson(_person);
+  currentTree->add(_person);
 //  currentProject->add(birthLocation);
 //  currentProject->add(birth);
   currentProject->add(_person);

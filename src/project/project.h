@@ -27,6 +27,8 @@ class Project : public QObject
     void add(Business::Person* person);
     void setCurrentTree(Business::Tree* tree);
 
+    void remove(Business::Person* person);
+
     QList<Business::Tree*> trees() const;
     Business::Tree* currentTree() const;
     Business::Tree* tree(QUuid droid) const;

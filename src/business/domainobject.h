@@ -1,8 +1,7 @@
 #ifndef DOMAINOBJECT_H
 #define DOMAINOBJECT_H
 
-#include <QScopedPointer>
-#include <QUuid>
+#include <QObject>
 
 namespace Business { class DomainObject_p; }
 
@@ -33,10 +32,10 @@ namespace Business { class DomainObject_p; }
 
 namespace Business
 {
-  class DomainObject
+  class DomainObject : public QObject
   {
     public:
-      DomainObject();
+      DomainObject(QObject* parent = nullptr);
       virtual ~DomainObject();
 
       QUuid droid() const;

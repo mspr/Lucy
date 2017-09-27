@@ -19,7 +19,8 @@ namespace Business
       void setName(const QString& name);
 
       QList<Person*> persons() const;
-      void addPerson(Person* person);
+      void add(Person* person);
+      void remove(Person* person);
 
       Person* reference() const;
       void setReference(Person* person);
