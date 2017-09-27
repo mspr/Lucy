@@ -1,4 +1,5 @@
 #include "personview.h"
+#include "familytreescene.h"
 #include "business/person.h"
 #include "business/birth.h"
 
@@ -27,6 +28,11 @@ PersonView::PersonView(const QPointF& sceneCenterPos, Person* person, QGraphicsI
   addToGroup(personBirthDateViewItem);
 
   setSceneCenterPos(sceneCenterPos);
+}
+
+FamilyTreeScene* PersonView::treeScene() const
+{
+  return dynamic_cast<FamilyTreeScene*>(scene());
 }
 
 QPointF PersonView::sceneCenterPos() const

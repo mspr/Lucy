@@ -4,17 +4,15 @@
 #include <QWizard>
 
 namespace Ui { class PersonBuilderWizard; }
-namespace Business { class Person; }
+class PersonView;
 
 class PersonBuilderWizard : public QWizard
 {
   Q_OBJECT
 
   public:
-    explicit PersonBuilderWizard(QWidget* parent = nullptr);
+    explicit PersonBuilderWizard(PersonView* personView, QWidget* parent = nullptr);
     ~PersonBuilderWizard();
-
-    Business::Person* person() const;
 
   public slots:
     virtual int exec() override;
@@ -25,7 +23,7 @@ class PersonBuilderWizard : public QWizard
 
   private:
     Ui::PersonBuilderWizard* _ui;
-    Business::Person* _person;
+    PersonView* _personView;
 };
 
 #endif // PERSONBUILDERWIZARD_H

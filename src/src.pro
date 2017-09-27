@@ -36,7 +36,8 @@ SOURCES += \
    databaseconnection.cpp \
    treebuilderview.cpp \
    application.cpp \
-   recentprojectsview.cpp
+   recentprojectsview.cpp \
+   commandsmanager.cpp
 
 HEADERS += \
    mainwindow.h \
@@ -44,7 +45,8 @@ HEADERS += \
    databaseconnection.h \
    treebuilderview.h \
    application.h \
-   recentprojectsview.h
+   recentprojectsview.h \
+   commandsmanager.h
 
 FORMS += \
    mainwindow.ui \

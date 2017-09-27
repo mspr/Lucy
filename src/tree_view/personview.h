@@ -4,6 +4,7 @@
 #include <QGraphicsItemGroup>
 
 namespace Business { class Person; }
+class FamilyTreeScene;
 
 class PersonView : public QGraphicsItemGroup
 {
@@ -15,6 +16,8 @@ class PersonView : public QGraphicsItemGroup
     virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget = nullptr) override;
 
     Business::Person* person() const;
+
+    FamilyTreeScene* treeScene() const;
 
     QPointF sceneCenterPos() const;
     void setSceneCenterPos(const QPointF& sceneCenterPos);

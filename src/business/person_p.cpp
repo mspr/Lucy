@@ -1,5 +1,6 @@
 #include "person_p.h"
 #include "person.h"
+#include "personinfo.h"
 #include "gender.h"
 #include "tree.h"
 #include "job.h"
@@ -24,17 +25,19 @@ Person_p::Person_p(Person* facade, const int id)
   Q_ASSERT(_facade != nullptr);
 }
 
-Person_p::Person_p(Person* facade, Gender gender, const QString& firstName, const QString& lastName, Birth* birth)
+Person_p::Person_p(Person* facade, const PersonInfo& personInfo)
   : DomainObject_p()
   , _facade(facade)
-  , _gender(gender)
-  , _firstName(firstName)
-  , _lastName(lastName)
-  , _birth(birth)
+  , _gender(personInfo.gender)
+  , _firstName(personInfo.firstName)
+  , _lastName(personInfo.lastName)
+  , _birth(personInfo.birth)
   , _father(nullptr)
   , _mother(nullptr)
 {
   Q_ASSERT(_facade != nullptr);
+  Q_ASSERT(!_firstName.isEmpty());
+  Q_ASSERT(!_lastName.isEmpty());
   Q_ASSERT(_birth != nullptr);
 }
 
@@ -67,6 +70,7 @@ QString Person_p::firstName() const
 
 void Person_p::setFirstName(const QString& firstName)
 {
+  Q_ASSERT(!firstName.isEmpty());
   _firstName = firstName;
   setDirty();
 }
@@ -78,6 +82,7 @@ QString Person_p::lastName() const
 
 void Person_p::setLastName(const QString& lastName)
 {
+  Q_ASSERT(!lastName.isEmpty());
   _lastName = lastName;
   setDirty();
 }

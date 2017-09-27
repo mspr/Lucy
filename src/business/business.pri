@@ -11,7 +11,8 @@ HEADERS += \
     $$PWD/location_p.h \
     $$PWD/birth_p.h \
     $$PWD/birth.h \
-    $$PWD/gender.h
+    $$PWD/gender.h \
+    $$PWD/personinfo.h
 
 SOURCES += \
     $$PWD/tree.cpp \
@@ -25,4 +26,5 @@ SOURCES += \
     $$PWD/location.cpp \
     $$PWD/location_p.cpp \
     $$PWD/birth_p.cpp \
-    $$PWD/birth.cpp
+    $$PWD/birth.cpp \
+    $$PWD/personinfo.cpp

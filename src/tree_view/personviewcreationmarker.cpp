@@ -37,15 +37,9 @@ void PersonViewCreationMarker::mousePressEvent(QGraphicsSceneMouseEvent* e)
   FamilyTreeScene* scene = dynamic_cast<FamilyTreeScene*>(this->scene());
   Q_ASSERT(scene != nullptr);
 
-  PersonBuilderWizard personBuilderWizard;
+  PersonBuilderWizard personBuilderWizard(_personView);
   if (personBuilderWizard.exec())
   {
-    Person* person = personBuilderWizard.person();
-
-    _personView->person()->setParent(person);
-
-    scene->extendTreeFromNode(_personView, person);
-//    scene->adjustNodes();
   }
 
   QGraphicsPixmapItem::mousePressEvent(e);

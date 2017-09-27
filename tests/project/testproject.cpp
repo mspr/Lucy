@@ -2,6 +2,7 @@
 #include "project/project.h"
 #include "business/tree.h"
 #include "business/person.h"
+#include "business/personinfo.h"
 #include "business/birth.h"
 #include "business/gender.h"
 
@@ -128,10 +129,16 @@ void TestProject::save_dirty()
   const QString projectName = "projectName";
   const QString projectFullPath = projectName + "." + Project::fileFormat();
 
+  PersonInfo personInfo;
+  personInfo.gender = Gender::Masculine;
+  personInfo.firstName = "Maxime";
+  personInfo.lastName = "Spriet";
+  personInfo.birth = new Birth(QDate());
+
   Project project(projectName);
 
   Tree* tree = new Tree("treeName");
-  Person* person = new Person(Gender::Masculine, "Maxime", "Spriet", new Birth(QDate()));
+  Person* person = new Person(personInfo);
   tree->addPerson(person);
   tree->setReference(person);
 

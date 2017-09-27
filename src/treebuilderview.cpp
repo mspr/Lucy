@@ -1,6 +1,7 @@
 #include "treebuilderview.h"
 #include "ui_treebuilderview.h"
 #include "business/person.h"
+#include "business/personinfo.h"
 #include "business/tree.h"
 #include "business/birth.h"
 #include "business/gender.h"
@@ -29,15 +30,18 @@ int TreeBuilderView::exec()
     QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
     Q_ASSERT(!currentProject.isNull());
 
+    PersonInfo personInfo;
+
     const QString treeName = _ui->treeNameLineEdit->text();
-    const QString firstName = _ui->firstNameLineEdit->text();
-    const QString lastName = _ui->lastNameLideEdit->text();
+    personInfo.firstName = _ui->firstNameLineEdit->text();
+    personInfo.lastName = _ui->lastNameLideEdit->text();
+    personInfo.gender = Gender::Masculine;
 
     const QDate birthDate = _ui->birthDateEdit->date();
-    Birth* birth = new Birth(birthDate);
+    personInfo.birth = new Birth(birthDate);
 
     Tree* tree = new Tree(treeName);
-    Person* person = new Person(Gender::Masculine, firstName, lastName, birth);
+    Person* person = new Person(personInfo);
     tree->addPerson(person);
     tree->setReference(person);
 

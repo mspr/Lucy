@@ -5,8 +5,8 @@ using namespace Business;
 
 DEFINE_PIMPL(Person)
 
-Person::Person(Gender gender, const QString& firstName, const QString& lastName, Birth* birth)
-  : _pimpl(new Person_p(this, gender, firstName, lastName, birth))
+Person::Person(const PersonInfo& personInfo)
+  : _pimpl(new Person_p(this, personInfo))
 {
 }
 

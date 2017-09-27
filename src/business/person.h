@@ -8,6 +8,7 @@
 namespace Business
 {
   class Person_p;
+  struct PersonInfo;
   enum class Gender;
   class Tree;
   class Birth;
@@ -18,7 +19,7 @@ namespace Business
     DECLARE_PIMPL(Person)
 
     public:
-      Person(Gender gender, const QString& firstName, const QString& lastName, Birth* birth);
+      Person(const PersonInfo& personInfo);
 
       Gender gender() const;
       void setGender(Gender gender);

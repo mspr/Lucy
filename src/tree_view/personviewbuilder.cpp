@@ -1,5 +1,6 @@
 #include "personviewbuilder.h"
 #include "ui_personviewbuilder.h"
+#include "business/personinfo.h"
 #include "business/birth.h"
 #include "business/gender.h"
 
@@ -19,12 +20,14 @@ PersonViewBuilder::~PersonViewBuilder()
 
 Person* PersonViewBuilder::person() const
 {
-  const QString firstName = _ui->firstNameLineEdit->text();
-  const QString lastName = _ui->lastNameLineEdit->text();
-  const Gender gender = _ui->feminineGenderPushButton->isChecked() ? Gender::Feminine : Gender::Masculine;
+  PersonInfo personInfo;
+
+  personInfo.firstName = _ui->firstNameLineEdit->text();
+  personInfo.lastName = _ui->lastNameLineEdit->text();
+  personInfo.gender = _ui->feminineGenderPushButton->isChecked() ? Gender::Feminine : Gender::Masculine;
 
   const QDate birthDate = _ui->birthDateEdit->date();
-  Birth* birth = new Birth(birthDate);
+  personInfo.birth = new Birth(birthDate);
 
-  return new Person(gender, firstName, lastName, birth);
+  return new Person(personInfo);
 }
