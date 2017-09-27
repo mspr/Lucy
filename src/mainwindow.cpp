@@ -8,6 +8,7 @@
 #include "project/project.h"
 #include "treebuilderview.h"
 #include "business/tree.h"
+#include "commandsmanager.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -200,7 +201,6 @@ void MainWindow::onProjectOpen()
   QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
   connect(currentProject.data(), Project::treeAdded, this, MainWindow::onTreeAdded);
   connect(currentProject.data(), Project::dirty, this, MainWindow::onProjectDirty);
-  connect(currentProject.data(), Project::upToDate, this, MainWindow::onProjectUpToDate);
   connect(currentProject.data(), Project::saved, this, MainWindow::onProjectSaved);
   connect(currentProject.data(), Project::destroyed, this, MainWindow::onProjectClosed);
 
@@ -213,7 +213,7 @@ void MainWindow::onProjectOpen()
     _treeTabWidget->addTab(familyTreeView, trees.at(i)->name());
   }
 
-  onProjectUpToDate();
+  onProjectSaved();
 }
 
 void MainWindow::onProjectClosed()
@@ -239,13 +239,6 @@ void MainWindow::onProjectDirty()
   setWindowModified(true);
 }
 
-void MainWindow::onProjectUpToDate()
-{
-  _ui->actionSave->setEnabled(false);
-  _ui->actionSaveAs->setEnabled(false);
-  setWindowModified(false);
-}
-
 void MainWindow::onProjectSaved()
 {
   Project* project = dynamic_cast<Project*>(sender());
@@ -258,6 +251,12 @@ void MainWindow::onProjectSaved()
   recentProjects.removeAll(fileName);
   recentProjects.prepend(fileName);
   settings.setValue("recentProjects", recentProjects);
+
+  CommandsManager::getInstance()->clear();
+
+  _ui->actionSave->setEnabled(false);
+  _ui->actionSaveAs->setEnabled(false);
+  setWindowModified(false);
 }
 
 MainWindow::~MainWindow()

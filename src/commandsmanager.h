@@ -13,6 +13,7 @@ class CommandsManager : public QObject
     static void kill();
 
     void addCommand(QUndoCommand* command);
+    void clear();
 
   private:
     CommandsManager();

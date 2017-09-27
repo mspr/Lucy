@@ -34,7 +34,6 @@ class MainWindow : public QMainWindow
     void onProjectClosed();
     void onTreeAdded(QUuid droid);
     void onProjectDirty();
-    void onProjectUpToDate();
     void onProjectSaved();
 
   private:

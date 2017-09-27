@@ -32,3 +32,8 @@ void CommandsManager::addCommand(QUndoCommand* command)
   Q_ASSERT(command != nullptr);
   _undoStack->push(command);
 }
+
+void CommandsManager::clear()
+{
+  _undoStack->clear();
+}

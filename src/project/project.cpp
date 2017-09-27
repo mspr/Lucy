@@ -188,6 +188,4 @@ void Project::commit()
     _objectsToAdd.at(i)->getD()->insertIntoDatabase();
 
   _isDirty = false;
-
-  emit upToDate();
 }
