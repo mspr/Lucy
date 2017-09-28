@@ -64,7 +64,7 @@ void Tree_p::remove(Person* person)
   Q_ASSERT(_persons.removeOne(person));
 
   if (person->isNew())
-    delete person;
+    person->deleteLater();
   else
     person->d()->markAsDeleted();
 }

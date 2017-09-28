@@ -70,8 +70,8 @@ void PersonView::paint(QPainter* painter, const QStyleOptionGraphicsItem* option
 
 void PersonView::keyPressEvent(QKeyEvent* e)
 {
+  QGraphicsItemGroup::keyPressEvent(e);
+
   if (e->key() == Qt::Key_Delete)
     _person->tree()->remove(_person);
-
-  QGraphicsItemGroup::keyPressEvent(e);
 }
