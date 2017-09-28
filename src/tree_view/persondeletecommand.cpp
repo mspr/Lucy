@@ -2,7 +2,7 @@
 #include "business/person.h"
 #include "business/person_p.h"
 #include "business/tree.h"
-#include "business/databsestatus.h"
+#include "business/databasestatus.h"
 
 using namespace Business;
 

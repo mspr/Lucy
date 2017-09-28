@@ -1,5 +1,5 @@
 #include "domainobject_p.h"
-#include "business/databsestatus.h"
+#include "business/databasestatus.h"
 
 #include <QSqlQuery>
 #include <QVariant>
