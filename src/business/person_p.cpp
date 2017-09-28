@@ -53,6 +53,18 @@ Person_p::~Person_p()
   _jobs.clear();
 }
 
+PersonInfo Person_p::info() const
+{
+  PersonInfo info;
+
+  info.firstName = _firstName;
+  info.lastName = _lastName;
+  info.gender = _gender;
+  info.birth = _birth;
+
+  return info;
+}
+
 Gender Person_p::gender() const
 {
   return _gender;

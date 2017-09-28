@@ -21,6 +21,8 @@ namespace Business
     public:
       Person_p(Person* facade, const PersonInfo& personInfo);
 
+      PersonInfo info() const;
+
       Gender gender() const;
       void setGender(Gender gender);
 

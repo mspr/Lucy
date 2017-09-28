@@ -1,5 +1,6 @@
 #include "person.h"
 #include "person_p.h"
+#include "personinfo.h"
 
 using namespace Business;
 
@@ -8,6 +9,11 @@ DEFINE_PIMPL(Person)
 Person::Person(const PersonInfo& personInfo)
   : _pimpl(new Person_p(this, personInfo))
 {
+}
+
+PersonInfo Person::info() const
+{
+  return d()->info();
 }
 
 Gender Person::gender() const
