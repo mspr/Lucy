@@ -4,6 +4,7 @@
 #include "business/person.h"
 #include "business/gender.h"
 #include "business/tree.h"
+#include "business/tree_p.h"
 #include "project/projectmanager.h"
 #include "project/project.h"
 #include "math.h"
@@ -28,6 +29,8 @@ FamilyTreeScene::FamilyTreeScene(const QRectF& sceneRect, Tree* tree, QObject* p
   extendTreeFromNodeRecursively(referenceNode);
 
   adjustNodes();
+
+  connect(tree->d(), Tree_p::personRemoved, this, FamilyTreeScene::onPersonRemoved);
 }
 
 void FamilyTreeScene::extendTreeFromNodeRecursively(PersonView* node)
@@ -190,18 +193,16 @@ PersonView* FamilyTreeScene::createNode(Person* person, const QPointF& scenePos)
   motherViewCreationMarker->setPos(motherViewSceneCenterPos);
   addItem(motherViewCreationMarker);
 
-  connect(person, &Person::destroyed, this, &FamilyTreeScene::onPersonDeleted);
-
   return node;
 }
 
-void FamilyTreeScene::onPersonDeleted()
+void FamilyTreeScene::onPersonRemoved(Person* person)
 {
-  Person* person = dynamic_cast<Person*>(sender());
   Q_ASSERT(person != nullptr);
 
   PersonView* personView = getView(person);
   removeItem(personView);
+
   delete personView;
 }
 

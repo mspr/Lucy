@@ -63,10 +63,7 @@ void Tree_p::remove(Person* person)
   Q_ASSERT(person != nullptr);
   Q_ASSERT(_persons.removeOne(person));
 
-  if (person->isNew())
-    person->deleteLater();
-  else
-    person->d()->markAsDeleted();
+  emit personRemoved(person);
 }
 
 Person* Tree_p::reference() const

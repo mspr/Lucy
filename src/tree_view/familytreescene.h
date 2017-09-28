@@ -38,7 +38,7 @@ class FamilyTreeScene : public QGraphicsScene
     PersonView* getView(Business::Person* person) const;
 
   private slots:
-    void onPersonDeleted();
+    void onPersonRemoved(Business::Person* person);
 
   private:
     QHash<QGraphicsItem*, int> _levelByTreeNode;

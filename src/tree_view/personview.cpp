@@ -73,5 +73,14 @@ void PersonView::keyPressEvent(QKeyEvent* e)
   QGraphicsItemGroup::keyPressEvent(e);
 
   if (e->key() == Qt::Key_Delete)
-    _person->tree()->remove(_person);
+  {
+    if (_person->father() == nullptr && _person->mother() == nullptr)
+    {
+      _person->tree()->remove(_person);
+    }
+    else
+    {
+
+    }
+  }
 }

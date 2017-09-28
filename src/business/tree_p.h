@@ -10,6 +10,8 @@ namespace Business
 
   class Tree_p : public DomainObject_p
   {
+    Q_OBJECT
+
     DECLARE_FACADE(Tree)
 
     public:
@@ -24,6 +26,9 @@ namespace Business
 
       Person* reference() const;
       void setReference(Person* person);
+
+    signals:
+      void personRemoved(Person* person);
 
     protected:
       virtual void load_impl(QSqlQuery& query) override;
