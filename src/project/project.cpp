@@ -5,8 +5,6 @@
 #include "business/person.h"
 #include "business/tree.h"
 
-#include <QDebug>
-
 using namespace Business;
 
 Project::Project(const QString& name)
@@ -179,8 +177,6 @@ void Project::save()
     ProjectXmlWriter::write(this);
 
     emit saved();
-
-    qInfo() << "Project " << name() << " has been saved.";
   }
 }
 

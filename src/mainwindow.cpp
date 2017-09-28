@@ -257,6 +257,8 @@ void MainWindow::onProjectSaved()
   _ui->actionSave->setEnabled(false);
   _ui->actionSaveAs->setEnabled(false);
   setWindowModified(false);
+
+  qInfo() << "Project " << project->name() << " has been saved.";
 }
 
 MainWindow::~MainWindow()
