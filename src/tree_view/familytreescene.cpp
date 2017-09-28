@@ -30,6 +30,7 @@ FamilyTreeScene::FamilyTreeScene(const QRectF& sceneRect, Tree* tree, QObject* p
 
   adjustNodes();
 
+  connect(tree->d(), Tree_p::personAdded, this, FamilyTreeScene::onPersonAdded);
   connect(tree->d(), Tree_p::personRemoved, this, FamilyTreeScene::onPersonRemoved);
 }
 
@@ -200,7 +201,11 @@ void FamilyTreeScene::onPersonAdded(Person* person)
 {
   Q_ASSERT(person != nullptr);
 
+  Person* child = person->child();
+  Q_ASSERT(child != nullptr);
+  PersonView* childNode = getView(child);
 
+  extendTreeFromNode(childNode, person);
 }
 
 void FamilyTreeScene::onPersonRemoved(Person* person)

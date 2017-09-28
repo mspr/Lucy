@@ -32,13 +32,10 @@ void PersonCreateCommand::redo()
   child->setParent(_person);
 
   currentProject->add(_person);
+  //  currentProject->add(birthLocation);
+  //  currentProject->add(birth);
 
   currentTree->add(_person);
-//  currentProject->add(birthLocation);
-//  currentProject->add(birth);
-
-  _personView->treeScene()->extendTreeFromNode(_personView, _person);
-//    scene->adjustNodes();
 }
 
 void PersonCreateCommand::undo()
