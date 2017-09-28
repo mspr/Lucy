@@ -32,6 +32,8 @@ namespace Business { class DomainObject_p; }
 
 namespace Business
 {
+  enum class DatabaseStatus;
+
   class DomainObject : public QObject
   {
     public:
@@ -41,6 +43,7 @@ namespace Business
       QUuid droid() const;
       int id() const;
 
+      DatabaseStatus status() const;
       bool isDirty() const;
       bool isNew() const;
       bool isDeleted() const;

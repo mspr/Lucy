@@ -22,6 +22,11 @@ int DomainObject::id() const
   return getD()->id();
 }
 
+DatabaseStatus DomainObject::status() const
+{
+  return getD()->status();
+}
+
 bool DomainObject::isDirty() const
 {
   return getD()->isDirty();

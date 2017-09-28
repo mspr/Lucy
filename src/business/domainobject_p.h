@@ -47,6 +47,7 @@ namespace Business
       QUuid droid() const;
       int id() const;
 
+      DatabaseStatus status() const;
       bool isDirty() const;
       bool isNew() const;
       bool isDeleted() const;

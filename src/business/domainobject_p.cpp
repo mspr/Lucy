@@ -36,6 +36,11 @@ int DomainObject_p::id() const
   return _id;
 }
 
+DatabaseStatus DomainObject_p::status() const
+{
+  return _status;
+}
+
 bool DomainObject_p::isDirty() const
 {
   return _status == DatabaseStatus::Dirty;
@@ -80,6 +85,12 @@ void DomainObject_p::tryLoad()
       qCritical() << "Fail to select data from " << databaseTableName() << " table from database:" << sqlError.text();
     }
   }
+}
+
+void DomainObject_p::setDirty()
+{
+  _status = DatabaseStatus::Dirty;
+  emit dirty();
 }
 
 void DomainObject_p::markAsDeleted()
@@ -161,10 +172,4 @@ void DomainObject_p::deleteFromDatabase()
     const QSqlError sqlError = query.lastError();
     qCritical() << "Fail to delete " << databaseTableName() << " " << _id << " from database :" << sqlError.text();
   }
-}
-
-void DomainObject_p::setDirty()
-{
-  _status = DatabaseStatus::Dirty;
-  emit dirty();
 }
