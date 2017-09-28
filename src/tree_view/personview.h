@@ -22,6 +22,9 @@ class PersonView : public QGraphicsItemGroup
     QPointF sceneCenterPos() const;
     void setSceneCenterPos(const QPointF& sceneCenterPos);
 
+  protected:
+    virtual void keyPressEvent(QKeyEvent*) override;
+
   public:
     static int _width;
     static int _height;

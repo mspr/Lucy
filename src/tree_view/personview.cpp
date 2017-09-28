@@ -2,6 +2,7 @@
 #include "familytreescene.h"
 #include "business/person.h"
 #include "business/birth.h"
+#include "business/tree.h"
 
 #include <QGraphicsScene>
 #include <QPainter>
@@ -65,4 +66,12 @@ void PersonView::paint(QPainter* painter, const QStyleOptionGraphicsItem* option
   QGraphicsItemGroup::paint(painter, option, widget);
 
   painter->drawRect(boundingRect());
+}
+
+void PersonView::keyPressEvent(QKeyEvent* e)
+{
+  if (e->key() == Qt::Key_Delete)
+    _person->tree()->remove(_person);
+
+  QGraphicsItemGroup::keyPressEvent(e);
 }
