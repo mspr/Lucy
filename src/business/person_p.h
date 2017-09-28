@@ -42,10 +42,9 @@ namespace Business
       void setDeathPlace(const QString& deathPlace);
 
       Person* father() const;
-      void setFather(Person* father);
       Person* mother() const;
-      void setMother(Person* mother);
       void setParent(Person* parent);
+      Person* child() const;
 
       Tree* tree() const;
       void setTree(Tree* tree);
@@ -60,6 +59,11 @@ namespace Business
       virtual QString databaseTableName() const override;
 
     private:
+      void setFather(Person* father);
+      void setMother(Person* mother);
+      void setChild(Person* child);
+
+    private:
       Tree* _tree;
       Gender _gender;
       QString _firstName;
@@ -69,6 +73,7 @@ namespace Business
       QString _deathPlace;
       Person* _father;
       Person* _mother;
+      Person* _child;
       QList<Job*> _jobs;
   };
 

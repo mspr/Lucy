@@ -39,10 +39,9 @@ namespace Business
       void setTree(Tree* tree);
 
       Person* father() const;
-      void setFather(Person* father);
       Person* mother() const;
-      void setMother(Person* mother);
       void setParent(Person* parent);
+      Person* child() const;
 
       QList<Job*> jobs() const;
       void addJob(Job* job);

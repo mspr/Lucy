@@ -21,6 +21,7 @@ Person_p::Person_p(Person* facade, const int id)
   , _birth(nullptr)
   , _father(nullptr)
   , _mother(nullptr)
+  , _child(nullptr)
 {
   Q_ASSERT(_facade != nullptr);
 }
@@ -34,6 +35,7 @@ Person_p::Person_p(Person* facade, const PersonInfo& personInfo)
   , _birth(personInfo.birth)
   , _father(nullptr)
   , _mother(nullptr)
+  , _child(nullptr)
 {
   Q_ASSERT(_facade != nullptr);
   Q_ASSERT(!_firstName.isEmpty());
@@ -120,6 +122,7 @@ void Person_p::setFather(Person* father)
 {
   Q_ASSERT(father != nullptr);
   _father = father;
+  _father->d()->setChild(facade());
   //setDirty();
 }
 
@@ -132,6 +135,7 @@ void Person_p::setMother(Person* mother)
 {
   Q_ASSERT(mother != nullptr);
   _mother = mother;
+  _mother->d()->setChild(facade());
   //setDirty();
 }
 
@@ -143,6 +147,17 @@ void Person_p::setParent(Person* parent)
     setFather(parent);
   else
     setMother(parent);
+}
+
+Person* Person_p::child() const
+{
+  return _child;
+}
+
+void Person_p::setChild(Person* child)
+{
+  Q_ASSERT(child != nullptr);
+  _child = child;
 }
 
 Tree* Person_p::tree() const

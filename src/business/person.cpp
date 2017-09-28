@@ -71,24 +71,19 @@ Person* Person::father() const
   return d()->father();
 }
 
-void Person::setFather(Person* father)
-{
-  d()->setFather(father);
-}
-
 Person* Person::mother() const
 {
   return d()->mother();
 }
 
-void Person::setMother(Person* mother)
-{
-  d()->setMother(mother);
-}
-
 void Person::setParent(Person* parent)
 {
   d()->setParent(parent);
+}
+
+Person* Person::child() const
+{
+  return d()->child();
 }
 
 QList<Job*> Person::jobs() const

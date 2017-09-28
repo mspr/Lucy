@@ -29,6 +29,7 @@ namespace Business
 
     signals:
       void personRemoved(Person* person);
+      void personAdded(Person* person);
 
     protected:
       virtual void load_impl(QSqlQuery& query) override;

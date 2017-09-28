@@ -56,6 +56,8 @@ void Tree_p::add(Person* person)
 
   person->setTree(facade());
   _persons.append(person);
+
+  emit personAdded(person);
 }
 
 void Tree_p::remove(Person* person)

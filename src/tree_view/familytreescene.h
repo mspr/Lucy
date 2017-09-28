@@ -38,6 +38,7 @@ class FamilyTreeScene : public QGraphicsScene
     PersonView* getView(Business::Person* person) const;
 
   private slots:
+    void onPersonAdded(Business::Person* person);
     void onPersonRemoved(Business::Person* person);
 
   private:

@@ -196,6 +196,13 @@ PersonView* FamilyTreeScene::createNode(Person* person, const QPointF& scenePos)
   return node;
 }
 
+void FamilyTreeScene::onPersonAdded(Person* person)
+{
+  Q_ASSERT(person != nullptr);
+
+
+}
+
 void FamilyTreeScene::onPersonRemoved(Person* person)
 {
   Q_ASSERT(person != nullptr);

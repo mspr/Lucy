@@ -27,12 +27,15 @@ void PersonCreateCommand::redo()
 
   _person = new Person(_personInfo);
 
+  Person* child = _personView->person();
+  Q_ASSERT(child != nullptr);
+  child->setParent(_person);
+
+  currentProject->add(_person);
+
   currentTree->add(_person);
 //  currentProject->add(birthLocation);
 //  currentProject->add(birth);
-  currentProject->add(_person);
-
-  _personView->person()->setParent(_person);
 
   _personView->treeScene()->extendTreeFromNode(_personView, _person);
 //    scene->adjustNodes();
