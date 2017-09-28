@@ -127,7 +127,7 @@ QSqlQuery Tree_p::prepareInsertIntoDatabaseQuery()
 void Tree_p::onInsertIntoDatabaseSucceeded()
 {
   // Insert persons recursively from the reference
-  _reference->getD()->insertIntoDatabase();
+  _reference->getD()->commit();
 
   for (int i=0; i<_persons.count(); ++i)
   {

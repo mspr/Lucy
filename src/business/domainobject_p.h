@@ -51,9 +51,7 @@ namespace Business
       bool isNew() const;
       bool isDeleted() const;
 
-      void deleteFromDatabase();
-      void updateInDatabase();
-      void insertIntoDatabase();
+      void commit();
 
     signals:
       void dirty();
@@ -66,6 +64,11 @@ namespace Business
       virtual QString databaseTableName() const = 0;
 
       void setDirty();
+
+    private:
+      void deleteFromDatabase();
+      void updateInDatabase();
+      void insertIntoDatabase();
 
     protected:
       int _id;

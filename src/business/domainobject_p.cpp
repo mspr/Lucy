@@ -82,6 +82,24 @@ void DomainObject_p::tryLoad()
   }
 }
 
+void DomainObject_p::commit()
+{
+  switch (_status)
+  {
+    case DatabaseStatus::New:
+      insertIntoDatabase();
+    break;
+    case DatabaseStatus::Dirty:
+      updateInDatabase();
+    break;
+    case DatabaseStatus::Deleted:
+      deleteFromDatabase();
+    break;
+    case DatabaseStatus::Loaded:
+    break;
+  }
+}
+
 void DomainObject_p::insertIntoDatabase()
 {
   Q_ASSERT(_id == -1);

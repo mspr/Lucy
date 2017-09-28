@@ -185,7 +185,7 @@ QString Person_p::databaseTableName() const
 
 QSqlQuery Person_p::prepareInsertIntoDatabaseQuery()
 {
-  _birth->d()->insertIntoDatabase();
+  _birth->d()->commit();
 
   QString queryStr = "INSERT INTO public.\"Person\" (\"FirstName\", \"Birth\", \"LastName\", \"Father\", \"Mother\") VALUES (:firstName, :birth, :lastName, :father, :mother);";
 
@@ -197,13 +197,13 @@ QSqlQuery Person_p::prepareInsertIntoDatabaseQuery()
 
   if (_father != nullptr)
   {
-    _father->getD()->insertIntoDatabase();
+    _father->getD()->commit();
     query.bindValue(":father", QVariant::fromValue(_father->id()));
   }
 
   if (_mother != nullptr)
   {
-    _mother->getD()->insertIntoDatabase();
+    _mother->getD()->commit();
     query.bindValue(":mother", QVariant::fromValue(_mother->id()));
   }
 

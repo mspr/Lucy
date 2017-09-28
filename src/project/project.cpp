@@ -97,12 +97,12 @@ void Project::add_impl(DomainObject* object)
 
   if (object->id() == -1)
   {
-    _objectsToAdd.append(object);
+    _objects.append(object);
     setDirty();
   }
   else
   {
-    connect(object->getD(), DomainObject_p::dirty, this, Project::onObjectDirty);
+    connect(object->getD(), DomainObject_p::dirty, this, Project::setDirty);
   }
 }
 
@@ -161,18 +161,6 @@ QList<Tree*> Project::trees() const
   return _trees;
 }
 
-void Project::onObjectDirty()
-{
-  DomainObject* dirtyObject = dynamic_cast<DomainObject*>(sender());
-  Q_ASSERT(dirtyObject != nullptr);
-
-  if (!_objectsToAdd.contains(dirtyObject) && !_objectsToDelete.contains(dirtyObject))
-  {
-    _objectsToUpdate.append(dirtyObject);
-    setDirty();
-  }
-}
-
 void Project::setDirty()
 {
   _isDirty = true;
@@ -198,14 +186,8 @@ void Project::save()
 
 void Project::commit()
 {
-  for (int i=0; i<_objectsToDelete.count(); ++i)
-    _objectsToDelete.at(i)->getD()->deleteFromDatabase();
-
-  for (int i=0; i<_objectsToUpdate.count(); ++i)
-    _objectsToUpdate.at(i)->getD()->updateInDatabase();
-
-  for (int i=0; i<_objectsToAdd.count(); ++i)
-    _objectsToAdd.at(i)->getD()->insertIntoDatabase();
+  for (int i=0; i<_objects.count(); ++i)
+    _objects.at(i)->getD()->commit();
 
   _isDirty = false;
 }

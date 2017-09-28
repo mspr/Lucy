@@ -89,7 +89,7 @@ QSqlQuery Job_p::prepareInsertIntoDatabaseQuery()
 
   if (_location != nullptr)
   {
-    _location->d()->insertIntoDatabase();
+    _location->d()->commit();
     query.bindValue(":location", QVariant::fromValue(_location->id()));
   }
 

@@ -48,7 +48,6 @@ class Project : public QObject
     void commit();
 
   private slots:
-    void onObjectDirty();
     void setDirty();
 
   private:
@@ -56,9 +55,7 @@ class Project : public QObject
     QString _name;
     bool _isDirty;
     QList<Business::Tree*> _trees;
-    QList<Business::DomainObject*> _objectsToDelete;
-    QList<Business::DomainObject*> _objectsToAdd;
-    QList<Business::DomainObject*> _objectsToUpdate;
+    QList<Business::DomainObject*> _objects;
     Business::Tree* _currentTree;
 };
 
