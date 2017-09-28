@@ -27,6 +27,11 @@ DatabaseStatus DomainObject::status() const
   return getD()->status();
 }
 
+void DomainObject::revertStatus()
+{
+  getD()->revertStatus();
+}
+
 bool DomainObject::isDirty() const
 {
   return getD()->isDirty();

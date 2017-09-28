@@ -41,6 +41,27 @@ DatabaseStatus DomainObject_p::status() const
   return _status;
 }
 
+void DomainObject_p::revertStatus()
+{
+  Q_ASSERT(_status == DatabaseStatus::Deleted);
+  _status = _oldStatus;
+}
+
+void DomainObject_p::setDirty()
+{
+  _status = DatabaseStatus::Dirty;
+  emit dirty();
+}
+
+void DomainObject_p::markAsDeleted()
+{
+  Q_ASSERT(_status != DatabaseStatus::Deleted);
+  Q_ASSERT(_status != DatabaseStatus::New);
+
+  _oldStatus = _status;
+  _status = DatabaseStatus::Deleted;
+}
+
 bool DomainObject_p::isDirty() const
 {
   return _status == DatabaseStatus::Dirty;
@@ -85,20 +106,6 @@ void DomainObject_p::tryLoad()
       qCritical() << "Fail to select data from " << databaseTableName() << " table from database:" << sqlError.text();
     }
   }
-}
-
-void DomainObject_p::setDirty()
-{
-  _status = DatabaseStatus::Dirty;
-  emit dirty();
-}
-
-void DomainObject_p::markAsDeleted()
-{
-  Q_ASSERT(_status != DatabaseStatus::Deleted);
-  Q_ASSERT(_status != DatabaseStatus::New);
-
-  _status = DatabaseStatus::Deleted;
 }
 
 void DomainObject_p::commit()

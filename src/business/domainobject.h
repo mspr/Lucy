@@ -44,6 +44,7 @@ namespace Business
       int id() const;
 
       DatabaseStatus status() const;
+      void revertStatus();
       bool isDirty() const;
       bool isNew() const;
       bool isDeleted() const;

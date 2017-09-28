@@ -41,7 +41,7 @@ void PersonDeleteCommand::undo()
   }
   else
   {
-//    _person->set
+    _person->revertStatus();
   }
 
   _tree->add(_person);

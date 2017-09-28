@@ -48,6 +48,7 @@ namespace Business
       int id() const;
 
       DatabaseStatus status() const;
+      void revertStatus();
       bool isDirty() const;
       bool isNew() const;
       bool isDeleted() const;
@@ -74,6 +75,7 @@ namespace Business
 
     protected:
       int _id;
+      DatabaseStatus _oldStatus;
       DatabaseStatus _status;
       QUuid _droid;
   };
