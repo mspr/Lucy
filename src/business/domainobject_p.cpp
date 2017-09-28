@@ -82,6 +82,14 @@ void DomainObject_p::tryLoad()
   }
 }
 
+void DomainObject_p::markAsDeleted()
+{
+  Q_ASSERT(_status != DatabaseStatus::Deleted);
+  Q_ASSERT(_status != DatabaseStatus::New);
+
+  _status = DatabaseStatus::Deleted;
+}
+
 void DomainObject_p::commit()
 {
   switch (_status)

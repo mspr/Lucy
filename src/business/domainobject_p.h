@@ -51,6 +51,7 @@ namespace Business
       bool isNew() const;
       bool isDeleted() const;
 
+      void markAsDeleted();
       void commit();
 
     signals:

@@ -27,8 +27,6 @@ class Project : public QObject
     void add(Business::Person* person);
     void setCurrentTree(Business::Tree* tree);
 
-    void remove(Business::Person* person);
-
     QList<Business::Tree*> trees() const;
     Business::Tree* currentTree() const;
     Business::Tree* tree(QUuid droid) const;
@@ -49,6 +47,7 @@ class Project : public QObject
 
   private slots:
     void setDirty();
+    void onObjectDeleted();
 
   private:
     QFileInfo _fileInfo;
