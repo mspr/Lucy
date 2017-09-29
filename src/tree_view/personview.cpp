@@ -3,8 +3,10 @@
 #include "business/person.h"
 #include "business/birth.h"
 #include "business/tree.h"
+#include "persondeletecommand.h"
+#include "persondeletecascadecommand.h"
+#include "commandsmanager.h"
 
-#include <QGraphicsScene>
 #include <QPainter>
 
 using namespace Business;
@@ -74,13 +76,17 @@ void PersonView::keyPressEvent(QKeyEvent* e)
 
   if (e->key() == Qt::Key_Delete)
   {
-    if (_person->father() == nullptr && _person->mother() == nullptr)
+    if (_person->hasParents())
     {
-      _person->tree()->remove(_person);
+      PersonDeleteCommand* personDeleteCommand = new PersonDeleteCommand(_person);
+      CommandsManager::getInstance()->addCommand(personDeleteCommand);
+      personDeleteCommand->redo();
     }
     else
     {
-
+      PersonDeleteCascadeCommand* personDeleteCascadeCommand = new PersonDeleteCascadeCommand(_person);
+      CommandsManager::getInstance()->addCommand(personDeleteCascadeCommand);
+      personDeleteCascadeCommand->redo();
     }
   }
 }

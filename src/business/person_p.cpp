@@ -149,6 +149,11 @@ void Person_p::setParent(Person* parent)
     setMother(parent);
 }
 
+bool Person_p::hasParents() const
+{
+  return _father != nullptr || _mother != nullptr;
+}
+
 Person* Person_p::child() const
 {
   return _child;

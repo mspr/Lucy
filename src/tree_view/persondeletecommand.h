@@ -11,7 +11,7 @@ namespace Business { enum class DatabaseStatus; }
 class PersonDeleteCommand : public QUndoCommand
 {
   public:
-    PersonDeleteCommand(Business::Person* person);
+    PersonDeleteCommand(Business::Person* person, QUndoCommand* parent = nullptr);
 
     virtual void redo() override;
     virtual void undo() override;

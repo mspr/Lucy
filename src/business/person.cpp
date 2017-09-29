@@ -81,6 +81,11 @@ void Person::setParent(Person* parent)
   d()->setParent(parent);
 }
 
+bool Person::hasParents() const
+{
+  return d()->hasParents();
+}
+
 Person* Person::child() const
 {
   return d()->child();

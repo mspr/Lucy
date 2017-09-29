@@ -8,8 +8,8 @@
 
 using namespace Business;
 
-PersonDeleteCommand::PersonDeleteCommand(Person* person)
-  : QUndoCommand()
+PersonDeleteCommand::PersonDeleteCommand(Person* person, QUndoCommand* parent)
+  : QUndoCommand(parent)
   , _person(person)
 {
   Q_ASSERT(_person != nullptr);

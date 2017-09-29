@@ -44,6 +44,7 @@ namespace Business
       Person* father() const;
       Person* mother() const;
       void setParent(Person* parent);
+      bool hasParents() const;
       Person* child() const;
 
       Tree* tree() const;
