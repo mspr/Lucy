@@ -71,9 +71,19 @@ Person* Person::father() const
   return d()->father();
 }
 
+bool Person::hasFather() const
+{
+  return d()->hasFather();
+}
+
 Person* Person::mother() const
 {
   return d()->mother();
+}
+
+bool Person::hasMother() const
+{
+  return d()->hasMother();
 }
 
 void Person::setParent(Person* parent)

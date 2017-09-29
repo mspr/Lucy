@@ -42,7 +42,9 @@ namespace Business
       void setDeathPlace(const QString& deathPlace);
 
       Person* father() const;
+      bool hasFather() const;
       Person* mother() const;
+      bool hasMother() const;
       void setParent(Person* parent);
       void removeParent(Person* parent);
       bool hasParents() const;

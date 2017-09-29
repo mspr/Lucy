@@ -29,13 +29,11 @@ void PersonDeleteCascadeCommand::stackPersonsRecursively(Person* person, QStack<
 
   stack.push(person);
 
-  Person* father = person->father();
-  if (father != nullptr)
-    stackPersonsRecursively(father, stack);
+  if (person->hasFather())
+    stackPersonsRecursively(person->father(), stack);
 
-  Person* mother = person->mother();
-  if (mother != nullptr)
-    stackPersonsRecursively(mother, stack);
+  if (person->hasMother())
+    stackPersonsRecursively(person->mother(), stack);
 }
 
 void PersonDeleteCascadeCommand::redo()

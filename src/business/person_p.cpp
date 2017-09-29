@@ -118,6 +118,11 @@ Person* Person_p::father() const
   return _father;
 }
 
+bool Person_p::hasFather() const
+{
+  return _father != nullptr;
+}
+
 void Person_p::setFather(Person* father)
 {
   _father = father;
@@ -132,11 +137,16 @@ Person* Person_p::mother() const
   return _mother;
 }
 
+bool Person_p::hasMother() const
+{
+  return _mother != nullptr;
+}
+
 void Person_p::setMother(Person* mother)
 {
   _mother = mother;
 
-  if (_mother != nullptr)
+  if (hasMother())
     _mother->d()->setChild(facade());
   //setDirty();
 }
@@ -163,7 +173,7 @@ void Person_p::removeParent(Person* parent)
 
 bool Person_p::hasParents() const
 {
-  return _father != nullptr || _mother != nullptr;
+  return hasFather() || hasMother();
 }
 
 Person* Person_p::child() const

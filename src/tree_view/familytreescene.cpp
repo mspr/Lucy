@@ -40,18 +40,16 @@ void FamilyTreeScene::extendTreeFromNodeRecursively(PersonView* node)
   Person* person = node->person();
   Q_ASSERT(person != nullptr);
 
-  Person* father = person->father();
-  if (father != nullptr)
+  if (person->hasFather())
   {
-    PersonView* fatherNode = extendTreeFromNode(node, father);
+    PersonView* fatherNode = extendTreeFromNode(node, person->father());
     Q_ASSERT(fatherNode != nullptr);
     extendTreeFromNodeRecursively(fatherNode);
   }
 
-  Person* mother = person->mother();
-  if (mother != nullptr)
+  if (person->hasMother())
   {
-    PersonView* motherNode = extendTreeFromNode(node, mother);
+    PersonView* motherNode = extendTreeFromNode(node, person->mother());
     Q_ASSERT(motherNode != nullptr);
     extendTreeFromNodeRecursively(motherNode);
   }
@@ -96,6 +94,8 @@ void FamilyTreeScene::adjustNodes()
 void FamilyTreeScene::adjustNodesRecursively(PersonView* node)
 {
   Q_ASSERT(node != nullptr);
+  Person* person = node->person();
+  Q_ASSERT(person != nullptr);
 
   const QPointF nodeCenterScenePos = node->scenePos();
   int xOffset = 200;
@@ -107,18 +107,16 @@ void FamilyTreeScene::adjustNodesRecursively(PersonView* node)
     xOffset = oldGenerationsCount * 200;
   }
 
-  Person* mother = node->person()->mother();
-  if (mother != nullptr)
+  if (person->hasMother())
   {
-    PersonView* motherView = getView(mother);
+    PersonView* motherView = getView(person->mother());
     motherView->setSceneCenterPos(nodeCenterScenePos + QPointF(xOffset, yOffset));
     adjustNodesRecursively(motherView);
   }
 
-  Person* father = node->person()->father();
-  if (father != nullptr)
+  if (person->hasFather())
   {
-    PersonView* fatherView = getView(father);
+    PersonView* fatherView = getView(person->father());
     fatherView->setSceneCenterPos(nodeCenterScenePos + QPointF(-xOffset, yOffset));
     adjustNodesRecursively(fatherView);
   }
