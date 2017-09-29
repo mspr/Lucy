@@ -33,6 +33,16 @@ void CommandsManager::addCommand(QUndoCommand* command)
   _undoStack->push(command);
 }
 
+void CommandsManager::undo()
+{
+  _undoStack->undo();
+}
+
+void CommandsManager::redo()
+{
+  _undoStack->redo();
+}
+
 void CommandsManager::clear()
 {
   _undoStack->clear();

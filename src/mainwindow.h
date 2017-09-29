@@ -36,6 +36,9 @@ class MainWindow : public QMainWindow
     void onProjectDirty();
     void onProjectSaved();
 
+  protected:
+    virtual void keyPressEvent(QKeyEvent*) override;
+
   private:
     Ui::MainWindow* _ui;
     QTabWidget* _treeTabWidget;

@@ -265,3 +265,20 @@ MainWindow::~MainWindow()
 {
   delete _ui;
 }
+
+void MainWindow::keyPressEvent(QKeyEvent* e)
+{
+  if (QApplication::keyboardModifiers() & Qt::Key_Control)
+  {
+    if (e->key() == Qt::Key_Z)
+    {
+      CommandsManager::getInstance()->undo();
+    }
+    else if (e->key() == Qt::Key_Y)
+    {
+      CommandsManager::getInstance()->redo();
+    }
+  }
+
+  QMainWindow::keyPressEvent(e);
+}
