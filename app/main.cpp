@@ -1,5 +1,5 @@
 #include "application.h"
-#include "mainwindow.h"
+#include "main_view/mainwindow.h"
 #include "messagehandler.h"
 #include "databaseconnection.h"
 #include "project/projectmanager.h"

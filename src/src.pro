@@ -25,6 +25,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 include(../defaults.pri)
 include(output/output.pri)
+include(main_view/main_view.pri)
 include(tree_view/tree_view.pri)
 include(tree_query/tree_query.pri)
 include(business/business.pri)
@@ -32,24 +33,14 @@ include(project/project.pri)
 include(commands/commands.pri)
 
 SOURCES += \
-   mainwindow.cpp \
    messagehandler.cpp \
    databaseconnection.cpp \
-   treebuilderview.cpp \
-   application.cpp \
-   recentprojectsview.cpp
+   application.cpp
 
 HEADERS += \
-   mainwindow.h \
    messagehandler.h \
    databaseconnection.h \
-   treebuilderview.h \
-   application.h \
-   recentprojectsview.h
-
-FORMS += \
-   mainwindow.ui \
-   treebuilderview.ui
+   application.h
 
 RESOURCES += \
    resources.qrc
