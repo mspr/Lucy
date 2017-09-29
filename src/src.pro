@@ -29,6 +29,7 @@ include(tree_view/tree_view.pri)
 include(tree_query/tree_query.pri)
 include(business/business.pri)
 include(project/project.pri)
+include(commands/commands.pri)
 
 SOURCES += \
    mainwindow.cpp \
@@ -36,8 +37,7 @@ SOURCES += \
    databaseconnection.cpp \
    treebuilderview.cpp \
    application.cpp \
-   recentprojectsview.cpp \
-   commandsmanager.cpp
+   recentprojectsview.cpp
 
 HEADERS += \
    mainwindow.h \
@@ -45,8 +45,7 @@ HEADERS += \
    databaseconnection.h \
    treebuilderview.h \
    application.h \
-   recentprojectsview.h \
-   commandsmanager.h
+   recentprojectsview.h
 
 FORMS += \
    mainwindow.ui \

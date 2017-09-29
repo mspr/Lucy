@@ -3,9 +3,9 @@
 #include "business/person.h"
 #include "business/birth.h"
 #include "business/tree.h"
-#include "persondeletecommand.h"
-#include "persondeletecascadecommand.h"
-#include "commandsmanager.h"
+#include "commands/persondeletecommand.h"
+#include "commands/persondeletecascadecommand.h"
+#include "commands/commandsmanager.h"
 
 #include <QPainter>
 

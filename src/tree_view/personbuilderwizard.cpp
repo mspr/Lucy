@@ -8,8 +8,8 @@
 #include "business/location.h"
 #include "business/birth.h"
 #include "business/gender.h"
-#include "personcreatecommand.h"
-#include "commandsmanager.h"
+#include "commands/personcreatecommand.h"
+#include "commands/commandsmanager.h"
 
 using namespace Business;
 

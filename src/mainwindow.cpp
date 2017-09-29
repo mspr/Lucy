@@ -8,7 +8,7 @@
 #include "project/project.h"
 #include "treebuilderview.h"
 #include "business/tree.h"
-#include "commandsmanager.h"
+#include "commands/commandsmanager.h"
 
 #include <QFileDialog>
 #include <QMessageBox>

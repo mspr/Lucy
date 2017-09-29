@@ -5,8 +5,8 @@
 #include "business/person.h"
 #include "business/person_p.h"
 #include "business/personinfo.h"
-#include "personview.h"
-#include "familytreescene.h"
+#include "tree_view/personview.h"
+#include "tree_view/familytreescene.h"
 
 using namespace Business;
 
