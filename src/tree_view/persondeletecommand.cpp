@@ -27,6 +27,7 @@ void PersonDeleteCommand::redo()
   if (_status == DatabaseStatus::New)
   {
     _personInfo = _person->info();
+    _person->d()->removeChild();
     _person->deleteLater();
   }
   else

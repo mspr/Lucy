@@ -2,6 +2,8 @@
 #include "business/person.h"
 #include "persondeletecommand.h"
 
+#include <QStack>
+
 using namespace Business;
 
 PersonDeleteCascadeCommand::PersonDeleteCascadeCommand(Person* person)
@@ -10,23 +12,30 @@ PersonDeleteCascadeCommand::PersonDeleteCascadeCommand(Person* person)
 {
   Q_ASSERT(_person != nullptr);
 
-  createDeleteCommandsRecursively(_person);
+  QStack<Person*> stack;
+  stackPersonsRecursively(_person, stack);
+
+  while (!stack.isEmpty())
+  {
+    Person* person = stack.pop();
+    PersonDeleteCommand* deleteCommand = new PersonDeleteCommand(person, this);
+    Q_UNUSED(deleteCommand);
+  }
 }
 
-void PersonDeleteCascadeCommand::createDeleteCommandsRecursively(Person* person)
+void PersonDeleteCascadeCommand::stackPersonsRecursively(Person* person, QStack<Person*>& stack)
 {
   Q_ASSERT(person != nullptr);
 
-  PersonDeleteCommand* deleteCommand = new PersonDeleteCommand(person, this);
-  Q_UNUSED(deleteCommand);
+  stack.push(person);
 
-  Person* father = _person->father();
+  Person* father = person->father();
   if (father != nullptr)
-    createDeleteCommandsRecursively(father);
+    stackPersonsRecursively(father, stack);
 
-  Person* mother = _person->mother();
+  Person* mother = person->mother();
   if (mother != nullptr)
-    createDeleteCommandsRecursively(mother);
+    stackPersonsRecursively(mother, stack);
 }
 
 void PersonDeleteCascadeCommand::redo()

@@ -14,7 +14,7 @@ class PersonDeleteCascadeCommand : public QUndoCommand
     virtual void undo() override;
 
   private:
-    void createDeleteCommandsRecursively(Business::Person* person);
+    void stackPersonsRecursively(Business::Person* person, QStack<Business::Person*>& stack);
 
   private:
     Business::Person* _person;
