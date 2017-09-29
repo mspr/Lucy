@@ -3,6 +3,7 @@
 #include "messagehandler.h"
 #include "databaseconnection.h"
 #include "project/projectmanager.h"
+#include "commands/commandsmanager.h"
 
 int main(int argc, char* argv[])
 {
@@ -17,6 +18,7 @@ int main(int argc, char* argv[])
 
   const int res = a.exec();
 
+  CommandsManager::kill();
   ProjectManager::kill();
 
   return res;
