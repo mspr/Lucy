@@ -3,6 +3,7 @@
 #include "project/project.h"
 #include "business/tree.h"
 #include "business/person.h"
+#include "business/person_p.h"
 #include "business/personinfo.h"
 #include "personview.h"
 #include "familytreescene.h"
@@ -20,6 +21,8 @@ PersonCreateCommand::PersonCreateCommand(const PersonInfo& personInfo, PersonVie
 
 void PersonCreateCommand::redo()
 {
+  Q_ASSERT(_person == nullptr);
+
   QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
   Q_ASSERT(!currentProject.isNull());
   Tree* currentTree = currentProject->currentTree();
@@ -42,10 +45,10 @@ void PersonCreateCommand::undo()
 {
   Q_ASSERT(_person != nullptr);
 
-  // Remove node from scene
+  _person->tree()->remove(_person);
 
-  // Remove person from project
+  _person->d()->removeChild();
 
-  delete _person;
+  _person->deleteLater();
   _person = nullptr;
 }

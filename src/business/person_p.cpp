@@ -120,9 +120,10 @@ Person* Person_p::father() const
 
 void Person_p::setFather(Person* father)
 {
-  Q_ASSERT(father != nullptr);
   _father = father;
-  _father->d()->setChild(facade());
+
+  if (_father != nullptr)
+    _father->d()->setChild(facade());
   //setDirty();
 }
 
@@ -133,9 +134,10 @@ Person* Person_p::mother() const
 
 void Person_p::setMother(Person* mother)
 {
-  Q_ASSERT(mother != nullptr);
   _mother = mother;
-  _mother->d()->setChild(facade());
+
+  if (_mother != nullptr)
+    _mother->d()->setChild(facade());
   //setDirty();
 }
 
@@ -147,6 +149,16 @@ void Person_p::setParent(Person* parent)
     setFather(parent);
   else
     setMother(parent);
+}
+
+void Person_p::removeParent(Person* parent)
+{
+  Q_ASSERT(parent != nullptr);
+
+  if (parent->gender() == Gender::Masculine)
+    setFather(nullptr);
+  else
+    setMother(nullptr);
 }
 
 bool Person_p::hasParents() const
@@ -163,6 +175,13 @@ void Person_p::setChild(Person* child)
 {
   Q_ASSERT(child != nullptr);
   _child = child;
+}
+
+void Person_p::removeChild()
+{
+  Q_ASSERT(_child != nullptr);
+  _child->d()->removeParent(facade());
+  _child = nullptr;
 }
 
 Tree* Person_p::tree() const
