@@ -5,6 +5,7 @@
 
 namespace Business { class Person; }
 class FamilyTreeScene;
+class PersonViewCreationMarker;
 
 class PersonView : public QGraphicsItemGroup
 {
@@ -35,6 +36,8 @@ class PersonView : public QGraphicsItemGroup
 
   private:
     Business::Person* _person;
+    PersonViewCreationMarker* _fatherMarker;
+    PersonViewCreationMarker* _motherMarker;
 };
 
 #endif // PERSONVIEW_H
