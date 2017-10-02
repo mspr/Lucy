@@ -27,6 +27,8 @@ namespace Business
       Person* reference() const;
       void setReference(Person* person);
 
+      int countGenerations() const;
+
     signals:
       void personRemoved(Person* person);
       void personAdded(Person* person);
@@ -37,6 +39,9 @@ namespace Business
       virtual void onInsertIntoDatabaseSucceeded() override;
       virtual QSqlQuery prepareUpdateInDatabaseQuery() override;
       virtual QString databaseTableName() const override;
+
+    private:
+      int countGenerationsRecursively(Person* person) const;
 
     private:
       QString _name;

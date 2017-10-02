@@ -26,6 +26,8 @@ namespace Business
       void add(Person* person);
       void remove(Person* person);
       void setReference(Person* person);
+
+      int countGenerations() const;
   };
 
 } // Business

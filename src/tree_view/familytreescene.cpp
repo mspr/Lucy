@@ -20,8 +20,9 @@ using namespace Business;
 
 FamilyTreeScene::FamilyTreeScene(const QRectF& sceneRect, Tree* tree, QObject* parent)
   : QGraphicsScene(sceneRect, parent)
+  , _tree(tree)
 {
-  Q_ASSERT(tree != nullptr);
+  Q_ASSERT(_tree != nullptr);
 
   PersonView* referenceNode = createReferenceNode(tree->reference(), QPointF(0, 0));
   _referenceNode = referenceNode;
@@ -43,14 +44,12 @@ void FamilyTreeScene::extendTreeFromNodeRecursively(PersonView* node)
   if (person->hasFather())
   {
     PersonView* fatherNode = extendTreeFromNode(node, person->father());
-    Q_ASSERT(fatherNode != nullptr);
     extendTreeFromNodeRecursively(fatherNode);
   }
 
   if (person->hasMother())
   {
     PersonView* motherNode = extendTreeFromNode(node, person->mother());
-    Q_ASSERT(motherNode != nullptr);
     extendTreeFromNodeRecursively(motherNode);
   }
 }
@@ -61,24 +60,21 @@ PersonView* FamilyTreeScene::extendTreeFromNode(PersonView* node, Person* person
   Q_ASSERT(person != nullptr);
   Q_ASSERT(_levelByTreeNode.contains(node));
 
-  const QPointF previousNodeRectCenter = node->boundingRect().center();
-  const QPointF previousNodeCenterScenePos = node->scenePos() + previousNodeRectCenter;
+//  const QPointF previousNodeRectCenter = node->boundingRect().center();
+//  const QPointF previousNodeCenterScenePos = node->scenePos() + previousNodeRectCenter;
 
-  double xOffset = (node == _referenceNode ? 500 : 100);
-  if (person->gender() == Gender::Masculine)
-    xOffset *= -1;
+//  double xOffset = (node == _referenceNode ? 500 : 100);
+//  if (person->gender() == Gender::Masculine)
+//    xOffset *= -1;
 
-  const double x = previousNodeCenterScenePos.x() + xOffset;
-  const double y = previousNodeCenterScenePos.y() - 100;
-  const QPointF scenePos = QPointF(x, y);
+//  const double x = previousNodeCenterScenePos.x() + xOffset;
+//  const double y = previousNodeCenterScenePos.y() - 100;
+//  const QPointF scenePos = QPointF(x, y);
 
-  PersonView* newNode = createNode(person, scenePos);
+  PersonView* newNode = createNode(person, QPointF(0, 0));
   Q_ASSERT(newNode != nullptr);
 
-  const int previousNodeLevel = _levelByTreeNode.value(node);
-  const int newTreeLevel = previousNodeLevel + 1;
-  Q_ASSERT(newTreeLevel > 0);
-
+  const int newTreeLevel = _levelByTreeNode.value(node) + 1;
   _levelByTreeNode.insert(newNode, newTreeLevel);
 
   return newNode;
@@ -88,43 +84,38 @@ void FamilyTreeScene::adjustNodes()
 {
   _referenceNode->setPos(QPointF(0, 0));
 
-  adjustNodesRecursively(_referenceNode);
+  const int generationsCount = _tree->countGenerations();
+
+  adjustNodesRecursively(_referenceNode, generationsCount);
 }
 
-void FamilyTreeScene::adjustNodesRecursively(PersonView* node)
+void FamilyTreeScene::adjustNodesRecursively(PersonView* node, int generationsCount)
 {
   Q_ASSERT(node != nullptr);
   Person* person = node->person();
   Q_ASSERT(person != nullptr);
 
-  const QPointF nodeCenterScenePos = node->scenePos();
-  int xOffset = 200;
-  const int yOffset = 100;
+  Q_ASSERT(_levelByTreeNode.contains(node));
+  const int nodeLevel = _levelByTreeNode.value(node);
+  const int factor = generationsCount - nodeLevel;
 
-  if (node == _referenceNode)
-  {
-    const int oldGenerationsCount = countOldGenerations();
-    xOffset = oldGenerationsCount * 200;
-  }
+  const QPointF nodeCenterScenePos = node->scenePos();
+  const int xOffset = 200 * factor;
+  const int yOffset = 100;
 
   if (person->hasMother())
   {
     PersonView* motherView = getView(person->mother());
     motherView->setSceneCenterPos(nodeCenterScenePos + QPointF(xOffset, yOffset));
-    adjustNodesRecursively(motherView);
+    adjustNodesRecursively(motherView, generationsCount);
   }
 
   if (person->hasFather())
   {
     PersonView* fatherView = getView(person->father());
     fatherView->setSceneCenterPos(nodeCenterScenePos + QPointF(-xOffset, yOffset));
-    adjustNodesRecursively(fatherView);
+    adjustNodesRecursively(fatherView, generationsCount);
   }
-}
-
-QList<PersonView*> FamilyTreeScene::nodes() const
-{
-  return _nodes;
 }
 
 PersonView* FamilyTreeScene::getView(Person* person) const
@@ -141,17 +132,6 @@ PersonView* FamilyTreeScene::getView(Person* person) const
   Q_ASSERT(false);
 
   return nullptr;
-}
-
-int FamilyTreeScene::countOldGenerations() const
-{
-  int generationsCount = 1;
-
-  int remainingNodes = _nodes.count();
-  while ((remainingNodes /= 2) > 1)
-    ++generationsCount;
-
-  return generationsCount;
 }
 
 PersonView* FamilyTreeScene::createReferenceNode(Person* person, const QPointF& scenePos)
@@ -171,26 +151,6 @@ PersonView* FamilyTreeScene::createNode(Person* person, const QPointF& scenePos)
   PersonView* node = new PersonView(scenePos, person);
   addItem(node);
   _nodes.append(node);
-
-  const QRectF boundingRect = node->boundingRect();
-  qDebug() << "boundingRect " << boundingRect;
-  const QPointF sceneCenterPos = node->sceneCenterPos();
-  qDebug() << "sceneCenterPos " << sceneCenterPos;
-  const QSize pixmapSize = QSize(20, 20);
-
-  const QPointF fatherViewSceneCenterPos = sceneCenterPos - QPointF(boundingRect.width()/2, boundingRect.height()/2);
-  qDebug() << "fatherViewSceneCenterPos " << fatherViewSceneCenterPos;
-  QPixmap masculineGenderPixmap(":/images/gender_masculine.png");
-  PersonViewCreationMarker* fatherViewCreationMarker = new PersonViewCreationMarker(masculineGenderPixmap.scaled(pixmapSize), node);
-  fatherViewCreationMarker->setPos(fatherViewSceneCenterPos);
-  addItem(fatherViewCreationMarker);
-
-  const QPointF motherViewSceneCenterPos = sceneCenterPos + QPointF(boundingRect.width()/2, -boundingRect.height()/2);
-  qDebug() << "motherViewSceneCenterPos " << motherViewSceneCenterPos;
-  QPixmap feminineGenderPixmap(":/images/gender_feminine.png");
-  PersonViewCreationMarker* motherViewCreationMarker = new PersonViewCreationMarker(feminineGenderPixmap.scaled(pixmapSize), node);
-  motherViewCreationMarker->setPos(motherViewSceneCenterPos);
-  addItem(motherViewCreationMarker);
 
   return node;
 }
@@ -248,4 +208,9 @@ PersonView* FamilyTreeScene::nodeAtPos(const QPointF& scenePos) const
     node = dynamic_cast<PersonView*>(itemAtPos->parentItem());
 
   return node;
+}
+
+QList<PersonView*> FamilyTreeScene::nodes() const
+{
+  return _nodes;
 }

@@ -6,8 +6,10 @@
 #include "commands/persondeletecommand.h"
 #include "commands/persondeletecascadecommand.h"
 #include "commands/commandsmanager.h"
+#include "personviewcreationmarker.h"
 
 #include <QPainter>
+#include <QDebug>
 
 using namespace Business;
 
@@ -31,6 +33,31 @@ PersonView::PersonView(const QPointF& sceneCenterPos, Person* person, QGraphicsI
   addToGroup(personBirthDateViewItem);
 
   setSceneCenterPos(sceneCenterPos);
+
+  setupCreationMarkers();
+}
+
+void PersonView::setupCreationMarkers()
+{
+  const QRectF boundingRect = this->boundingRect();
+  qDebug() << "boundingRect " << boundingRect;
+  const QPointF sceneCenterPos = this->sceneCenterPos();
+  qDebug() << "sceneCenterPos " << sceneCenterPos;
+  const QSize pixmapSize = QSize(20, 20);
+
+  const QPointF fatherViewSceneCenterPos = sceneCenterPos - QPointF(boundingRect.width()/2, boundingRect.height()/2);
+  qDebug() << "fatherViewSceneCenterPos " << fatherViewSceneCenterPos;
+  QPixmap masculineGenderPixmap(":/images/gender_masculine.png");
+  PersonViewCreationMarker* fatherViewCreationMarker = new PersonViewCreationMarker(masculineGenderPixmap.scaled(pixmapSize), this);
+  fatherViewCreationMarker->setPos(fatherViewSceneCenterPos);
+  scene()->addItem(fatherViewCreationMarker);
+
+  const QPointF motherViewSceneCenterPos = sceneCenterPos + QPointF(boundingRect.width()/2, -boundingRect.height()/2);
+  qDebug() << "motherViewSceneCenterPos " << motherViewSceneCenterPos;
+  QPixmap feminineGenderPixmap(":/images/gender_feminine.png");
+  PersonViewCreationMarker* motherViewCreationMarker = new PersonViewCreationMarker(feminineGenderPixmap.scaled(pixmapSize), this);
+  motherViewCreationMarker->setPos(motherViewSceneCenterPos);
+  scene()->addItem(motherViewCreationMarker);
 }
 
 FamilyTreeScene* PersonView::treeScene() const

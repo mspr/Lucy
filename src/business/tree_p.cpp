@@ -81,6 +81,35 @@ void Tree_p::setReference(Person* person)
   _reference = person;
 }
 
+int Tree_p::countGenerations() const
+{
+  int count = 0;
+
+  if (_reference != nullptr)
+    count = countGenerationsRecursively(_reference);
+
+  return count;
+}
+
+int Tree_p::countGenerationsRecursively(Person* person) const
+{
+  Q_ASSERT(person != nullptr);
+
+  int count = 1;
+
+  if (person->hasFather() && person->hasMother())
+  {
+    count += qMax(countGenerationsRecursively(person->father()),
+                  countGenerationsRecursively(person->mother()));
+  }
+  else if (person->hasFather())
+    count += countGenerationsRecursively(person->father());
+  else if (person->hasMother())
+    count += countGenerationsRecursively(person->mother());
+
+  return count;
+}
+
 void Tree_p::load_impl(QSqlQuery& query)
 {
   _name = query.value(1).toString();

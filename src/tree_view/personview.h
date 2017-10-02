@@ -25,6 +25,9 @@ class PersonView : public QGraphicsItemGroup
   protected:
     virtual void keyPressEvent(QKeyEvent*) override;
 
+  private:
+    void setupCreationMarkers();
+
   public:
     static int _width;
     static int _height;

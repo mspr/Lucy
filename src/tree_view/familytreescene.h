@@ -33,8 +33,7 @@ class FamilyTreeScene : public QGraphicsScene
     PersonView* nodeAtPos(const QPointF& scenePos) const;
 
     void adjustNodes();
-    void adjustNodesRecursively(PersonView* node);
-    int countOldGenerations() const;
+    void adjustNodesRecursively(PersonView* node, int generationsCount);
     PersonView* getView(Business::Person* person) const;
 
   private slots:
@@ -42,6 +41,7 @@ class FamilyTreeScene : public QGraphicsScene
     void onPersonRemoved(Business::Person* person);
 
   private:
+    Business::Tree* _tree;
     QHash<QGraphicsItem*, int> _levelByTreeNode;
     QList<PersonView*> _nodes;
     PersonView* _referenceNode;

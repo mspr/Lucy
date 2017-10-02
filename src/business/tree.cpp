@@ -44,3 +44,8 @@ Person* Tree::reference() const
 {
   return d()->reference();
 }
+
+int Tree::countGenerations() const
+{
+  return d()->countGenerations();
+}
