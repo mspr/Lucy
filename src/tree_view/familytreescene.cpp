@@ -82,7 +82,7 @@ PersonView* FamilyTreeScene::extendTreeFromNode(PersonView* node, Person* person
 
 void FamilyTreeScene::adjustNodes()
 {
-  _referenceNode->setPos(QPointF(0, 0));
+  _referenceNode->setSceneCenterPos(QPointF(0, 0));
 
   const int generationsCount = _tree->countGenerations();
 
