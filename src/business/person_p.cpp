@@ -41,16 +41,12 @@ Person_p::Person_p(Person* facade, const PersonInfo& personInfo)
   Q_ASSERT(!_firstName.isEmpty());
   Q_ASSERT(!_lastName.isEmpty());
   Q_ASSERT(_birth != nullptr);
+
+  _birth->setParent(this->facade());
 }
 
 Person_p::~Person_p()
 {
-  if (_birth != nullptr)
-  {
-    delete _birth;
-    _birth = nullptr;
-  }
-
   qDeleteAll(_jobs);
   _jobs.clear();
 }
@@ -109,6 +105,7 @@ Birth* Person_p::birth() const
 void Person_p::setBirth(Birth* birth)
 {
   Q_ASSERT(birth != nullptr);
+  Q_ASSERT(_birth == nullptr); // Manage memory if removed
   _birth = birth;
 //  setDirty();
 }

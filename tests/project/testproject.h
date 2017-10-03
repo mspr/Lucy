@@ -1,5 +1,5 @@
-#ifndef TESTINTERVAL_H
-#define TESTINTERVAL_H
+#ifndef TESTPROJECT_H
+#define TESTPROJECT_H
 
 #include <QObject>
 
@@ -21,4 +21,4 @@ class TestProject : public QObject
     void cleanupTestCase();
 };
 
-#endif // TESTINTERVAL_H
+#endif // TESTPROJECT_H

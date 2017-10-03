@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 include(../defaults.pri)
+include(business/business.pri)
 include(project/project.pri)
 include(tree_query/tree_query.pri)
 

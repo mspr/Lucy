@@ -27,5 +27,4 @@ SOURCES += \
     $$PWD/location.cpp \
     $$PWD/location_p.cpp \
     $$PWD/birth_p.cpp \
-    $$PWD/birth.cpp \
-    $$PWD/personinfo.cpp
+    $$PWD/birth.cpp

@@ -19,7 +19,7 @@ class FamilyTreeScene : public QGraphicsScene
 
     PersonView* createReferenceNode(Business::Person* person, const QPointF& scenePos);
     PersonView* createNode(Business::Person* person, const QPointF& scenePos);
-    PersonView* extendTreeFromNode(PersonView* node, Business::Person* person);
+    PersonView* createNode(PersonView* node, Business::Person* person);
 
     QList<PersonView*> nodes() const;
 
@@ -28,7 +28,7 @@ class FamilyTreeScene : public QGraphicsScene
     virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent*) override;
 
   private:
-    void extendTreeFromNodeRecursively(PersonView* node);
+    void createNodeRecursively(PersonView* node);
 
     PersonView* nodeAtPos(const QPointF& scenePos) const;
 

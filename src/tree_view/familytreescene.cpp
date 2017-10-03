@@ -1,6 +1,5 @@
 #include "familytreescene.h"
 #include "personview.h"
-#include "personviewbuilder.h"
 #include "business/person.h"
 #include "business/gender.h"
 #include "business/tree.h"
@@ -26,8 +25,9 @@ FamilyTreeScene::FamilyTreeScene(const QRectF& sceneRect, Tree* tree, QObject* p
 
   PersonView* referenceNode = createReferenceNode(tree->reference(), QPointF(0, 0));
   _referenceNode = referenceNode;
+  Q_ASSERT(_referenceNode != nullptr);
 
-  extendTreeFromNodeRecursively(referenceNode);
+  createNodeRecursively(referenceNode);
 
   adjustNodes();
 
@@ -35,7 +35,7 @@ FamilyTreeScene::FamilyTreeScene(const QRectF& sceneRect, Tree* tree, QObject* p
   connect(tree->d(), Tree_p::personRemoved, this, FamilyTreeScene::onPersonRemoved);
 }
 
-void FamilyTreeScene::extendTreeFromNodeRecursively(PersonView* node)
+void FamilyTreeScene::createNodeRecursively(PersonView* node)
 {
   Q_ASSERT(node != nullptr);
   Person* person = node->person();
@@ -43,33 +43,21 @@ void FamilyTreeScene::extendTreeFromNodeRecursively(PersonView* node)
 
   if (person->hasFather())
   {
-    PersonView* fatherNode = extendTreeFromNode(node, person->father());
-    extendTreeFromNodeRecursively(fatherNode);
+    PersonView* fatherNode = createNode(node, person->father());
+    createNodeRecursively(fatherNode);
   }
 
   if (person->hasMother())
   {
-    PersonView* motherNode = extendTreeFromNode(node, person->mother());
-    extendTreeFromNodeRecursively(motherNode);
+    PersonView* motherNode = createNode(node, person->mother());
+    createNodeRecursively(motherNode);
   }
 }
 
-PersonView* FamilyTreeScene::extendTreeFromNode(PersonView* node, Person* person)
+PersonView* FamilyTreeScene::createNode(PersonView* node, Person* person)
 {
   Q_ASSERT(node != nullptr);
-  Q_ASSERT(person != nullptr);
   Q_ASSERT(_levelByTreeNode.contains(node));
-
-//  const QPointF previousNodeRectCenter = node->boundingRect().center();
-//  const QPointF previousNodeCenterScenePos = node->scenePos() + previousNodeRectCenter;
-
-//  double xOffset = (node == _referenceNode ? 500 : 100);
-//  if (person->gender() == Gender::Masculine)
-//    xOffset *= -1;
-
-//  const double x = previousNodeCenterScenePos.x() + xOffset;
-//  const double y = previousNodeCenterScenePos.y() - 100;
-//  const QPointF scenePos = QPointF(x, y);
 
   PersonView* newNode = createNode(person, QPointF(0, 0));
   Q_ASSERT(newNode != nullptr);
@@ -163,7 +151,7 @@ void FamilyTreeScene::onPersonAdded(Person* person)
   Q_ASSERT(child != nullptr);
   PersonView* childNode = getView(child);
 
-  extendTreeFromNode(childNode, person);
+  createNode(childNode, person);
 }
 
 void FamilyTreeScene::onPersonRemoved(Person* person)

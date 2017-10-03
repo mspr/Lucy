@@ -1,4 +1,5 @@
 #include "birth_p.h"
+#include "birth.h"
 #include "location.h"
 #include "location_p.h"
 
@@ -24,15 +25,13 @@ Birth_p::Birth_p(Birth* facade, const QDate& date, Location* location)
   , _location(location)
 {
   Q_ASSERT(_facade != nullptr);
+
+  if (_location != nullptr)
+    _location->setParent(this->facade());
 }
 
 Birth_p::~Birth_p()
 {
-  if (_location != nullptr)
-  {
-    delete _location;
-    _location = nullptr;
-  }
 }
 
 QDate Birth_p::date() const
@@ -53,6 +52,7 @@ Location* Birth_p::location() const
 void Birth_p::setLocation(Location* location)
 {
   Q_ASSERT(location != nullptr);
+  Q_ASSERT(_location == nullptr); // Manage memory if removed
   _location = location;
 }
 
