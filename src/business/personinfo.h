@@ -10,6 +10,18 @@ namespace Business
 
   struct PersonInfo
   {
+    PersonInfo()
+    {
+    }
+
+    PersonInfo(const QString& firstName, const QString& lastName, Gender gender, Birth* birth)
+      : firstName(firstName)
+      , lastName(lastName)
+      , gender(gender)
+      , birth(birth)
+    {
+    }
+
     QString firstName;
     QString lastName;
     Gender gender;
