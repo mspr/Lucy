@@ -199,6 +199,7 @@ Tree* Person_p::tree() const
 void Person_p::setTree(Tree* tree)
 {
   Q_ASSERT(tree != nullptr);
+  static_cast<QObject*>(facade())->setParent(tree);
   _tree = tree;
 }
 

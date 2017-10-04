@@ -37,8 +37,6 @@ void Tree_p::setupConnections()
 
 Tree_p::~Tree_p()
 {
-  qDeleteAll(_persons);
-  _persons.clear();
 }
 
 QString Tree_p::name() const

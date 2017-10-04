@@ -3,6 +3,7 @@
 #include "business/personinfo.h"
 #include "business/gender.h"
 #include "business/birth.h"
+#include "business/tree.h"
 
 #include <QtTest/QTest>
 
@@ -30,6 +31,17 @@ void TestPerson::createPerson()
   QCOMPARE(maxime.mother(), nullptr);
   QCOMPARE(maxime.child(), nullptr);
   QCOMPARE(maxime.isNew(), true);
+}
+
+void TestPerson::setTree()
+{
+  PersonInfo maximeInfo("Maxime", "Spriet", Gender::Masculine, new Birth(QDate()));
+  Person* maxime = new Person(maximeInfo);
+
+  Tree tree("TreeName");
+  maxime->setTree(&tree);
+
+  QCOMPARE(maxime->tree(), &tree);
 }
 
 void TestPerson::setFather()
