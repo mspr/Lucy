@@ -34,10 +34,6 @@ void PersonCreateCommand::redo()
   Q_ASSERT(child != nullptr);
   child->setParent(_person);
 
-  currentProject->add(_person);
-  //  currentProject->add(birthLocation);
-  //  currentProject->add(birth);
-
   currentTree->add(_person);
 }
 

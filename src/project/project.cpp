@@ -13,6 +13,7 @@ Project::Project(const QString& name)
   , _currentTree(nullptr)
 {
   Q_ASSERT(!_name.isEmpty());
+  connect(this, Project::treeAdded, this, Project::setDirty);
 }
 
 Project::~Project()
@@ -57,39 +58,9 @@ void Project::add(Tree* tree)
   if (_trees.count() == 1)
     setCurrentTree(tree);
 
-  add_impl(tree);
+  connect(tree->getD(), DomainObject_p::dirty, this, Project::setDirty);
 
   emit treeAdded(tree->droid());
-}
-
-void Project::add(Person* person)
-{
-  Q_ASSERT(person != nullptr);
-
-  add_impl(person);
-}
-
-void Project::add_impl(DomainObject* object)
-{
-  Q_ASSERT(object != nullptr);
-
-  if (object->id() == -1)
-  {
-    _objects.append(object);
-    setDirty();
-  }
-  else
-  {
-    connect(object->getD(), DomainObject_p::dirty, this, Project::setDirty);
-    connect(object, DomainObject::destroyed, this, Project::onObjectDeleted);
-  }
-}
-
-void Project::onObjectDeleted()
-{
-  DomainObject* object = dynamic_cast<DomainObject*>(sender());
-  Q_ASSERT(object != nullptr);
-  Q_ASSERT(_objects.removeOne(object));
 }
 
 void Project::setCurrentTree(Tree* tree)
@@ -170,8 +141,19 @@ void Project::save()
 
 void Project::commit()
 {
-  for (int i=0; i<_objects.count(); ++i)
-    _objects.at(i)->getD()->commit();
+  for (int i=0; i<_trees.count(); ++i)
+  {
+    Tree* tree = _trees.at(i);
+    const QList<Person*> persons = tree->persons();
+
+    for (int j=0; j<persons.count(); ++j)
+    {
+      Person* person = persons.at(j);
+      person->getD()->commit();
+    }
+
+    tree->getD()->commit();
+  }
 
   _isDirty = false;
 }

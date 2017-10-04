@@ -41,6 +41,7 @@ namespace Business
       virtual QString databaseTableName() const override;
 
     private:
+      void setupConnections();
       int countGenerationsRecursively(Person* person) const;
 
     private:

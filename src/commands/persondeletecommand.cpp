@@ -3,8 +3,6 @@
 #include "business/person_p.h"
 #include "business/tree.h"
 #include "business/databasestatus.h"
-#include "project/projectmanager.h"
-#include "project/project.h"
 
 using namespace Business;
 
@@ -41,7 +39,6 @@ void PersonDeleteCommand::undo()
   if (_status == DatabaseStatus::New)
   {
     _person = new Person(_personInfo);
-    ProjectManager::getInstance()->currentProject()->add(_person);
   }
   else
   {

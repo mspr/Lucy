@@ -17,6 +17,8 @@ Tree_p::Tree_p(Tree* facade, const int id)
   , _reference(nullptr)
 {
   Q_ASSERT(_facade != nullptr);
+
+  setupConnections();
 }
 
 Tree_p::Tree_p(Tree* facade, const QString& name)
@@ -25,6 +27,12 @@ Tree_p::Tree_p(Tree* facade, const QString& name)
   , _name(name)
   , _reference(nullptr)
 {
+  setupConnections();
+}
+
+void Tree_p::setupConnections()
+{
+  connect(this, Tree_p::personRemoved, this, DomainObject_p::dirty);
 }
 
 Tree_p::~Tree_p()
@@ -57,7 +65,12 @@ void Tree_p::add(Person* person)
   person->setTree(facade());
   _persons.append(person);
 
+  connect(person->getD(), Person_p::dirty, this, Tree_p::dirty);
+
   emit personAdded(person);
+
+  if (!person->isNew())
+    setDirty();
 }
 
 void Tree_p::remove(Person* person)

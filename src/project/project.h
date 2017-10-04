@@ -5,9 +5,7 @@
 #include <QUuid>
 #include <QFileInfo>
 
-namespace Business { class Person; }
 namespace Business { class Tree; }
-namespace Business { class DomainObject; }
 
 class Project : public QObject
 {
@@ -24,7 +22,6 @@ class Project : public QObject
     void setFileInfo(const QFileInfo& fileInfo);
 
     void add(Business::Tree* tree);
-    void add(Business::Person* person);
     void setCurrentTree(Business::Tree* tree);
 
     QList<Business::Tree*> trees() const;
@@ -42,19 +39,16 @@ class Project : public QObject
     void saved();
 
   private:
-    void add_impl(Business::DomainObject* object);
     void commit();
 
   private slots:
     void setDirty();
-    void onObjectDeleted();
 
   private:
     QFileInfo _fileInfo;
     QString _name;
     bool _isDirty;
     QList<Business::Tree*> _trees;
-    QList<Business::DomainObject*> _objects;
     Business::Tree* _currentTree;
 };
 

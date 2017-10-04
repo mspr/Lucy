@@ -46,7 +46,6 @@ int TreeBuilderView::exec()
     tree->setReference(person);
 
     currentProject->add(tree);
-    currentProject->add(person);
 //    currentProject->add(birth);
     currentProject->setCurrentTree(tree);
   }

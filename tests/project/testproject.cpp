@@ -129,21 +129,15 @@ void TestProject::save_dirty()
   const QString projectName = "projectName";
   const QString projectFullPath = projectName + "." + Project::fileFormat();
 
-  PersonInfo personInfo;
-  personInfo.gender = Gender::Masculine;
-  personInfo.firstName = "Maxime";
-  personInfo.lastName = "Spriet";
-  personInfo.birth = new Birth(QDate());
-
   Project project(projectName);
 
   Tree* tree = new Tree("treeName");
+  PersonInfo personInfo("Maxime", "Spriet", Gender::Masculine, new Birth(QDate()));
   Person* person = new Person(personInfo);
   tree->add(person);
   tree->setReference(person);
 
   project.add(tree);
-  project.add(person);
 
   QCOMPARE(project.isDirty(), true);
 
