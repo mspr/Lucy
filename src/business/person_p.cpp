@@ -114,14 +114,6 @@ Birth* Person_p::birth() const
   return _birth;
 }
 
-void Person_p::setBirth(Birth* birth)
-{
-  Q_ASSERT(birth != nullptr);
-  Q_ASSERT(_birth == nullptr); // Manage memory if removed
-  _birth = birth;
-//  setDirty();
-}
-
 Person* Person_p::father() const
 {
   return _father;

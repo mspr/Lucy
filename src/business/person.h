@@ -33,7 +33,6 @@ namespace Business
       void setLastName(const QString& lastName);
 
       Birth* birth() const;
-      void setBirth(Birth* birth);
 
       Tree* tree() const;
       void setTree(Tree* tree);

@@ -51,11 +51,6 @@ Birth* Person::birth() const
   return d()->birth();
 }
 
-void Person::setBirth(Birth* birth)
-{
-  d()->setBirth(birth);
-}
-
 Tree* Person::tree() const
 {
   return d()->tree();
