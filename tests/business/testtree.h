@@ -8,7 +8,8 @@ class TestTree : public QObject
   Q_OBJECT
 
   private slots:
-    void countGenerations_empty();
+    void createTree();
+    void setReference();
     void countGenerations_reference_only();
     void countGenerations();
 };

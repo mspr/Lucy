@@ -9,11 +9,29 @@
 
 using namespace Business;
 
-void TestTree::countGenerations_empty()
+void TestTree::createTree()
 {
   Tree tree("treeName");
 
+  QCOMPARE(tree.isNew(), true);
+  QCOMPARE(tree.persons().isEmpty(), true);
+  QCOMPARE(tree.reference(), nullptr);
   QCOMPARE(tree.countGenerations(), 0);
+}
+
+void TestTree::setReference()
+{
+  Tree tree("treeName");
+
+  PersonInfo maximeInfo("Maxime", "Spriet", Gender::Masculine, new Birth(QDate()));
+  Person* maxime = new Person(maximeInfo);
+  tree.add(maxime);
+
+  QCOMPARE(tree.reference(), nullptr);
+
+  tree.setReference(maxime);
+
+  QCOMPARE(tree.reference(), maxime);
 }
 
 void TestTree::countGenerations_reference_only()
