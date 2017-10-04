@@ -44,6 +44,48 @@ void TestPerson::setTree()
   QCOMPARE(maxime->tree(), &tree);
 }
 
+void TestPerson::setFirstName()
+{
+  const QString newFirstName = "Max";
+
+  PersonInfo maximeInfo("Maxime", "Spriet", Gender::Masculine, new Birth(QDate()));
+  Person maxime(maximeInfo);
+
+  QVERIFY(maxime.firstName() != newFirstName);
+
+  maxime.setFirstName(newFirstName);
+
+  QCOMPARE(maxime.firstName(), newFirstName);
+}
+
+void TestPerson::setLastName()
+{
+  const QString newLastName = "Thual";
+
+  PersonInfo maximeInfo("Maxime", "Spriet", Gender::Masculine, new Birth(QDate()));
+  Person maxime(maximeInfo);
+
+  QVERIFY(maxime.lastName() != newLastName);
+
+  maxime.setLastName(newLastName);
+
+  QCOMPARE(maxime.lastName(), newLastName);
+}
+
+void TestPerson::setGender()
+{
+  const Gender newGender = Gender::Feminine;
+
+  PersonInfo maximeInfo("Maxime", "Spriet", Gender::Masculine, new Birth(QDate()));
+  Person maxime(maximeInfo);
+
+  QVERIFY(maxime.gender() != newGender);
+
+  maxime.setGender(newGender);
+
+  QCOMPARE(maxime.gender(), newGender);
+}
+
 void TestPerson::setFather()
 {
   PersonInfo maximeInfo("Maxime", "Spriet", Gender::Masculine, new Birth(QDate()));

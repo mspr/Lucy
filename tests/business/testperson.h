@@ -10,6 +10,9 @@ class TestPerson : public QObject
   private slots:
     void createPerson();
     void setTree();
+    void setFirstName();
+    void setLastName();
+    void setGender();
     void setFather();
     void setMother();
 };
