@@ -1,3 +1,4 @@
+#include "business/testperson.h"
 #include "business/testtree.h"
 #include "project/testproject.h"
 #include "tree_query/testquerylistmodel.h"
@@ -7,6 +8,9 @@
 
 int main(int argc, char* argv[])
 {
+  TestPerson testPerson;
+  QTest::qExec(&testPerson, argc, argv);
+
   TestTree testTree;
   QTest::qExec(&testTree, argc, argv);
 
