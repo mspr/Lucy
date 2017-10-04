@@ -9,6 +9,8 @@ class TestPerson : public QObject
 
   private slots:
     void createPerson();
+    void setFather();
+    void setMother();
 };
 
 #endif // TESTPERSON_H

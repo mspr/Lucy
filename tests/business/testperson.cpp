@@ -16,15 +16,49 @@ void TestPerson::createPerson()
   Birth* birth = new Birth(QDate());
 
   PersonInfo maximeInfo(firstName, lastName, gender, birth);
-  Person person(maximeInfo);
+  Person maxime(maximeInfo);
 
-  QCOMPARE(person.firstName(), firstName);
-  QCOMPARE(person.lastName(), lastName);
-  QCOMPARE(person.gender(), gender);
-  QCOMPARE(person.birth(), birth);
-  QCOMPARE(person.tree(), nullptr);
-  QCOMPARE(person.father(), nullptr);
-  QCOMPARE(person.mother(), nullptr);
-  QCOMPARE(person.child(), nullptr);
-  QCOMPARE(person.isNew(), true);
+  QCOMPARE(maxime.firstName(), firstName);
+  QCOMPARE(maxime.lastName(), lastName);
+  QCOMPARE(maxime.gender(), gender);
+  QCOMPARE(maxime.birth(), birth);
+  QCOMPARE(maxime.tree(), nullptr);
+  QCOMPARE(maxime.hasParents(), false);
+  QCOMPARE(maxime.hasFather(), false);
+  QCOMPARE(maxime.father(), nullptr);
+  QCOMPARE(maxime.hasMother(), false);
+  QCOMPARE(maxime.mother(), nullptr);
+  QCOMPARE(maxime.child(), nullptr);
+  QCOMPARE(maxime.isNew(), true);
+}
+
+void TestPerson::setFather()
+{
+  PersonInfo maximeInfo("Maxime", "Spriet", Gender::Masculine, new Birth(QDate()));
+  Person maxime(maximeInfo);
+
+  PersonInfo jeanPierreInfo("Jean Pierre", "Spriet", Gender::Masculine, new Birth(QDate()));
+  Person jeanPierre(jeanPierreInfo);
+
+  maxime.setParent(&jeanPierre);
+
+  QCOMPARE(maxime.hasParents(), true);
+  QCOMPARE(maxime.hasFather(), true);
+  QCOMPARE(maxime.father(), &jeanPierre);
+  QCOMPARE(jeanPierre.child(), &maxime);
+}
+
+void TestPerson::setMother()
+{
+  PersonInfo maximeInfo("Maxime", "Spriet", Gender::Masculine, new Birth(QDate()));
+  Person maxime(maximeInfo);
+
+  PersonInfo claudineInfo("Claudine", "Thual", Gender::Feminine, new Birth(QDate()));
+  Person claudine(claudineInfo);
+
+  maxime.setParent(&claudine);
+
+  QCOMPARE(maxime.hasMother(), true);
+  QCOMPARE(maxime.mother(), &claudine);
+  QCOMPARE(claudine.child(), &maxime);
 }
