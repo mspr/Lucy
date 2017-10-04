@@ -70,7 +70,11 @@ Gender Person_p::gender() const
 
 void Person_p::setGender(Gender gender)
 {
-  _gender = gender;
+  if (_gender != gender)
+  {
+    _gender = gender;
+    setDirty();
+  }
 }
 
 QString Person_p::firstName() const
@@ -81,8 +85,12 @@ QString Person_p::firstName() const
 void Person_p::setFirstName(const QString& firstName)
 {
   Q_ASSERT(!firstName.isEmpty());
-  _firstName = firstName;
-  setDirty();
+
+  if (_firstName != firstName)
+  {
+    _firstName = firstName;
+    setDirty();
+  }
 }
 
 QString Person_p::lastName() const
@@ -93,8 +101,12 @@ QString Person_p::lastName() const
 void Person_p::setLastName(const QString& lastName)
 {
   Q_ASSERT(!lastName.isEmpty());
-  _lastName = lastName;
-  setDirty();
+
+  if (_lastName != lastName)
+  {
+    _lastName = lastName;
+    setDirty();
+  }
 }
 
 Birth* Person_p::birth() const

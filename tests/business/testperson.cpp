@@ -56,6 +56,7 @@ void TestPerson::setFirstName()
   maxime.setFirstName(newFirstName);
 
   QCOMPARE(maxime.firstName(), newFirstName);
+  QCOMPARE(maxime.isDirty(), true);
 }
 
 void TestPerson::setLastName()
@@ -70,6 +71,7 @@ void TestPerson::setLastName()
   maxime.setLastName(newLastName);
 
   QCOMPARE(maxime.lastName(), newLastName);
+  QCOMPARE(maxime.isDirty(), true);
 }
 
 void TestPerson::setGender()
@@ -84,6 +86,7 @@ void TestPerson::setGender()
   maxime.setGender(newGender);
 
   QCOMPARE(maxime.gender(), newGender);
+  QCOMPARE(maxime.isDirty(), true);
 }
 
 void TestPerson::setFather()
