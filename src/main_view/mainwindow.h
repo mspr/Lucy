@@ -20,6 +20,7 @@ class MainWindow : public QMainWindow
     void updateRecentProjectsMenu();
     void setupSignalSlotConnections();
     void askUserToSaveAndContinue(std::function<void()> action);
+    void setDirty(bool dirty);
 
   private slots:
     void newProject();

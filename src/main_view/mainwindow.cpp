@@ -213,7 +213,7 @@ void MainWindow::onProjectOpen()
     _treeTabWidget->addTab(familyTreeView, trees.at(i)->name());
   }
 
-  onProjectSaved();
+  setDirty(false);
 }
 
 void MainWindow::onProjectClosed()
@@ -234,9 +234,14 @@ void MainWindow::onTreeAdded(QUuid droid)
 
 void MainWindow::onProjectDirty()
 {
-  _ui->actionSave->setEnabled(true);
-  _ui->actionSaveAs->setEnabled(true);
-  setWindowModified(true);
+  setDirty(true);
+}
+
+void MainWindow::setDirty(bool dirty)
+{
+  _ui->actionSave->setEnabled(dirty);
+  _ui->actionSaveAs->setEnabled(dirty);
+  setWindowModified(dirty);
 }
 
 void MainWindow::onProjectSaved()
@@ -254,9 +259,7 @@ void MainWindow::onProjectSaved()
 
   CommandsManager::getInstance()->clear();
 
-  _ui->actionSave->setEnabled(false);
-  _ui->actionSaveAs->setEnabled(false);
-  setWindowModified(false);
+  setDirty(false);
 
   qInfo() << "Project " << project->name() << " has been saved.";
 }
