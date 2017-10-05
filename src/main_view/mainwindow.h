@@ -6,6 +6,7 @@
 #include <QUuid>
 
 namespace Ui { class MainWindow; }
+class RecentProjectsView;
 
 class MainWindow : public QMainWindow
 {
@@ -43,6 +44,7 @@ class MainWindow : public QMainWindow
   private:
     Ui::MainWindow* _ui;
     QTabWidget* _treeTabWidget;
+    RecentProjectsView* _recentProjectsView;
     int _recentProjectsNumber;
     QMenu* _recentProjectsMenu;
 };

@@ -29,8 +29,8 @@ MainWindow::MainWindow(QWidget* parent)
 
   setupRecentProjectsMenu();
 
-  RecentProjectsView* recentProjectsView = new RecentProjectsView(_recentProjectsMenu->actions(), this);
-  addDockWidget(Qt::LeftDockWidgetArea, recentProjectsView);
+  _recentProjectsView = new RecentProjectsView(_recentProjectsMenu->actions(), this);
+  addDockWidget(Qt::LeftDockWidgetArea, _recentProjectsView);
 
   _treeTabWidget = new QTabWidget();
   setCentralWidget(_treeTabWidget);
@@ -196,8 +196,6 @@ void MainWindow::createTree()
 
 void MainWindow::onProjectOpen()
 {
-  _ui->actionCreateTree->setEnabled(true);
-
   QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
   connect(currentProject.data(), Project::treeAdded, this, MainWindow::onTreeAdded);
   connect(currentProject.data(), Project::dirty, this, MainWindow::onProjectDirty);
@@ -213,7 +211,11 @@ void MainWindow::onProjectOpen()
     _treeTabWidget->addTab(familyTreeView, trees.at(i)->name());
   }
 
+  _ui->actionCreateTree->setEnabled(true);
+
   setDirty(false);
+
+  _recentProjectsView->hide();
 }
 
 void MainWindow::onProjectClosed()
