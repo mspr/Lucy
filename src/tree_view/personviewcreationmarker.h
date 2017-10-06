@@ -22,6 +22,7 @@ class PersonViewCreationMarker : public QGraphicsPixmapItem
     virtual void mousePressEvent(QGraphicsSceneMouseEvent* e) override;
 
   private:
+    Business::Gender _gender;
     QRectF _boundingRect;
     PersonView* _personView;
     bool _setPixmapVisible;

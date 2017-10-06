@@ -14,6 +14,7 @@ using namespace Business;
 PersonViewCreationMarker::PersonViewCreationMarker(Business::Gender gender, const QRectF& boundingRect,
                                                    PersonView* personView, QGraphicsScene* scene)
   : QGraphicsPixmapItem()
+  , _gender(gender)
   , _boundingRect(boundingRect)
   , _personView(personView)
   , _setPixmapVisible(false)
@@ -23,7 +24,7 @@ PersonViewCreationMarker::PersonViewCreationMarker(Business::Gender gender, cons
 
   const QSize pixmapSize = QSize(20, 20);
 
-  if (gender == Gender::Masculine)
+  if (_gender == Gender::Masculine)
   {
     QPixmap masculineGenderPixmap(":/images/gender_masculine.png");
     setPixmap(masculineGenderPixmap.scaled(pixmapSize));
@@ -60,7 +61,7 @@ void PersonViewCreationMarker::mousePressEvent(QGraphicsSceneMouseEvent* e)
   FamilyTreeScene* scene = dynamic_cast<FamilyTreeScene*>(this->scene());
   Q_ASSERT(scene != nullptr);
 
-  PersonBuilderWizard personBuilderWizard(_personView);
+  PersonBuilderWizard personBuilderWizard(_personView, _gender);
   if (personBuilderWizard.exec())
   {
   }

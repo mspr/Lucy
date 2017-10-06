@@ -13,9 +13,10 @@
 
 using namespace Business;
 
-PersonBuilderWizard::PersonBuilderWizard(PersonView* personView, QWidget* parent)
+PersonBuilderWizard::PersonBuilderWizard(PersonView* personView, Gender gender, QWidget* parent)
   : QWizard(parent)
   , _ui(new Ui::PersonBuilderWizard)
+  , _gender(gender)
   , _personView(personView)
 {
   Q_ASSERT(_personView != nullptr);
@@ -49,7 +50,7 @@ void PersonBuilderWizard::done(int result)
 
   personInfo.firstName = _ui->firstNameLineEdit->text();
   personInfo.lastName = _ui->lastNameLineEdit->text();
-  personInfo.gender = _ui->feminineGenderPushButton->isChecked() ? Gender::Feminine : Gender::Masculine;
+  personInfo.gender = _gender;
 
   const QDate birthDate = _ui->dateEdit->date();
   const QString birthCountry = _ui->countryLineEdit->text();
@@ -60,7 +61,6 @@ void PersonBuilderWizard::done(int result)
 
   PersonCreateCommand* personCreateCommand = new PersonCreateCommand(personInfo, _personView);
   CommandsManager::getInstance()->addCommand(personCreateCommand);
-  personCreateCommand->redo();
 
   QWizard::done(result);
 }

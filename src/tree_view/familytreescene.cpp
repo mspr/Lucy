@@ -151,6 +151,8 @@ void FamilyTreeScene::onPersonAdded(Person* person)
   PersonView* childNode = getView(child);
 
   createNode(childNode, person);
+
+  adjustNodes();
 }
 
 void FamilyTreeScene::onPersonRemoved(Person* person)

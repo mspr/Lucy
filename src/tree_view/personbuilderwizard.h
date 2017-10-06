@@ -4,6 +4,7 @@
 #include <QWizard>
 
 namespace Ui { class PersonBuilderWizard; }
+namespace Business { enum class Gender; }
 class PersonView;
 
 class PersonBuilderWizard : public QWizard
@@ -11,7 +12,7 @@ class PersonBuilderWizard : public QWizard
   Q_OBJECT
 
   public:
-    explicit PersonBuilderWizard(PersonView* personView, QWidget* parent = nullptr);
+    explicit PersonBuilderWizard(PersonView* personView, Business::Gender gender, QWidget* parent = nullptr);
     ~PersonBuilderWizard();
 
   public slots:
@@ -23,6 +24,7 @@ class PersonBuilderWizard : public QWizard
 
   private:
     Ui::PersonBuilderWizard* _ui;
+    Business::Gender _gender;
     PersonView* _personView;
 };
 
