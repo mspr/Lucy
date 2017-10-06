@@ -1,6 +1,7 @@
 #include "personview.h"
 #include "familytreescene.h"
 #include "business/person.h"
+#include "business/gender.h"
 #include "business/birth.h"
 #include "business/tree.h"
 #include "commands/persondeletecommand.h"
@@ -41,15 +42,8 @@ PersonView::PersonView(const QPointF& sceneCenterPos, Person* person, QGraphicsS
 
 void PersonView::setupCreationMarkers()
 {
-  const QSize pixmapSize = QSize(20, 20);
-
-  QPixmap masculineGenderPixmap(":/images/gender_masculine.png");
-  _fatherMarker = new PersonViewCreationMarker(masculineGenderPixmap.scaled(pixmapSize), this);
-  scene()->addItem(_fatherMarker);
-
-  QPixmap feminineGenderPixmap(":/images/gender_feminine.png");
-  _motherMarker = new PersonViewCreationMarker(feminineGenderPixmap.scaled(pixmapSize), this);
-  scene()->addItem(_motherMarker);
+  _fatherMarker = new PersonViewCreationMarker(Gender::Masculine, this, scene());
+  _motherMarker = new PersonViewCreationMarker(Gender::Feminine, this, scene());
 }
 
 FamilyTreeScene* PersonView::treeScene() const

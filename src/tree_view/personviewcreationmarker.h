@@ -3,12 +3,13 @@
 
 #include <QGraphicsPixmapItem>
 
+namespace Business { enum class Gender; }
 class PersonView;
 
 class PersonViewCreationMarker : public QGraphicsPixmapItem
 {
   public:
-    PersonViewCreationMarker(const QPixmap& pixmap, PersonView* personView, QGraphicsItem* parent = nullptr);
+    PersonViewCreationMarker(Business::Gender gender, PersonView* personView, QGraphicsScene* scene);
 
     virtual QRectF boundingRect() const override;
     virtual QPainterPath shape() const override;
