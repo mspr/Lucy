@@ -24,6 +24,17 @@ PersonView::PersonView(const QPointF& sceneCenterPos, Person* person, QGraphicsS
 {
   Q_ASSERT(_person != nullptr);
 
+  setupComponents();
+
+  scene->addItem(this);
+
+  setupCreationMarkers();
+
+  setSceneCenterPos(sceneCenterPos);
+}
+
+void PersonView::setupComponents()
+{
   QGraphicsSimpleTextItem* personFirstNameViewItem = new QGraphicsSimpleTextItem(_person->firstName(), this);
   addToGroup(personFirstNameViewItem);
   QGraphicsSimpleTextItem* personLastNameViewItem = new QGraphicsSimpleTextItem(_person->lastName(), this);
@@ -32,12 +43,6 @@ PersonView::PersonView(const QPointF& sceneCenterPos, Person* person, QGraphicsS
   QGraphicsSimpleTextItem* personBirthDateViewItem = new QGraphicsSimpleTextItem(_person->birth()->date().toString(), this);
   personBirthDateViewItem->setPos(0, 20);
   addToGroup(personBirthDateViewItem);
-
-  scene->addItem(this);
-
-  setupCreationMarkers();
-
-  setSceneCenterPos(sceneCenterPos);
 }
 
 void PersonView::setupCreationMarkers()
