@@ -16,7 +16,7 @@ PersonViewCreationMarker::PersonViewCreationMarker(Business::Gender gender, cons
   : QGraphicsPixmapItem()
   , _boundingRect(boundingRect)
   , _personView(personView)
-  , _setPixmapVisible(true)
+  , _setPixmapVisible(false)
 {
   Q_ASSERT(_personView != nullptr);
   Q_ASSERT(scene != nullptr);
