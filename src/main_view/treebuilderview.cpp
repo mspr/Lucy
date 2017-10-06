@@ -30,23 +30,21 @@ int TreeBuilderView::exec()
     QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
     Q_ASSERT(!currentProject.isNull());
 
-    PersonInfo personInfo;
-
     const QString treeName = _ui->treeNameLineEdit->text();
+    Tree* tree = new Tree(treeName);
+
+    PersonInfo personInfo;
     personInfo.firstName = _ui->firstNameLineEdit->text();
     personInfo.lastName = _ui->lastNameLideEdit->text();
     personInfo.gender = Gender::Masculine;
-
     const QDate birthDate = _ui->birthDateEdit->date();
     personInfo.birth = new Birth(birthDate);
-
-    Tree* tree = new Tree(treeName);
     Person* person = new Person(personInfo);
+
     tree->add(person);
     tree->setReference(person);
 
     currentProject->add(tree);
-//    currentProject->add(birth);
     currentProject->setCurrentTree(tree);
   }
 

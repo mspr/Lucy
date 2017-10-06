@@ -17,8 +17,8 @@ int PersonView::_width = 100;
 int PersonView::_height = 50;
 int PersonView::_margin = 5;
 
-PersonView::PersonView(const QPointF& sceneCenterPos, Person* person, QGraphicsItem* parent)
-  : QGraphicsItemGroup(parent)
+PersonView::PersonView(const QPointF& sceneCenterPos, Person* person, QGraphicsScene* scene)
+  : QGraphicsItemGroup()
   , _person(person)
 {
   Q_ASSERT(_person != nullptr);
@@ -31,6 +31,8 @@ PersonView::PersonView(const QPointF& sceneCenterPos, Person* person, QGraphicsI
   QGraphicsSimpleTextItem* personBirthDateViewItem = new QGraphicsSimpleTextItem(_person->birth()->date().toString(), this);
   personBirthDateViewItem->setPos(0, 20);
   addToGroup(personBirthDateViewItem);
+
+  scene->addItem(this);
 
   setupCreationMarkers();
 
@@ -69,12 +71,14 @@ void PersonView::setSceneCenterPos(const QPointF& sceneCenterPos)
   qDebug() << "sceneCenterPos " << sceneCenterPos;
 
   Q_ASSERT(_fatherMarker != nullptr);
-  const QPointF fatherViewSceneCenterPos = sceneCenterPos - QPointF(boundingRect.width()/2, boundingRect.height()/2);
+  const QPointF fatherViewSceneCenterPos = sceneCenterPos - QPointF(boundingRect.width()/2 + _fatherMarker->boundingRect().width()/2,
+                                                                    boundingRect.height()/2 + 30 + _fatherMarker->boundingRect().height()/2);
   qDebug() << "fatherViewSceneCenterPos " << fatherViewSceneCenterPos;
   _fatherMarker->setPos(fatherViewSceneCenterPos);
 
   Q_ASSERT(_motherMarker != nullptr);
-  const QPointF motherViewSceneCenterPos = sceneCenterPos + QPointF(boundingRect.width()/2, -boundingRect.height()/2);
+  const QPointF motherViewSceneCenterPos = sceneCenterPos + QPointF(boundingRect.width()/2 - _motherMarker->boundingRect().width()/2,
+                                                                    -(boundingRect.height()/2 +30 + _motherMarker->boundingRect().height()/2));
   qDebug() << "motherViewSceneCenterPos " << motherViewSceneCenterPos;
   _motherMarker->setPos(motherViewSceneCenterPos);
 }

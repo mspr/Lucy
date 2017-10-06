@@ -10,7 +10,7 @@ class PersonViewCreationMarker;
 class PersonView : public QGraphicsItemGroup
 {
   public:
-    PersonView(const QPointF& scenePos, Business::Person* person, QGraphicsItem* parent = nullptr);
+    PersonView(const QPointF& scenePos, Business::Person* person, QGraphicsScene* scene);
 
     virtual QRectF boundingRect() const override;
     virtual QPainterPath shape() const override;

@@ -136,8 +136,7 @@ PersonView* FamilyTreeScene::createNode(Person* person, const QPointF& scenePos)
 {
   Q_ASSERT(person != nullptr);
 
-  PersonView* node = new PersonView(scenePos, person);
-  addItem(node);
+  PersonView* node = new PersonView(scenePos, person, this);
   _nodes.append(node);
 
   return node;
