@@ -6,12 +6,15 @@
 #include "business/gender.h"
 
 #include <QGraphicsSceneHoverEvent>
+#include <QPainter>
 #include <QDebug>
 
 using namespace Business;
 
-PersonViewCreationMarker::PersonViewCreationMarker(Business::Gender gender, PersonView* personView, QGraphicsScene* scene)
+PersonViewCreationMarker::PersonViewCreationMarker(Business::Gender gender, const QRectF& boundingRect,
+                                                   PersonView* personView, QGraphicsScene* scene)
   : QGraphicsPixmapItem()
+  , _boundingRect(boundingRect)
   , _personView(personView)
   , _setPixmapVisible(true)
 {
@@ -67,26 +70,23 @@ void PersonViewCreationMarker::mousePressEvent(QGraphicsSceneMouseEvent* e)
 
 QRectF PersonViewCreationMarker::boundingRect() const
 {
-  return QGraphicsPixmapItem::boundingRect();
-//  const QRectF boundingRect = QGraphicsPixmapItem::boundingRect();
-//  return QRectF(0, 0, boundingRect.width() + 50, boundingRect.height() + 50);
+  return _boundingRect;
 }
 
 QPainterPath PersonViewCreationMarker::shape() const
 {
   QPainterPath path;
-  const QRectF boundingRect = this->boundingRect();
-  path.addRect(0, 0, boundingRect.width() + 50, boundingRect.height() + 50);
-//  QRegion region;
-//  path.addRegion(QRegion(pixmap().mask());
+  path.addRect(_boundingRect);
   return path;
 }
 
-void PersonViewCreationMarker::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
+void PersonViewCreationMarker::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*option*/, QWidget* /*widget*/)
 {
   if (_setPixmapVisible)
   {
-
-    QGraphicsPixmapItem::paint(painter, option, widget);
+    const qreal posX = _boundingRect.x() + _boundingRect.width()/2 - pixmap().width()/2;
+    const qreal posY = _boundingRect.y() + _boundingRect.height()/2 - pixmap().height()/2;
+    const QRect rect(posX, posY, pixmap().width(), pixmap().height());
+    painter->drawPixmap(rect, pixmap());
   }
 }

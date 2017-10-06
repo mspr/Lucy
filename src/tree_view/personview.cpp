@@ -47,8 +47,9 @@ void PersonView::setupComponents()
 
 void PersonView::setupCreationMarkers()
 {
-  _fatherMarker = new PersonViewCreationMarker(Gender::Masculine, this, scene());
-  _motherMarker = new PersonViewCreationMarker(Gender::Feminine, this, scene());
+  const QRectF boundingRect(0, 0, _width/2 + _margin, _height/2 + _margin);
+  _fatherMarker = new PersonViewCreationMarker(Gender::Masculine, boundingRect, this, scene());
+  _motherMarker = new PersonViewCreationMarker(Gender::Feminine, boundingRect, this, scene());
 }
 
 FamilyTreeScene* PersonView::treeScene() const
@@ -66,19 +67,15 @@ void PersonView::setSceneCenterPos(const QPointF& sceneCenterPos)
   setPos(sceneCenterPos.x() - _width/2, sceneCenterPos.y() - _height/2);
 
   const QRectF boundingRect = this->boundingRect();
-  qDebug() << "boundingRect " << boundingRect;
-  qDebug() << "sceneCenterPos " << sceneCenterPos;
 
   Q_ASSERT(_fatherMarker != nullptr);
-  const QPointF fatherViewSceneCenterPos = sceneCenterPos - QPointF(boundingRect.width()/2 + _fatherMarker->boundingRect().width()/2,
-                                                                    boundingRect.height()/2 + 30 + _fatherMarker->boundingRect().height()/2);
-  qDebug() << "fatherViewSceneCenterPos " << fatherViewSceneCenterPos;
+  const QPointF fatherViewSceneCenterPos = sceneCenterPos - QPointF(boundingRect.width()/2 + _margin,
+                                                                    boundingRect.height()/2 + _margin + _fatherMarker->boundingRect().height());
   _fatherMarker->setPos(fatherViewSceneCenterPos);
 
   Q_ASSERT(_motherMarker != nullptr);
-  const QPointF motherViewSceneCenterPos = sceneCenterPos + QPointF(boundingRect.width()/2 - _motherMarker->boundingRect().width()/2,
-                                                                    -(boundingRect.height()/2 +30 + _motherMarker->boundingRect().height()/2));
-  qDebug() << "motherViewSceneCenterPos " << motherViewSceneCenterPos;
+  const QPointF motherViewSceneCenterPos = sceneCenterPos - QPointF(0,
+                                                                    boundingRect.height()/2 + _margin + _motherMarker->boundingRect().height());
   _motherMarker->setPos(motherViewSceneCenterPos);
 }
 

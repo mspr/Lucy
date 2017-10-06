@@ -9,7 +9,8 @@ class PersonView;
 class PersonViewCreationMarker : public QGraphicsPixmapItem
 {
   public:
-    PersonViewCreationMarker(Business::Gender gender, PersonView* personView, QGraphicsScene* scene);
+    PersonViewCreationMarker(Business::Gender gender, const QRectF& boundingRect,
+                             PersonView* personView, QGraphicsScene* scene);
 
     virtual QRectF boundingRect() const override;
     virtual QPainterPath shape() const override;
@@ -21,6 +22,7 @@ class PersonViewCreationMarker : public QGraphicsPixmapItem
     virtual void mousePressEvent(QGraphicsSceneMouseEvent* e) override;
 
   private:
+    QRectF _boundingRect;
     PersonView* _personView;
     bool _setPixmapVisible;
 };
