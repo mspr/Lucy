@@ -40,6 +40,7 @@ void TestTree::setName()
 void TestTree::addPerson()
 {
   Tree tree("treeName");
+  QSignalSpy spy(tree.getD(), SIGNAL(personAdded(Person*)));
 
   PersonInfo maximeInfo("Maxime", "Spriet", Gender::Masculine, new Birth(QDate()));
   Person* maxime = new Person(maximeInfo);
@@ -47,6 +48,10 @@ void TestTree::addPerson()
 
   QCOMPARE(tree.persons().count(), 1);
   QCOMPARE(tree.persons().first(), maxime);
+  QCOMPARE(spy.count(), 1);
+  const QList<QVariant> arguments = spy.takeFirst();
+  Person* person = qvariant_cast<Person*>(arguments.at(0));
+  QCOMPARE(person, maxime);
 }
 
 void TestTree::removePerson()
