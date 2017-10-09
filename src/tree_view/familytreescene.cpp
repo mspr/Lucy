@@ -94,14 +94,14 @@ void FamilyTreeScene::adjustNodesRecursively(PersonView* node, int generationsCo
   if (person->hasMother())
   {
     PersonView* motherView = getView(person->mother());
-    motherView->setSceneCenterPos(nodeCenterScenePos + QPointF(xOffset, yOffset));
+    motherView->setSceneCenterPos(nodeCenterScenePos - QPointF(-xOffset, yOffset));
     adjustNodesRecursively(motherView, generationsCount);
   }
 
   if (person->hasFather())
   {
     PersonView* fatherView = getView(person->father());
-    fatherView->setSceneCenterPos(nodeCenterScenePos + QPointF(-xOffset, yOffset));
+    fatherView->setSceneCenterPos(nodeCenterScenePos - QPointF(xOffset, yOffset));
     adjustNodesRecursively(fatherView, generationsCount);
   }
 }
