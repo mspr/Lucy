@@ -3,8 +3,6 @@
 
 #include "domainobject.h"
 
-#include <QString>
-
 namespace Business
 {
   class Tree_p;
@@ -19,12 +17,12 @@ namespace Business
 
     public:
       QString name() const;
-      QList<Person*> persons() const;
-      Person* reference() const;
-
       void setName(const QString& name);
+
+      QList<Person*> persons() const;
       void add(Person* person);
       void remove(Person* person);
+      Person* reference() const;
       void setReference(Person* person);
 
       int countGenerations() const;

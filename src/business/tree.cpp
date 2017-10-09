@@ -10,9 +10,19 @@ Tree::Tree(const QString& name)
 {
 }
 
+QString Tree::name() const
+{
+  return d()->name();
+}
+
 void Tree::setName(const QString& name)
 {
   d()->setName(name);
+}
+
+QList<Person*> Tree::persons() const
+{
+  return d()->persons();
 }
 
 void Tree::add(Person* person)
@@ -25,24 +35,14 @@ void Tree::remove(Person* person)
   d()->remove(person);
 }
 
-void Tree::setReference(Person* person)
-{
-  d()->setReference(person);
-}
-
-QString Tree::name() const
-{
-  return d()->name();
-}
-
-QList<Person*> Tree::persons() const
-{
-  return d()->persons();
-}
-
 Person* Tree::reference() const
 {
   return d()->reference();
+}
+
+void Tree::setReference(Person* person)
+{
+  d()->setReference(person);
 }
 
 int Tree::countGenerations() const
