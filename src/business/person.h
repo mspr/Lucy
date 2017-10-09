@@ -16,6 +16,8 @@ namespace Business
 
   class Person : public DomainObject
   {
+    Q_OBJECT
+
     DECLARE_PIMPL(Person)
 
     public:
@@ -50,5 +52,7 @@ namespace Business
   };
 
 } // Business
+
+Q_DECLARE_METATYPE(Business::Person*)
 
 #endif // PERSON_H

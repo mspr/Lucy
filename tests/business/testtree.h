@@ -9,6 +9,9 @@ class TestTree : public QObject
 
   private slots:
     void createTree();
+    void setName();
+    void addPerson();
+    void removePerson();
     void setReference();
     void countGenerations_reference_only();
     void countGenerations();
