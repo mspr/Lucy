@@ -9,7 +9,6 @@ DEFINE_PIMPL(Person)
 Person::Person(const PersonInfo& personInfo)
   : _pimpl(new Person_p(this, personInfo))
 {
-  qRegisterMetaType<Person*>("Person*");
 }
 
 PersonInfo Person::info() const

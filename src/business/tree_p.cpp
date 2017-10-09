@@ -32,6 +32,8 @@ Tree_p::Tree_p(Tree* facade, const QString& name)
 
 void Tree_p::setupConnections()
 {
+  qRegisterMetaType<Person*>("Person*");
+
   connect(this, Tree_p::personRemoved, this, DomainObject_p::dirty);
 }
 
