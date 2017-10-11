@@ -46,6 +46,7 @@ namespace Business
       void setParent(Person* parent);
       bool hasParents() const;
       Person* child() const;
+      bool hasChild() const;
 
       QList<Job*> jobs() const;
       void addJob(Job* job);

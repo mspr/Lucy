@@ -182,6 +182,11 @@ Person* Person_p::child() const
   return _child;
 }
 
+bool Person_p::hasChild() const
+{
+  return _child != nullptr;
+}
+
 void Person_p::setChild(Person* child)
 {
   Q_ASSERT(child != nullptr);

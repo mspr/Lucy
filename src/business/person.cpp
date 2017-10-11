@@ -96,6 +96,11 @@ Person* Person::child() const
   return d()->child();
 }
 
+bool Person::hasChild() const
+{
+  return d()->hasChild();
+}
+
 QList<Job*> Person::jobs() const
 {
   return d()->jobs();

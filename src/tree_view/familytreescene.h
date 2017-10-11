@@ -22,6 +22,7 @@ class FamilyTreeScene : public QGraphicsScene
     PersonView* createNode(Business::Person* person, const QPointF& scenePos);
     PersonView* createNode(PersonView* node, Business::Person* person);
 
+    PersonView* getView(Business::Person* person) const;
     QList<PersonView*> nodes() const;
 
   protected:
@@ -35,7 +36,6 @@ class FamilyTreeScene : public QGraphicsScene
 
     void adjustNodes();
     void adjustNodesRecursively(PersonView* node, int generationsCount);
-    PersonView* getView(Business::Person* person) const;
 
   private slots:
     void onPersonAdded(Business::Person* person);

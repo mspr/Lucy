@@ -28,7 +28,6 @@ class PersonView : public QGraphicsItemGroup
 
   private:
     void setupComponents();
-    void setupCreationMarkers();
 
   public:
     static int _width;
@@ -37,6 +36,8 @@ class PersonView : public QGraphicsItemGroup
 
   private:
     Business::Person* _person;
+    PersonView* _childView;
+    QGraphicsPathItem* _childLink;
     PersonViewCreationMarker* _fatherMarker;
     PersonViewCreationMarker* _motherMarker;
 };

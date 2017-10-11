@@ -20,14 +20,17 @@ int PersonView::_margin = 5;
 PersonView::PersonView(const QPointF& sceneCenterPos, Person* person, QGraphicsScene* scene)
   : QGraphicsItemGroup()
   , _person(person)
+  , _childView(nullptr)
 {
   Q_ASSERT(_person != nullptr);
-
-  setupComponents();
+  Q_ASSERT(scene != nullptr);
 
   scene->addItem(this);
 
-  setupCreationMarkers();
+  if (_person->hasChild())
+    _childView = treeScene()->getView(_person->child());
+
+  setupComponents();
 
   setSceneCenterPos(sceneCenterPos);
 }
@@ -42,13 +45,11 @@ void PersonView::setupComponents()
   QGraphicsSimpleTextItem* personBirthDateViewItem = new QGraphicsSimpleTextItem(_person->birth()->date().toString(), this);
   personBirthDateViewItem->setPos(0, 20);
   addToGroup(personBirthDateViewItem);
-}
 
-void PersonView::setupCreationMarkers()
-{
   const QRectF boundingRect(0, 0, _width/2 + _margin, _height/2 + _margin);
   _fatherMarker = new PersonViewCreationMarker(Gender::Masculine, boundingRect, this, scene());
   _motherMarker = new PersonViewCreationMarker(Gender::Feminine, boundingRect, this, scene());
+  _childLink = new QGraphicsPathItem(this);
 }
 
 FamilyTreeScene* PersonView::treeScene() const
@@ -76,6 +77,19 @@ void PersonView::setSceneCenterPos(const QPointF& sceneCenterPos)
   const QPointF motherViewSceneCenterPos = sceneCenterPos - QPointF(0,
                                                                     boundingRect.height()/2 + _margin + _motherMarker->boundingRect().height());
   _motherMarker->setPos(motherViewSceneCenterPos);
+
+  if (_childView != nullptr)
+  {
+    QPainterPath path;
+    qreal xOffset = _childView->sceneCenterPos().x() - sceneCenterPos.x();
+    if (xOffset < 0)
+      xOffset += _width + 2*_margin;
+    const qreal yOffset = _childView->sceneCenterPos().y() - sceneCenterPos.y();
+    path.addPolygon(QPolygonF() << QPointF(_width/2, _height + _margin)
+                                << QPointF(_width/2, _height/2 + yOffset)
+                                << QPointF(xOffset - _margin, _height/2 + yOffset));
+    _childLink->setPath(path);
+  }
 }
 
 Person* PersonView::person() const

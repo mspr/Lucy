@@ -48,6 +48,7 @@ namespace Business
       void removeParent(Person* parent);
       bool hasParents() const;
       Person* child() const;
+      bool hasChild() const;
       void removeChild();
 
       Tree* tree() const;
