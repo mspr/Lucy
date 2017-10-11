@@ -9,13 +9,14 @@ namespace Business { class Tree; }
 
 class QGraphicsSceneMouseEvent;
 class PersonView;
+class FamilyTreeView;
 
 class FamilyTreeScene : public QGraphicsScene
 {
   Q_OBJECT
 
   public:
-    FamilyTreeScene(const QRectF& sceneRect, Business::Tree* tree, QObject* parent = nullptr);
+    FamilyTreeScene(const QRectF& sceneRect, Business::Tree* tree, FamilyTreeView* view);
 
     PersonView* createReferenceNode(Business::Person* person, const QPointF& scenePos);
     PersonView* createNode(Business::Person* person, const QPointF& scenePos);

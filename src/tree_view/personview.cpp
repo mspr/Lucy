@@ -10,7 +10,6 @@
 #include "personviewcreationmarker.h"
 
 #include <QPainter>
-#include <QDebug>
 
 using namespace Business;
 

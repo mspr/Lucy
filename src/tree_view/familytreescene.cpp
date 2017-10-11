@@ -11,17 +11,22 @@
 #include "personupdaterview.h"
 #include "personbuilderwizard.h"
 #include "personviewcreationmarker.h"
+#include "familytreeview.h"
 
 #include <QGraphicsSceneMouseEvent>
 #include <QDebug>
 
 using namespace Business;
 
-FamilyTreeScene::FamilyTreeScene(const QRectF& sceneRect, Tree* tree, QObject* parent)
-  : QGraphicsScene(sceneRect, parent)
+FamilyTreeScene::FamilyTreeScene(const QRectF& sceneRect, Tree* tree, FamilyTreeView* view)
+  : QGraphicsScene(sceneRect, view)
   , _tree(tree)
 {
+  Q_ASSERT(view != nullptr);
   Q_ASSERT(_tree != nullptr);
+
+  view->setScene(this);
+  view->setSceneRect(sceneRect);
 
   PersonView* referenceNode = createReferenceNode(tree->reference(), QPointF(0, 0));
   _referenceNode = referenceNode;
@@ -70,7 +75,12 @@ PersonView* FamilyTreeScene::createNode(PersonView* node, Person* person)
 
 void FamilyTreeScene::adjustNodes()
 {
-  _referenceNode->setSceneCenterPos(QPointF(0, 0));
+  Q_ASSERT(views().count() == 1);
+  QGraphicsView* view = views().first();
+  const QRect viewportRect = view->viewport()->rect();
+  const QRectF visibleSceneRect = views().first()->mapToScene(viewportRect).boundingRect();
+
+  _referenceNode->setSceneCenterPos(QPointF(0, visibleSceneRect.height()/2));
 
   const int generationsCount = _tree->countGenerations();
 
@@ -83,26 +93,30 @@ void FamilyTreeScene::adjustNodesRecursively(PersonView* node, int generationsCo
   Person* person = node->person();
   Q_ASSERT(person != nullptr);
 
-  Q_ASSERT(_levelByTreeNode.contains(node));
-  const int nodeLevel = _levelByTreeNode.value(node);
-  const int factor = generationsCount - nodeLevel;
-
-  const QPointF nodeCenterScenePos = node->scenePos();
-  const int xOffset = 200 * factor;
-  const int yOffset = 100;
-
-  if (person->hasMother())
+  if (person->hasParents())
   {
-    PersonView* motherView = getView(person->mother());
-    motherView->setSceneCenterPos(nodeCenterScenePos - QPointF(-xOffset, yOffset));
-    adjustNodesRecursively(motherView, generationsCount);
-  }
+    Q_ASSERT(_levelByTreeNode.contains(node));
+    const int nodeLevel = _levelByTreeNode.value(node);
+    const int factor = generationsCount - nodeLevel;
+    Q_ASSERT(factor > 0);
 
-  if (person->hasFather())
-  {
-    PersonView* fatherView = getView(person->father());
-    fatherView->setSceneCenterPos(nodeCenterScenePos - QPointF(xOffset, yOffset));
-    adjustNodesRecursively(fatherView, generationsCount);
+    const QPointF nodeCenterScenePos = node->sceneCenterPos();
+    const int xOffset = 100 * pow(2, factor - 1);
+    const int yOffset = 100;
+
+    if (person->hasMother())
+    {
+      PersonView* motherView = getView(person->mother());
+      motherView->setSceneCenterPos(nodeCenterScenePos - QPointF(-xOffset, yOffset));
+      adjustNodesRecursively(motherView, generationsCount);
+    }
+
+    if (person->hasFather())
+    {
+      PersonView* fatherView = getView(person->father());
+      fatherView->setSceneCenterPos(nodeCenterScenePos - QPointF(xOffset, yOffset));
+      adjustNodesRecursively(fatherView, generationsCount);
+    }
   }
 }
 
@@ -127,7 +141,7 @@ PersonView* FamilyTreeScene::createReferenceNode(Person* person, const QPointF& 
   PersonView* node = createNode(person, scenePos);
   Q_ASSERT(node != nullptr);
 
-  _levelByTreeNode.insert(node, 0);
+  _levelByTreeNode.insert(node, 1);
 
   return node;
 }

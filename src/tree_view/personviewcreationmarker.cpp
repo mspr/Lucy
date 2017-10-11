@@ -7,7 +7,6 @@
 
 #include <QGraphicsSceneHoverEvent>
 #include <QPainter>
-#include <QDebug>
 
 using namespace Business;
 
@@ -56,8 +55,6 @@ void PersonViewCreationMarker::hoverLeaveEvent(QGraphicsSceneHoverEvent* e)
 
 void PersonViewCreationMarker::mousePressEvent(QGraphicsSceneMouseEvent* e)
 {
-  qDebug() << "mousePressEvent " << e->scenePos();
-
   FamilyTreeScene* scene = dynamic_cast<FamilyTreeScene*>(this->scene());
   Q_ASSERT(scene != nullptr);
 

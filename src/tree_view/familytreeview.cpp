@@ -14,8 +14,7 @@ FamilyTreeView::FamilyTreeView(Tree* tree, QWidget* parent)
   Q_ASSERT(tree != nullptr);
 
   FamilyTreeScene* familyTreeScene = new FamilyTreeScene(QRectF(-10000, -10000, 20000, 20000), tree, this);
-  setScene(familyTreeScene);
-  setSceneRect(QRectF(-1000, -1000, 2000, 2000));
+  Q_UNUSED(familyTreeScene);
 
   setMouseTracking(true);
 }
