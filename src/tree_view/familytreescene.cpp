@@ -85,6 +85,8 @@ void FamilyTreeScene::adjustNodes()
   const int generationsCount = _tree->countGenerations();
 
   adjustNodesRecursively(_referenceNode, generationsCount);
+
+  view->fitInView(itemsBoundingRect(), Qt::KeepAspectRatio);
 }
 
 void FamilyTreeScene::adjustNodesRecursively(PersonView* node, int generationsCount)
