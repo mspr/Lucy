@@ -15,6 +15,19 @@ TreeBuilderView::TreeBuilderView(QWidget* parent)
   , _ui(new Ui::TreeBuilderView)
 {
   _ui->setupUi(this);
+
+  _ui->treeNameLineEdit->setProperty("mandatoryField", true);
+  _ui->firstNameLineEdit->setProperty("mandatoryField", true);
+  _ui->lastNameLideEdit->setProperty("mandatoryField", true);
+
+  clearValidationMarkers();
+}
+
+void TreeBuilderView::clearValidationMarkers()
+{
+  _ui->treeNameValidationMarker->hide();
+  _ui->firstNameValidationMarker->hide();
+  _ui->lastNameValidationMarker->hide();
 }
 
 TreeBuilderView::~TreeBuilderView()
@@ -49,4 +62,32 @@ int TreeBuilderView::exec()
   }
 
   return result;
+}
+
+void TreeBuilderView::accept()
+{
+  bool valid = true;
+
+  clearValidationMarkers();
+
+  if (_ui->treeNameLineEdit->text().isEmpty())
+  {
+    _ui->treeNameValidationMarker->show();
+    valid = false;
+  }
+
+  if (_ui->firstNameLineEdit->text().isEmpty())
+  {
+    _ui->firstNameValidationMarker->show();
+    valid = false;
+  }
+
+  if (_ui->lastNameLideEdit->text().isEmpty())
+  {
+    _ui->lastNameValidationMarker->show();
+    valid = false;
+  }
+
+  if (valid)
+    QDialog::accept();
 }

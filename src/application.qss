@@ -1,1 +1,2 @@
 QToolBar { background-color: rgb(254, 249, 239); }
+*[mandatoryField="true"] { background-color: rgb(251, 244, 227); }

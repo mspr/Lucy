@@ -27,6 +27,7 @@ Tree_p::Tree_p(Tree* facade, const QString& name)
   , _name(name)
   , _reference(nullptr)
 {
+  Q_ASSERT(!_name.isEmpty());
   setupConnections();
 }
 
@@ -48,6 +49,7 @@ QString Tree_p::name() const
 
 void Tree_p::setName(const QString& name)
 {
+  Q_ASSERT(!name.isEmpty());
   _name = name;
   setDirty();
 }

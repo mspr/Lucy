@@ -25,6 +25,8 @@ FamilyTreeScene::FamilyTreeScene(const QRectF& sceneRect, Tree* tree, FamilyTree
   Q_ASSERT(view != nullptr);
   Q_ASSERT(_tree != nullptr);
 
+  setBackgroundBrush(QBrush(QColor(247, 248, 255)));
+
   view->setScene(this);
   view->setSceneRect(sceneRect);
 

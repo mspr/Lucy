@@ -15,6 +15,10 @@ class TreeBuilderView : public QDialog
 
   public slots:
     virtual int exec() override;
+    virtual void accept() override;
+
+  private:
+    void clearValidationMarkers();
 
   private:
     Ui::TreeBuilderView* _ui;
