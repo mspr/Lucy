@@ -8,6 +8,8 @@ class Application : public QApplication
   public:
     Application(int& argc, char** argv);
 
+    bool loadStyleSheet(const QString& fileName);
+
   private:
     virtual bool notify(QObject* receiver, QEvent* event) override;
 };
