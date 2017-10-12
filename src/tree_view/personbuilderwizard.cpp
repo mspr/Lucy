@@ -1,5 +1,6 @@
 #include "personbuilderwizard.h"
-#include "ui_personbuilderwizard.h"
+#include "personidentificationwizardpage.h"
+#include "personbirthwizardpage.h"
 #include "project/projectmanager.h"
 #include "project/project.h"
 #include "business/tree.h"
@@ -15,18 +16,17 @@ using namespace Business;
 
 PersonBuilderWizard::PersonBuilderWizard(PersonView* personView, Gender gender, QWidget* parent)
   : QWizard(parent)
-  , _ui(new Ui::PersonBuilderWizard)
   , _gender(gender)
   , _personView(personView)
 {
   Q_ASSERT(_personView != nullptr);
 
-  _ui->setupUi(this);
+  addPage(new PersonIdentificationWizardPage(this));
+  addPage(new PersonBirthWizardPage(this));
 }
 
 PersonBuilderWizard::~PersonBuilderWizard()
 {
-  delete _ui;
 }
 
 int PersonBuilderWizard::exec()
@@ -48,16 +48,16 @@ void PersonBuilderWizard::done(int result)
 
   PersonInfo personInfo;
 
-  personInfo.firstName = _ui->firstNameLineEdit->text();
-  personInfo.lastName = _ui->lastNameLineEdit->text();
+  personInfo.firstName = field("firstName").toString();
+  personInfo.lastName = field("lastName").toString();
   personInfo.gender = _gender;
 
-  const QDate birthDate = _ui->dateEdit->date();
-  const QString birthCountry = _ui->countryLineEdit->text();
-  const QString birthDepartment = _ui->departmentLineEdit->text();
-  const QString birthCity = _ui->cityLineEdit->text();
-  Location* birthLocation = new Location(birthCountry, birthDepartment, birthCity);
-  personInfo.birth = new Birth(birthDate, birthLocation);
+  const QDate birthDate = field("birth").toDate();
+//  const QString birthCountry = _ui->countryLineEdit->text();
+//  const QString birthDepartment = _ui->departmentLineEdit->text();
+//  const QString birthCity = _ui->cityLineEdit->text();
+//  Location* birthLocation = new Location(birthCountry, birthDepartment, birthCity);
+  personInfo.birth = new Birth(birthDate, nullptr);
 
   PersonCreateCommand* personCreateCommand = new PersonCreateCommand(personInfo, _personView);
   CommandsManager::getInstance()->addCommand(personCreateCommand);

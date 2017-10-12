@@ -3,7 +3,6 @@
 
 #include <QWizard>
 
-namespace Ui { class PersonBuilderWizard; }
 namespace Business { enum class Gender; }
 class PersonView;
 
@@ -23,7 +22,6 @@ class PersonBuilderWizard : public QWizard
     virtual void done(int result) override;
 
   private:
-    Ui::PersonBuilderWizard* _ui;
     Business::Gender _gender;
     PersonView* _personView;
 };

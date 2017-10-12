@@ -8,7 +8,9 @@ SOURCES += \
     $$PWD/personviewcreationmarker.cpp \
     $$PWD/filtering/familytreescenefilters.cpp \
     $$PWD/filtering/familytreesceneabstractfilter.cpp \
-    $$PWD/filtering/familytreescenevisibilityfilter.cpp
+    $$PWD/filtering/familytreescenevisibilityfilter.cpp \
+    $$PWD/personidentificationwizardpage.cpp \
+    $$PWD/personbirthwizardpage.cpp
 
 HEADERS += \
     tree_view/personview.h \
@@ -20,9 +22,12 @@ HEADERS += \
     $$PWD/personviewcreationmarker.h \
     $$PWD/filtering/familytreescenefilters.h \
     $$PWD/filtering/familytreesceneabstractfilter.h \
-    $$PWD/filtering/familytreescenevisibilityfilter.h
+    $$PWD/filtering/familytreescenevisibilityfilter.h \
+    $$PWD/personidentificationwizardpage.h \
+    $$PWD/personbirthwizardpage.h
 
 FORMS += \
     $$PWD/personupdaterview.ui \
     $$PWD/configuration/personviewconfigurationmainview.ui \
-    $$PWD/personbuilderwizard.ui
+    $$PWD/personidentificationwizardpage.ui \
+    $$PWD/personbirthwizardpage.ui
