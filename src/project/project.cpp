@@ -71,6 +71,8 @@ void Project::setCurrentTree(Tree* tree)
   {
     _currentTree = tree;
     setDirty();
+
+    emit currentTreeChanged();
   }
 }
 

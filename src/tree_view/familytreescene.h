@@ -22,6 +22,7 @@ class FamilyTreeScene : public QGraphicsScene
     PersonView* createNode(Business::Person* person, const QPointF& scenePos);
     PersonView* createNode(PersonView* node, Business::Person* person);
 
+    Business::Tree* tree() const;
     PersonView* getView(Business::Person* person) const;
     QList<PersonView*> nodes() const;
 

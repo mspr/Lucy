@@ -32,9 +32,12 @@ class MainWindow : public QMainWindow
     void quit();
     void createTree();
 
+    void onTreeTabCurrentChanged(int index);
+
     void onProjectOpen();
     void onProjectClosed();
     void onTreeAdded(QUuid droid);
+    void onCurrentTreeChanged();
     void onProjectDirty();
     void onProjectSaved();
 

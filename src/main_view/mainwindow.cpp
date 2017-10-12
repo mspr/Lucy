@@ -80,6 +80,7 @@ void MainWindow::updateRecentProjectsMenu()
 
 void MainWindow::setupSignalSlotConnections()
 {
+  connect(_treeTabWidget, QTabWidget::currentChanged, this, MainWindow::onTreeTabCurrentChanged);
   connect(ProjectManager::getInstance(), ProjectManager::projectOpen, this, MainWindow::onProjectOpen);
 }
 
@@ -107,6 +108,17 @@ void MainWindow::newProject()
 void MainWindow::openRecentProject()
 {
 
+}
+
+void MainWindow::onTreeTabCurrentChanged(int /*index*/)
+{
+  QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
+  Q_ASSERT(!currentProject.isNull());
+
+  FamilyTreeView* currentTreeView = dynamic_cast<FamilyTreeView*>(_treeTabWidget->currentWidget());
+  Q_ASSERT(currentTreeView != nullptr);
+
+  currentProject->setCurrentTree(currentTreeView->tree());
 }
 
 void MainWindow::openProject()
@@ -198,6 +210,7 @@ void MainWindow::onProjectOpen()
 {
   QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
   connect(currentProject.data(), Project::treeAdded, this, MainWindow::onTreeAdded);
+  connect(currentProject.data(), Project::currentTreeChanged, this, MainWindow::onCurrentTreeChanged);
   connect(currentProject.data(), Project::dirty, this, MainWindow::onProjectDirty);
   connect(currentProject.data(), Project::saved, this, MainWindow::onProjectSaved);
   connect(currentProject.data(), Project::destroyed, this, MainWindow::onProjectClosed);
@@ -232,6 +245,11 @@ void MainWindow::onTreeAdded(QUuid droid)
 
   FamilyTreeView* familyTreeView = new FamilyTreeView(treeAdded);
   _treeTabWidget->addTab(familyTreeView, treeAdded->name());
+}
+
+void MainWindow::onCurrentTreeChanged()
+{
+  CommandsManager::getInstance()->clear();
 }
 
 void MainWindow::onProjectDirty()

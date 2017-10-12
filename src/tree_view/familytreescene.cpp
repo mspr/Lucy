@@ -124,6 +124,11 @@ void FamilyTreeScene::adjustNodesRecursively(PersonView* node, int generationsCo
   }
 }
 
+Tree* FamilyTreeScene::tree() const
+{
+  return _tree;
+}
+
 PersonView* FamilyTreeScene::getView(Person* person) const
 {
   Q_ASSERT(person != nullptr);

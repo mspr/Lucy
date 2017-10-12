@@ -19,6 +19,14 @@ FamilyTreeView::FamilyTreeView(Tree* tree, QWidget* parent)
   setMouseTracking(true);
 }
 
+Tree* FamilyTreeView::tree() const
+{
+  FamilyTreeScene* scene = dynamic_cast<FamilyTreeScene*>(this->scene());
+  Q_ASSERT(scene != nullptr);
+
+  return scene->tree();
+}
+
 void FamilyTreeView::mousePressEvent(QMouseEvent* e)
 {
   QGraphicsView::mousePressEvent(e);

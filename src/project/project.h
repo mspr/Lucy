@@ -35,6 +35,7 @@ class Project : public QObject
 
   signals:
     void treeAdded(QUuid droid);
+    void currentTreeChanged();
     void dirty();
     void saved();
 

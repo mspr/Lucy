@@ -10,6 +10,8 @@ class FamilyTreeView : public QGraphicsView
   public:
     FamilyTreeView(Business::Tree* tree, QWidget* parent = nullptr);
 
+    Business::Tree* tree() const;
+
   protected:
     virtual void keyPressEvent(QKeyEvent*) override;
     virtual void keyReleaseEvent(QKeyEvent*) override;
