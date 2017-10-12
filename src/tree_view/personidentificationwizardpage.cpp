@@ -2,6 +2,8 @@
 #include "ui_personidentificationwizardpage.h"
 #include "business/gender.h"
 
+#include <QDebug>
+
 using namespace Business;
 
 PersonIdentificationWizardPage::PersonIdentificationWizardPage(Gender gender, QWidget* parent)
@@ -15,7 +17,8 @@ PersonIdentificationWizardPage::PersonIdentificationWizardPage(Gender gender, QW
   else
     _ui->masculineGenderButton->setChecked(true);
 
-  _ui->genderWidget->setVisible(gender == Gender::Unidentified);
+  if (gender != Gender::Unidentified)
+    _ui->genderWidget->hide();
 
   registerField("firstName*", _ui->firstNameLineEdit);
   registerField("lastName*", _ui->lastNameLineEdit);
