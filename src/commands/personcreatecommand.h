@@ -10,7 +10,7 @@ class PersonView;
 class PersonCreateCommand : public QUndoCommand
 {
   public:
-    PersonCreateCommand(const Business::PersonInfo& personInfo, PersonView* personView);
+    PersonCreateCommand(const Business::PersonInfo& personInfo, PersonView* childView);
 
     virtual void redo() override;
     virtual void undo() override;
@@ -18,7 +18,7 @@ class PersonCreateCommand : public QUndoCommand
   private:
     const Business::PersonInfo& _personInfo;
     Business::Person* _person;
-    PersonView* _personView;
+    PersonView* _childView;
 };
 
 #endif // PERSONCREATECOMMAND_H

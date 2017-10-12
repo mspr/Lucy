@@ -14,12 +14,12 @@
 
 using namespace Business;
 
-PersonBuilderWizard::PersonBuilderWizard(PersonView* personView, Gender gender, QWidget* parent)
+PersonBuilderWizard::PersonBuilderWizard(PersonView* childView, Gender gender, QWidget* parent)
   : QWizard(parent)
   , _gender(gender)
-  , _personView(personView)
+  , _childView(childView)
 {
-  Q_ASSERT(_personView != nullptr);
+  Q_ASSERT(_childView != nullptr);
 
   addPage(new PersonIdentificationWizardPage(this));
   addPage(new PersonBirthWizardPage(this));
@@ -59,7 +59,7 @@ void PersonBuilderWizard::done(int result)
 //  Location* birthLocation = new Location(birthCountry, birthDepartment, birthCity);
   personInfo.birth = new Birth(birthDate, nullptr);
 
-  PersonCreateCommand* personCreateCommand = new PersonCreateCommand(personInfo, _personView);
+  PersonCreateCommand* personCreateCommand = new PersonCreateCommand(personInfo, _childView);
   CommandsManager::getInstance()->addCommand(personCreateCommand);
 
   QWizard::done(result);

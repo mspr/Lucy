@@ -11,7 +11,7 @@ class PersonBuilderWizard : public QWizard
   Q_OBJECT
 
   public:
-    explicit PersonBuilderWizard(PersonView* personView, Business::Gender gender, QWidget* parent = nullptr);
+    explicit PersonBuilderWizard(PersonView* childView, Business::Gender gender, QWidget* parent = nullptr);
     ~PersonBuilderWizard();
 
   public slots:
@@ -23,7 +23,7 @@ class PersonBuilderWizard : public QWizard
 
   private:
     Business::Gender _gender;
-    PersonView* _personView;
+    PersonView* _childView;
 };
 
 #endif // PERSONBUILDERWIZARD_H

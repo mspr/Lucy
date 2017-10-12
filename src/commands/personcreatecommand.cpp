@@ -10,13 +10,13 @@
 
 using namespace Business;
 
-PersonCreateCommand::PersonCreateCommand(const PersonInfo& personInfo, PersonView* personView)
+PersonCreateCommand::PersonCreateCommand(const PersonInfo& personInfo, PersonView* childView)
   : QUndoCommand("Create person " + personInfo.firstName + " " + personInfo.lastName)
   , _personInfo(personInfo)
   , _person(nullptr)
-  , _personView(personView)
+  , _childView(childView)
 {
-  Q_ASSERT(_personView != nullptr);
+  Q_ASSERT(_childView != nullptr);
 }
 
 void PersonCreateCommand::redo()
@@ -30,7 +30,7 @@ void PersonCreateCommand::redo()
 
   _person = new Person(_personInfo);
 
-  Person* child = _personView->person();
+  Person* child = _childView->person();
   Q_ASSERT(child != nullptr);
   child->setParent(_person);
 
