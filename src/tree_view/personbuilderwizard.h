@@ -2,8 +2,10 @@
 #define PERSONBUILDERWIZARD_H
 
 #include <QWizard>
+#include "business/gender.h"
 
-namespace Business { enum class Gender; }
+namespace Business { class Tree; }
+namespace Business { class Person; }
 class PersonView;
 
 class PersonBuilderWizard : public QWizard
@@ -11,7 +13,10 @@ class PersonBuilderWizard : public QWizard
   Q_OBJECT
 
   public:
-    explicit PersonBuilderWizard(PersonView* childView, Business::Gender gender, QWidget* parent = nullptr);
+    explicit PersonBuilderWizard(Business::Tree* tree,
+                                 Business::Gender gender = Business::Gender::Unidentified,
+                                 Business::Person* child = nullptr,
+                                 QWidget* parent = nullptr);
     ~PersonBuilderWizard();
 
   public slots:
@@ -22,8 +27,8 @@ class PersonBuilderWizard : public QWizard
     virtual void done(int result) override;
 
   private:
-    Business::Gender _gender;
-    PersonView* _childView;
+    Business::Tree* _tree;
+    Business::Person* _child;
 };
 
 #endif // PERSONBUILDERWIZARD_H

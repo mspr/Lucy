@@ -1,5 +1,6 @@
 #include "treebuilderview.h"
 #include "ui_treebuilderview.h"
+#include "tree_view/personbuilderwizard.h"
 #include "business/person.h"
 #include "business/personinfo.h"
 #include "business/tree.h"
@@ -17,17 +18,9 @@ TreeBuilderView::TreeBuilderView(QWidget* parent)
   _ui->setupUi(this);
 
   _ui->treeNameLineEdit->setProperty("mandatoryField", true);
-  _ui->firstNameLineEdit->setProperty("mandatoryField", true);
-  _ui->lastNameLideEdit->setProperty("mandatoryField", true);
-
-  clearValidationMarkers();
-}
-
-void TreeBuilderView::clearValidationMarkers()
-{
   _ui->treeNameValidationMarker->hide();
-  _ui->firstNameValidationMarker->hide();
-  _ui->lastNameValidationMarker->hide();
+
+  _ui->treeNameLineEdit->setFocus();
 }
 
 TreeBuilderView::~TreeBuilderView()
@@ -46,19 +39,16 @@ int TreeBuilderView::exec()
     const QString treeName = _ui->treeNameLineEdit->text();
     Tree* tree = new Tree(treeName);
 
-    PersonInfo personInfo;
-    personInfo.firstName = _ui->firstNameLineEdit->text();
-    personInfo.lastName = _ui->lastNameLideEdit->text();
-    personInfo.gender = Gender::Masculine;
-    const QDate birthDate = _ui->birthDateEdit->date();
-    personInfo.birth = new Birth(birthDate);
-    Person* person = new Person(personInfo);
-
-    tree->add(person);
-    tree->setReference(person);
-
-    currentProject->add(tree);
-    currentProject->setCurrentTree(tree);
+    PersonBuilderWizard personBuilderWizard(tree);
+    if (personBuilderWizard.exec() == QWizard::Accepted)
+    {
+      currentProject->add(tree);
+      currentProject->setCurrentTree(tree);
+    }
+    else
+    {
+      tree->deleteLater();
+    }
   }
 
   return result;
@@ -66,28 +56,10 @@ int TreeBuilderView::exec()
 
 void TreeBuilderView::accept()
 {
-  bool valid = true;
-
-  clearValidationMarkers();
+  _ui->treeNameValidationMarker->hide();
 
   if (_ui->treeNameLineEdit->text().isEmpty())
-  {
     _ui->treeNameValidationMarker->show();
-    valid = false;
-  }
-
-  if (_ui->firstNameLineEdit->text().isEmpty())
-  {
-    _ui->firstNameValidationMarker->show();
-    valid = false;
-  }
-
-  if (_ui->lastNameLideEdit->text().isEmpty())
-  {
-    _ui->lastNameValidationMarker->show();
-    valid = false;
-  }
-
-  if (valid)
+  else
     QDialog::accept();
 }

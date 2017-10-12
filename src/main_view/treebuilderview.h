@@ -18,9 +18,6 @@ class TreeBuilderView : public QDialog
     virtual void accept() override;
 
   private:
-    void clearValidationMarkers();
-
-  private:
     Ui::TreeBuilderView* _ui;
 };
 

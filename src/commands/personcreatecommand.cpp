@@ -10,31 +10,27 @@
 
 using namespace Business;
 
-PersonCreateCommand::PersonCreateCommand(const PersonInfo& personInfo, PersonView* childView)
+PersonCreateCommand::PersonCreateCommand(const PersonInfo& personInfo, Person* child)
   : QUndoCommand("Create person " + personInfo.firstName + " " + personInfo.lastName)
   , _personInfo(personInfo)
   , _person(nullptr)
-  , _childView(childView)
+  , _child(child)
 {
-  Q_ASSERT(_childView != nullptr);
+  Q_ASSERT(_child != nullptr);
 }
 
 void PersonCreateCommand::redo()
 {
   Q_ASSERT(_person == nullptr);
 
-  QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
-  Q_ASSERT(!currentProject.isNull());
-  Tree* currentTree = currentProject->currentTree();
-  Q_ASSERT(currentTree != nullptr);
-
   _person = new Person(_personInfo);
 
-  Person* child = _childView->person();
-  Q_ASSERT(child != nullptr);
-  child->setParent(_person);
+  Q_ASSERT(_child != nullptr);
+  _child->setParent(_person);
 
-  currentTree->add(_person);
+  Tree* tree = _child->tree();
+  Q_ASSERT(tree != nullptr);
+  tree->add(_person);
 }
 
 void PersonCreateCommand::undo()

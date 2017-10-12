@@ -6,7 +6,8 @@ namespace Business
   enum class Gender
   {
     Feminine,
-    Masculine
+    Masculine,
+    Unidentified
   };
 }
 

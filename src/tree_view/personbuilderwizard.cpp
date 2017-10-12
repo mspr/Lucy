@@ -8,20 +8,19 @@
 #include "business/personinfo.h"
 #include "business/location.h"
 #include "business/birth.h"
-#include "business/gender.h"
 #include "commands/personcreatecommand.h"
 #include "commands/commandsmanager.h"
 
 using namespace Business;
 
-PersonBuilderWizard::PersonBuilderWizard(PersonView* childView, Gender gender, QWidget* parent)
+PersonBuilderWizard::PersonBuilderWizard(Tree* tree, Gender gender, Person* child, QWidget* parent)
   : QWizard(parent)
-  , _gender(gender)
-  , _childView(childView)
+  , _tree(tree)
+  , _child(child)
 {
-  Q_ASSERT(_childView != nullptr);
+  Q_ASSERT(_tree != nullptr);
 
-  addPage(new PersonIdentificationWizardPage(this));
+  addPage(new PersonIdentificationWizardPage(gender, this));
   addPage(new PersonBirthWizardPage(this));
 }
 
@@ -41,26 +40,33 @@ void PersonBuilderWizard::open()
 
 void PersonBuilderWizard::done(int result)
 {
-  QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
-  Q_ASSERT(!currentProject.isNull());
-  Tree* currentTree = currentProject->currentTree();
-  Q_ASSERT(currentTree != nullptr);
+  if (result == QWizard::Accepted)
+  {
+    PersonInfo personInfo;
 
-  PersonInfo personInfo;
+    personInfo.firstName = field("firstName").toString();
+    personInfo.lastName = field("lastName").toString();
+    personInfo.gender = field("feminineGender").toBool() ? Gender::Feminine : Gender::Masculine;
 
-  personInfo.firstName = field("firstName").toString();
-  personInfo.lastName = field("lastName").toString();
-  personInfo.gender = _gender;
+    const QDate birthDate = field("birth").toDate();
+  //  const QString birthCountry = _ui->countryLineEdit->text();
+  //  const QString birthDepartment = _ui->departmentLineEdit->text();
+  //  const QString birthCity = _ui->cityLineEdit->text();
+  //  Location* birthLocation = new Location(birthCountry, birthDepartment, birthCity);
+    personInfo.birth = new Birth(birthDate, nullptr);
 
-  const QDate birthDate = field("birth").toDate();
-//  const QString birthCountry = _ui->countryLineEdit->text();
-//  const QString birthDepartment = _ui->departmentLineEdit->text();
-//  const QString birthCity = _ui->cityLineEdit->text();
-//  Location* birthLocation = new Location(birthCountry, birthDepartment, birthCity);
-  personInfo.birth = new Birth(birthDate, nullptr);
-
-  PersonCreateCommand* personCreateCommand = new PersonCreateCommand(personInfo, _childView);
-  CommandsManager::getInstance()->addCommand(personCreateCommand);
+    if (_child != nullptr)
+    {
+      PersonCreateCommand* personCreateCommand = new PersonCreateCommand(personInfo, _child);
+      CommandsManager::getInstance()->addCommand(personCreateCommand);
+    }
+    else
+    {
+      Person* person = new Person(personInfo);
+      _tree->add(person);
+      _tree->setReference(person);
+    }
+  }
 
   QWizard::done(result);
 }

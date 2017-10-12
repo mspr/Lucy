@@ -110,12 +110,15 @@ void MainWindow::openRecentProject()
 
 }
 
-void MainWindow::onTreeTabCurrentChanged(int /*index*/)
+void MainWindow::onTreeTabCurrentChanged(int index)
 {
+  if (index == -1)
+    return;
+
   QSharedPointer<Project> currentProject = ProjectManager::getInstance()->currentProject();
   Q_ASSERT(!currentProject.isNull());
 
-  FamilyTreeView* currentTreeView = dynamic_cast<FamilyTreeView*>(_treeTabWidget->currentWidget());
+  FamilyTreeView* currentTreeView = dynamic_cast<FamilyTreeView*>(_treeTabWidget->widget(index));
   Q_ASSERT(currentTreeView != nullptr);
 
   currentProject->setCurrentTree(currentTreeView->tree());

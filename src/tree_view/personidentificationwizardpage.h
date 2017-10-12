@@ -4,13 +4,14 @@
 #include <QWizardPage>
 
 namespace Ui { class PersonIdentificationWizardPage; }
+namespace Business { enum class Gender; }
 
 class PersonIdentificationWizardPage : public QWizardPage
 {
   Q_OBJECT
 
   public:
-    explicit PersonIdentificationWizardPage(QWidget* parent);
+    explicit PersonIdentificationWizardPage(Business::Gender gender, QWidget* parent);
     ~PersonIdentificationWizardPage();
 
   private:

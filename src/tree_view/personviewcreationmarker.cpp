@@ -10,15 +10,17 @@
 
 using namespace Business;
 
-PersonViewCreationMarker::PersonViewCreationMarker(Business::Gender gender, const QRectF& boundingRect,
-                                                   PersonView* personView, QGraphicsScene* scene)
+PersonViewCreationMarker::PersonViewCreationMarker(Business::Gender gender,
+                                                   const QRectF& boundingRect,
+                                                   PersonView* childView,
+                                                   QGraphicsScene* scene)
   : QGraphicsPixmapItem()
   , _gender(gender)
   , _boundingRect(boundingRect)
-  , _personView(personView)
+  , _childView(childView)
   , _setPixmapVisible(false)
 {
-  Q_ASSERT(_personView != nullptr);
+  Q_ASSERT(_childView != nullptr);
   Q_ASSERT(scene != nullptr);
 
   const QSize pixmapSize = QSize(20, 20);
@@ -58,7 +60,8 @@ void PersonViewCreationMarker::mousePressEvent(QGraphicsSceneMouseEvent* e)
   FamilyTreeScene* scene = dynamic_cast<FamilyTreeScene*>(this->scene());
   Q_ASSERT(scene != nullptr);
 
-  PersonBuilderWizard personBuilderWizard(_personView, _gender);
+  Tree* tree = _childView->treeScene()->tree();
+  PersonBuilderWizard personBuilderWizard(tree, _gender, _childView->person());
   if (personBuilderWizard.exec())
   {
   }
