@@ -30,12 +30,13 @@ PersonView::PersonView(const QPointF& sceneCenterPos, Person* person, QGraphicsS
   if (_person->hasChild())
     _childView = treeScene()->getView(_person->child());
 
+  setupPersonInfo();
   setupComponents();
 
   setSceneCenterPos(sceneCenterPos);
 }
 
-void PersonView::setupComponents()
+void PersonView::setupPersonInfo()
 {
   QGraphicsSimpleTextItem* personFirstNameViewItem = new QGraphicsSimpleTextItem(_person->firstName(), this);
   addToGroup(personFirstNameViewItem);
@@ -45,7 +46,10 @@ void PersonView::setupComponents()
   QGraphicsSimpleTextItem* personBirthDateViewItem = new QGraphicsSimpleTextItem(_person->birth()->date().toString(), this);
   personBirthDateViewItem->setPos(0, 20);
   addToGroup(personBirthDateViewItem);
+}
 
+void PersonView::setupComponents()
+{
   const QRectF boundingRect(0, 0, _width/2 + _margin, _height/2 + _margin);
   _fatherMarker = new PersonViewCreationMarker(Gender::Masculine, boundingRect, this, scene());
   _motherMarker = new PersonViewCreationMarker(Gender::Feminine, boundingRect, this, scene());
