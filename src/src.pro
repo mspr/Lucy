@@ -34,12 +34,12 @@ include(commands/commands.pri)
 
 SOURCES += \
    messagehandler.cpp \
-   databaseconnection.cpp \
+   databasemanager.cpp \
    application.cpp
 
 HEADERS += \
    messagehandler.h \
-   databaseconnection.h \
+   databasemanager.h \
    application.h
 
 RESOURCES += \

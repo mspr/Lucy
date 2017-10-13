@@ -9,7 +9,7 @@
 #include "treebuilderview.h"
 #include "business/tree.h"
 #include "commands/commandsmanager.h"
-#include "databaseconnection.h"
+#include "databasemanager.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -49,7 +49,7 @@ MainWindow::MainWindow(QWidget* parent)
 
 void MainWindow::setupDatabaseConnectionIndicator()
 {
-  const bool databaseIsOpen = DatabaseConnection::getInstance()->isOpen();
+  const bool databaseIsOpen = DatabaseManager::getInstance()->isOpen();
   if (!databaseIsOpen)
     QMessageBox::warning(nullptr,
                          "Database connection failure",

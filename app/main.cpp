@@ -1,7 +1,7 @@
 #include "application.h"
 #include "main_view/mainwindow.h"
 #include "messagehandler.h"
-#include "databaseconnection.h"
+#include "databasemanager.h"
 #include "project/projectmanager.h"
 #include "commands/commandsmanager.h"
 
@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
 
   qInstallMessageHandler(MessageHandler::handleMessage);
 
-  DatabaseConnection::getInstance()->open();
+  DatabaseManager::getInstance()->open();
 
   MainWindow w;
   w.show();
@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
 
   CommandsManager::kill();
   ProjectManager::kill();
-  DatabaseConnection::kill();
+  DatabaseManager::kill();
 
   return res;
 }

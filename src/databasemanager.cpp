@@ -1,19 +1,19 @@
-#include "databaseconnection.h"
+#include "databasemanager.h"
 
 #include <QtSql/QSqlError>
 #include <QDebug>
 
-DatabaseConnection* DatabaseConnection::_databaseManager = nullptr;
+DatabaseManager* DatabaseManager::_databaseManager = nullptr;
 
-/*static*/ DatabaseConnection* DatabaseConnection::getInstance()
+/*static*/ DatabaseManager* DatabaseManager::getInstance()
 {
   if (_databaseManager == nullptr)
-    _databaseManager = new DatabaseConnection();
+    _databaseManager = new DatabaseManager();
 
   return _databaseManager;
 }
 
-/*static*/ void DatabaseConnection::kill()
+/*static*/ void DatabaseManager::kill()
 {
   if (_databaseManager != nullptr)
   {
@@ -22,7 +22,7 @@ DatabaseConnection* DatabaseConnection::_databaseManager = nullptr;
   }
 }
 
-DatabaseConnection::DatabaseConnection()
+DatabaseManager::DatabaseManager()
 {
   _database = QSqlDatabase::addDatabase("QPSQL");
   _database.setHostName("localhost");
@@ -32,7 +32,7 @@ DatabaseConnection::DatabaseConnection()
   _database.setPassword("postgres");
 }
 
-bool DatabaseConnection::open()
+bool DatabaseManager::open()
 {
   const bool success = _database.open();
   if (!success)
@@ -44,12 +44,12 @@ bool DatabaseConnection::open()
   return success;
 }
 
-bool DatabaseConnection::isOpen() const
+bool DatabaseManager::isOpen() const
 {
   return _database.isOpen();
 }
 
-DatabaseConnection::~DatabaseConnection()
+DatabaseManager::~DatabaseManager()
 {
   if (_database.isOpen())
     _database.close();
