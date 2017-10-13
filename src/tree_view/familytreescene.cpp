@@ -184,9 +184,12 @@ void FamilyTreeScene::onPersonRemoved(Person* person)
 
   PersonView* personView = getView(person);
   _nodes.removeOne(personView);
+  _levelByTreeNode.remove(personView);
   removeItem(personView);
 
   delete personView;
+
+  adjustNodes();
 }
 
 void FamilyTreeScene::mousePressEvent(QGraphicsSceneMouseEvent* e)

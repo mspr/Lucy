@@ -20,17 +20,17 @@ PersonDeleteCommand::PersonDeleteCommand(Person* person, QUndoCommand* parent)
 
 void PersonDeleteCommand::redo()
 {
-  _tree->remove(_person);
-
   if (_status == DatabaseStatus::New)
   {
     _personInfo = _person->info();
     _person->d()->removeChild();
+    _tree->remove(_person);
     _person->deleteLater();
   }
   else
   {
     _person->d()->markAsDeleted();
+    _tree->remove(_person);
   }
 }
 
