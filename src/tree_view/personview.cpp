@@ -10,6 +10,7 @@
 #include "personviewcreationmarker.h"
 
 #include <QPainter>
+#include <QDebug>
 
 using namespace Business;
 
@@ -34,6 +35,8 @@ PersonView::PersonView(const QPointF& sceneCenterPos, Person* person, QGraphicsS
   setupComponents();
 
   setSceneCenterPos(sceneCenterPos);
+
+  setFlags(QGraphicsItem::ItemIsFocusable | QGraphicsItem::ItemIsSelectable);
 }
 
 void PersonView::setupPersonInfo()
@@ -114,6 +117,9 @@ QPainterPath PersonView::shape() const
 void PersonView::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
   QGraphicsItemGroup::paint(painter, option, widget);
+
+  if (isSelected())
+    painter->setPen(QPen(QBrush(Qt::red), 10));
 
   painter->drawRect(boundingRect());
 
