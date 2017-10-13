@@ -20,6 +20,11 @@ PersonBuilderWizard::PersonBuilderWizard(Tree* tree, Gender gender, Person* chil
 {
   Q_ASSERT(_tree != nullptr);
 
+  if (_child == nullptr)
+    setWindowTitle("Create Reference");
+  else
+    setWindowTitle("Create Person");
+
   addPage(new PersonIdentificationWizardPage(gender, this));
   addPage(new PersonBirthWizardPage(this));
 }
