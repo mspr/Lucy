@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
 
   qInstallMessageHandler(MessageHandler::handleMessage);
 
-  DatabaseConnection dbConnection;
+  DatabaseConnection::getInstance()->open();
 
   MainWindow w;
   w.show();
@@ -20,6 +20,7 @@ int main(int argc, char* argv[])
 
   CommandsManager::kill();
   ProjectManager::kill();
+  DatabaseConnection::kill();
 
   return res;
 }

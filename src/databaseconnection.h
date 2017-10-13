@@ -6,10 +6,18 @@
 class DatabaseConnection
 {
   public:
+    static DatabaseConnection* getInstance();
+    static void kill();
+
+    bool open();
+    bool isOpen() const;
+
+  private:
     DatabaseConnection();
     ~DatabaseConnection();
 
   private:
+    static DatabaseConnection* _databaseManager;
     QSqlDatabase _database;
 };
 

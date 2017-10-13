@@ -17,6 +17,7 @@ class MainWindow : public QMainWindow
     ~MainWindow();
 
   private:
+    void setupDatabaseConnectionIndicator();
     void setupRecentProjectsMenu();
     void updateRecentProjectsMenu();
     void setupSignalSlotConnections();

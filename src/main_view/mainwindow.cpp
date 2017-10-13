@@ -9,11 +9,13 @@
 #include "treebuilderview.h"
 #include "business/tree.h"
 #include "commands/commandsmanager.h"
+#include "databaseconnection.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QInputDialog>
 #include <QSettings>
+#include <QLabel>
 #include <QDebug>
 
 using namespace Output;
@@ -26,6 +28,8 @@ MainWindow::MainWindow(QWidget* parent)
   , _recentProjectsMenu(nullptr)
 {
   _ui->setupUi(this);
+
+  setupDatabaseConnectionIndicator();
 
   setupRecentProjectsMenu();
 
@@ -41,6 +45,24 @@ MainWindow::MainWindow(QWidget* parent)
   setupSignalSlotConnections();
 
   setWindowState(Qt::WindowMaximized);
+}
+
+void MainWindow::setupDatabaseConnectionIndicator()
+{
+  const bool databaseIsOpen = DatabaseConnection::getInstance()->isOpen();
+  if (!databaseIsOpen)
+    QMessageBox::warning(nullptr,
+                         "Database connection failure",
+                         "Impossible to connect to the database. All your project can be saved but it won't be pushed into the database.");
+
+  QLabel* databaseConnectionIndicator = new QLabel();
+
+  if (databaseIsOpen)
+    databaseConnectionIndicator->setPixmap(QPixmap("./database_connection_ok"));
+  else
+    databaseConnectionIndicator->setPixmap(QPixmap("./database_connection_ko"));
+
+  _ui->menuBar->setCornerWidget(databaseConnectionIndicator);
 }
 
 void MainWindow::setupRecentProjectsMenu()
