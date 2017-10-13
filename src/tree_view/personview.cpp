@@ -135,17 +135,18 @@ void PersonView::keyPressEvent(QKeyEvent* e)
 
   if (e->key() == Qt::Key_Delete)
   {
-    if (_person->hasParents())
+    if (_person->tree()->isReference(_person))
+      return;
+
+    if (!_person->hasParents())
     {
       PersonDeleteCommand* personDeleteCommand = new PersonDeleteCommand(_person);
       CommandsManager::getInstance()->addCommand(personDeleteCommand);
-      personDeleteCommand->redo();
     }
     else
     {
       PersonDeleteCascadeCommand* personDeleteCascadeCommand = new PersonDeleteCascadeCommand(_person);
       CommandsManager::getInstance()->addCommand(personDeleteCascadeCommand);
-      personDeleteCascadeCommand->redo();
     }
   }
 }

@@ -183,6 +183,7 @@ void FamilyTreeScene::onPersonRemoved(Person* person)
   Q_ASSERT(person != nullptr);
 
   PersonView* personView = getView(person);
+  _nodes.removeOne(personView);
   removeItem(personView);
 
   delete personView;

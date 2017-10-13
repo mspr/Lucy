@@ -45,6 +45,11 @@ void Tree::setReference(Person* person)
   d()->setReference(person);
 }
 
+bool Tree::isReference(Person* person) const
+{
+  return d()->isReference(person);
+}
+
 int Tree::countGenerations() const
 {
   return d()->countGenerations();

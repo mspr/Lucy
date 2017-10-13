@@ -96,6 +96,12 @@ void Tree_p::setReference(Person* person)
   _reference = person;
 }
 
+bool Tree_p::isReference(Person* person) const
+{
+  Q_ASSERT(person != nullptr);
+  return _reference == person;
+}
+
 int Tree_p::countGenerations() const
 {
   int count = 0;
