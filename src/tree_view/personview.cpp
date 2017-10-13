@@ -131,12 +131,10 @@ void PersonView::paint(QPainter* painter, const QStyleOptionGraphicsItem* option
 
 void PersonView::keyPressEvent(QKeyEvent* e)
 {
-  QGraphicsItemGroup::keyPressEvent(e);
-
   if (e->key() == Qt::Key_Delete)
   {
     if (_person->tree()->isReference(_person))
-      return;
+      QGraphicsItemGroup::keyPressEvent(e);
 
     if (!_person->hasParents())
     {
