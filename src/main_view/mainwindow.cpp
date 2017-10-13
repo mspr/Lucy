@@ -56,11 +56,12 @@ void MainWindow::setupDatabaseConnectionIndicator()
                          "Impossible to connect to the database. All your project can be saved but it won't be pushed into the database.");
 
   QLabel* databaseConnectionIndicator = new QLabel();
+  databaseConnectionIndicator->setMargin(3);
 
   if (databaseIsOpen)
-    databaseConnectionIndicator->setPixmap(QPixmap("./database_connection_ok"));
+    databaseConnectionIndicator->setPixmap(QPixmap(":/images/database_connection_ok"));
   else
-    databaseConnectionIndicator->setPixmap(QPixmap("./database_connection_ko"));
+    databaseConnectionIndicator->setPixmap(QPixmap(":/images/database_connection_ko"));
 
   _ui->menuBar->setCornerWidget(databaseConnectionIndicator);
 }

@@ -12,5 +12,7 @@
         <file>images/gender_masculine.png</file>
         <file>images/gender_feminine.png</file>
         <file>application.qss</file>
+        <file>images/database_connection_ko.png</file>
+        <file>images/database_connection_ok.png</file>
     </qresource>
 </RCC>
