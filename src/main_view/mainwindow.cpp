@@ -87,6 +87,7 @@ void MainWindow::setupSignalSlotConnections()
 void MainWindow::newProject()
 {
   QInputDialog* dialog = new QInputDialog(this);
+  dialog->setWindowTitle("New Project");
   dialog->setLabelText("Project name:");
   dialog->setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
@@ -130,7 +131,6 @@ void MainWindow::openProject()
                                                                tr("Open Project"),
                                                                "",
                                                                tr("Project Files (*.lcy)"));
-
   if (!projectFileName.isEmpty())
   {
     std::function<void()> action = [&] ()
@@ -188,7 +188,6 @@ void MainWindow::saveProjectAs()
                                                         tr("Save Project"),
                                                         ".",
                                                         tr("Project Files (*.lcy)"));
-
   if (!fileName.isEmpty())
   {
     currentProject->setFileInfo(QFileInfo(fileName));
