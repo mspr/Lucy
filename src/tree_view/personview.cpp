@@ -116,6 +116,11 @@ void PersonView::paint(QPainter* painter, const QStyleOptionGraphicsItem* option
   QGraphicsItemGroup::paint(painter, option, widget);
 
   painter->drawRect(boundingRect());
+
+  if (_person->gender() == Gender::Masculine)
+    painter->fillRect(boundingRect(), QBrush(QColor(237, 248, 254)));
+  else
+    painter->fillRect(boundingRect(), QBrush(QColor(254, 237, 248)));
 }
 
 void PersonView::keyPressEvent(QKeyEvent* e)
